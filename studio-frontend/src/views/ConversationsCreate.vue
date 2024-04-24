@@ -263,7 +263,7 @@ export default {
               {
                 name: convName,
                 description: "",
-                membersRight: this.organizationMemberAccess
+                membersRights: this.organizationMemberAccess
                   ? parseInt(this.membersRight.value)
                   : 0,
                 serviceName: this.transcriptionService.value.serviceName,
