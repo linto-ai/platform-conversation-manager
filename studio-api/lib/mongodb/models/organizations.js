@@ -2,7 +2,8 @@ const debug = require('debug')('linto:conversation-manager:lib:mongodb:models:or
 const ROLES = require(`${process.cwd()}/lib/dao/organization/roles`)
 
 const MongoModel = require(`../model`)
-const model = require(`${process.cwd()}/lib/mongodb/models`)
+
+const PostgreModel = require(`${process.cwd()}/lib/mongodb/models/postgreSQL/index`)
 
 const public_projection = { token: 0 }
 
@@ -65,15 +66,19 @@ class OrganizationModel extends MongoModel {
 
     async getByIdAndUser(orgaId, userId) {
         try {
-            const query = {
-                _id: this.getObjectId(orgaId),
-                "users": {
-                    $elemMatch: {
-                        userId: userId.toString(),
+            if (process.env.DB_MODE === 'postgreSQL') {
+                return await PostgreModel.organizations.getByIdAndUser(orgaId, userId)
+            } else {
+                const query = {
+                    _id: this.getObjectId(orgaId),
+                    "users": {
+                        $elemMatch: {
+                            userId: this.getObjectId(userId),
+                        }
                     }
                 }
+                return await this.mongoRequest(query, public_projection)
             }
-            return await this.mongoRequest(query, public_projection)
         } catch (error) {
             console.error(error)
             return error
@@ -83,7 +88,7 @@ class OrganizationModel extends MongoModel {
     async getByName(name) {
         try {
             const query = { name }
-            return await this.mongoRequest(query, public_projection) 
+            return await this.mongoRequest(query, public_projection)
         } catch (error) {
             console.error(error)
             return error
@@ -92,14 +97,19 @@ class OrganizationModel extends MongoModel {
 
     async listSelf(userId) {
         try {
-            const query = {
-                "users": {
-                    $elemMatch: {
-                        userId: userId.toString(),
+            if (process.env.DB_MODE === 'postgreSQL') {
+                return await PostgreModel.organizations.listSelf(userId)
+            } else {
+                const query = {
+                    "users": {
+                        $elemMatch: {
+                            userId: this.getObjectId(userId),
+                        }
                     }
                 }
+
+                return await this.mongoRequest(query, public_projection)
             }
-            return await this.mongoRequest(query, public_projection)
         } catch (error) {
             console.error(error)
             return error

@@ -40,8 +40,9 @@ async function batchShareConversation(req, res, next) {
     }
 
     const conversationsIds = req.body.conversations.split(',')
-    let conversations = await model.conversations.listConvFromAccess(conversationsIds, auth_user.id,
-      auth_user.organizationId, auth_user.role, RIGHTS.READ, { _id: 1, text: 0, tags: 0, speakers: 0, metadata: 0, jobs: 0 })
+    let conversations = await model.conversations.listConversationList(conversationsIds)
+    // let conversations = await model.conversations.listConvFromAccess(conversationsIds, auth_user.id,
+      // auth_user.organizationId, auth_user.role, RIGHTS.READ, { _id: 1, text: 0, tags: 0, speakers: 0, metadata: 0, jobs: 0 })
 
     const method = req.method
     //req.body.users is a json string, transform it to an object

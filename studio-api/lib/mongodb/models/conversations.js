@@ -5,6 +5,9 @@ const moment = require('moment')
 const ROLES = require(`${process.cwd()}/lib/dao/organization/roles`)
 const RIGHTS = require(`${process.cwd()}/lib/dao/conversation/rights`)
 
+const PostgreModel = require(`${process.cwd()}/lib/mongodb/models/postgreSQL/index`)
+
+
 class ConvoModel extends MongoModel {
 
     constructor() {
@@ -170,36 +173,6 @@ class ConvoModel extends MongoModel {
         return await this.mongoRequest(query, projection)
     }
 
-    async getTagByShare(idUser, filter = undefined) {
-        const query = {
-            "sharedWithUsers": {
-                $elemMatch: {
-                    userId: idUser.toString(),
-                }
-            }
-        }
-        if (filter.tags) {
-            filter.tags = filter.tags.split(',')
-            query.tags = {
-                $elemMatch: {
-                    $in: filter.tags
-                }
-            }
-        }
-
-        const projection = {
-            tags: 1,
-            name: 1,
-        }
-
-        return await this.mongoRequest(query, projection)
-    }
-
-    // list conversation from an organization id
-    async getConvoByOrga(idOrga) {
-        getByOrga(idOrga)
-    }
-
     async getByOrga(idOrga, projection) {
         try {
             const query = {
@@ -222,15 +195,19 @@ class ConvoModel extends MongoModel {
 
     async getSharedConvFromOrga(idOrga, idUser) {
         try {
-            const query = {
-                "organization.organizationId": idOrga.toString(),
-                "sharedWithUsers": {
-                    $elemMatch: {
-                        userId: idUser.toString(),
+            if (process.env.DB_MODE === 'postgreSQL') {
+                return await PostgreModel.conversations.getSharedConvFromOrga(idOrga, idUser)
+            } else {
+                const query = {
+                    "organization.organizationId": idOrga.toString(),
+                    "sharedWithUsers": {
+                        $elemMatch: {
+                            userId: idUser.toString(),
+                        }
                     }
                 }
+                return await this.mongoRequest(query, { _id: 1, sharedWithUsers: 1, organization: 1 })
             }
-            return await this.mongoRequest(query, { _id: 1, sharedWithUsers: 1, organization: 1 })
         } catch (err) {
             console.error(err)
             return err
@@ -402,68 +379,68 @@ class ConvoModel extends MongoModel {
     // Default right is 1 (read)
     async listConvFromOrga(organizationId, userId, userRole, desiredAccess = 1, filter) {
         try {
-            let projection = {
-                page: 0,
-                text: 0,
-                "jobs.transcription.job_logs": 0
-            }
+            if (process.env.DB_MODE === 'postgreSQL') {
+                return await PostgreModel.conversations.listConvFromOrga(organizationId, userId, userRole, desiredAccess, filter)
+            } else {
+                let projection = {
+                    page: 0,
+                    text: 0,
+                    "jobs.transcription.job_logs": 0
+                }
 
-            let query = {
-                "organization.organizationId": organizationId.toString(),
-                $or: [
-                    {
-                        "organization.customRights": {
-                            $elemMatch: {
-                                userId: userId,
-                                right: { $bitsAnySet: desiredAccess }
-                            }
-                        }
-                    },
-                    {
-                        "organization.customRights": {
-                            $not: {
+                let query = {
+                    "organization.organizationId": organizationId.toString(),
+                    $or: [
+                        {
+                            "organization.customRights": {
                                 $elemMatch: {
-                                    userId: userId
+                                    userId: userId,
+                                    right: { $bitsAnySet: desiredAccess }
+                                }
+                            }
+                        },
+                        {
+                            "organization.customRights": {
+                                $not: {
+                                    $elemMatch: {
+                                        userId: userId
+                                    }
                                 }
                             }
                         }
-                    }
-                ],
-            }
+                    ],
+                }
 
-            if (filter.tags && filter.filter === 'notags') {
-                // notags rules don't apply for highlighs category
-                query.tags = {
-                    $nin: filter.tags
+                if (filter.tags && filter.filter === 'notags')
+                    query.tags = { $nin: filter.tags } // notags rules don't apply for highlighs category
+                else if (filter.tags)
+                    query.tags = { $all: filter.tags.split(',') }
+                if (filter.tags && filter.filter !== 'notags')
+                    query.tags = { $all: filter.tags.split(',') }
+                if (filter.name && filter.text) {
+                    query.$and = [
+                        { $or: query.$or },
+                        {
+                            $or: [
+                                filter.name ? { name: { $regex: filter.name, $options: 'i' } } : {},
+                                filter.text ? { 'text.raw_segment': { $regex: filter.text, $options: 'i' } } : {}
+                            ]
+                        }
+                    ]
+                    delete query.$or
+                } else {
+                    if (filter.name)
+                        query.name = { $regex: filter.name, $options: 'i' };
+                    if (filter.text)
+                        query['text.raw_segment'] = { $regex: filter.text, $options: 'i' };
                 }
-            } else if (filter.tags) {
-                query.tags = {
-                    $all: filter.tags.split(',')
-                }
-            }
-            if (filter.name) {
-                query.name = {
-                    $regex: filter.name,
-                    $options: 'i'
-                }
-            }
-            if (filter.tags && filter.filter !== 'notags') {
-                query.tags = {
-                    $all: filter.tags.split(',')
-                }
-            }
-            if (filter.text) {
-                query['text.raw_segment'] = {
-                    $regex: filter.text,
-                    $options: 'i'
-                }
-            }
 
-            if (userRole === ROLES.MEMBER) { // A member can only see conversation where he has access
-                query['$or'][1]['organization.membersRight'] = { $bitsAnySet: desiredAccess }
-            }
+                if (userRole === ROLES.MEMBER)  // A member can only see conversation where he has access
+                    query['$or'][1]['organization.membersRight'] = { $bitsAnySet: desiredAccess }
 
-            return await this.mongoAggregatePaginate(query, projection, filter)
+
+                return await this.mongoAggregatePaginate(query, projection, filter)
+            }
         } catch (error) {
             console.error(error)
             return error
@@ -477,47 +454,50 @@ class ConvoModel extends MongoModel {
                 else return id
             })
 
-            let query = {
-                "_id": {
-                    $in: convIds
-                }, $or: [
-                    {
-                        "organization.customRights": {
-                            $elemMatch: {
-                                userId: userId,
-                                right: { $bitsAnySet: desiredAccess }
-                            }
-                        }
-                    },
-                    {
-                        "organization.customRights": {
-                            $not: {
+            if (process.env.DB_MODE === 'postgreSQL') {
+                return await PostgreModel.conversations.listConvFromConvIds(convIds, userId, userRole, desiredAccess, filter)
+            } else {
+                let query = {
+                    "_id": {
+                        $in: convIds
+                    }, $or: [
+                        {
+                            "organization.customRights": {
                                 $elemMatch: {
-                                    userId: userId
+                                    userId: userId,
+                                    right: { $bitsAnySet: desiredAccess }
                                 }
                             }
-                        }
-                    },
-                    {
-                        "sharedWithUsers": {
-                            $elemMatch: {
-                                userId: userId,
-                                right: { $bitsAnySet: desiredAccess }
+                        },
+                        {
+                            "organization.customRights": {
+                                $not: {
+                                    $elemMatch: {
+                                        userId: userId
+                                    }
+                                }
                             }
-                        }
-                    },
-                ]
+                        },
+                        {
+                            "sharedWithUsers": {
+                                $elemMatch: {
+                                    userId: userId,
+                                    right: { $bitsAnySet: desiredAccess }
+                                }
+                            }
+                        },
+                    ]
+                }
+
+
+                if (userRole === ROLES.MEMBER) { // A member can only see conversation where he has access
+                    query['$or'][1]['organization.membersRight'] = { $bitsAnySet: desiredAccess }
+                }
+
+                return await this.mongoAggregatePaginate(query, {
+                    page: 0, ...filter
+                }, filter)
             }
-
-
-            if (userRole === ROLES.MEMBER) { // A member can only see conversation where he has access
-                query['$or'][1]['organization.membersRight'] = { $bitsAnySet: desiredAccess }
-            }
-
-            return await this.mongoAggregatePaginate(query, {
-                page: 0, ...filter
-            }, filter)
-
         } catch (error) {
             console.error(error)
             return error
@@ -570,6 +550,7 @@ class ConvoModel extends MongoModel {
         }
     }
 
+    //Should not be used anymore (can replace multiple access later on)
     async listConvFromAccess(convIds, userId, orgaId, userRole, desiredAccess = 1, filter = {}) {
         try {
             convIds = convIds.map(id => {
@@ -619,12 +600,38 @@ class ConvoModel extends MongoModel {
             }
 
             return await this.mongoRequest(query, filter)
+
         } catch (error) {
             console.error(error)
             return error
         }
     }
 
+    async listConversationList(convIds) {
+        try {
+            let projection = {
+                page: 0,
+                text: 0,
+                "jobs.transcription.job_logs": 0
+            }
+
+            convIds = convIds.map(id => {
+                if (typeof id === 'string') return this.getObjectId(id)
+                else return id
+            })
+
+            let query = {
+                "_id": {
+                    $in: convIds
+                }
+            }
+
+            return await this.mongoRequest(query, projection)
+        } catch (error) {
+            console.error(error)
+            throw error
+        }
+    }
 
 }
 

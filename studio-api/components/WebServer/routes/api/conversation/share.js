@@ -58,7 +58,7 @@ module.exports = (webserver) => {
       path: '/shared/access',
       method: 'post,patch,delete',
       requireAuth: true,
-      // requireConversationShareAccess: true,
+      requireConversationMultipleShareAccess: true,
       controller: batchShareConversation
     }
   ]

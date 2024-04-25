@@ -42,7 +42,9 @@ class Router {
                 if (route.requireConversationCommentAccess) middlewaresLoaded.push(conversation_middlewares.asCommentAccess) // require comment access
                 if (route.requireConversationWriteAccess) middlewaresLoaded.push(conversation_middlewares.asWriteAccess) // require write access
                 if (route.requireConversationDeleteAccess) middlewaresLoaded.push(conversation_middlewares.asDeleteAccess) // require delete access
-                if (route.requireConversationShareAccess) middlewaresLoaded.push(conversation_middlewares.asShareAccess) // require delete access
+                if (route.requireConversationShareAccess) middlewaresLoaded.push(conversation_middlewares.asShareAccess) // require share access
+                if (route.requireConversationMultipleShareAccess) middlewaresLoaded.push(conversation_middlewares.asShareMultipleAccess) // require multiple share access
+
 
                 // Organization rights
                 if (route.requireOrganizationAdminAccess) middlewaresLoaded.push(organization_middlewares.asAdminAccess)

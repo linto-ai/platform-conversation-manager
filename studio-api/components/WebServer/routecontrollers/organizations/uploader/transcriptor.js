@@ -118,6 +118,9 @@ async function createConversation(processing_job, body) {
         let conversation = initConversation(body, body.userId, job.job_id)
         conversation = await addFileMetadataToConversation(conversation, body.file_data)
 
+        delete conversation.metadata.file.quality
+        delete conversation.metadata.file.common
+
         const result = await model.conversations.create(conversation)
         if (result.insertedCount !== 1) throw new ConversationError()
 

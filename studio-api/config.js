@@ -17,6 +17,7 @@ function configureDefaults() {
         process.env.WEBSERVER_HTTP_PORT = ifHas(process.env.WEBSERVER_HTTP_PORT, envdefault.WEBSERVER_HTTP_PORT)
 
         // Mongo
+        process.env.DB_MODE = ifHas(process.env.DB_MODE, envdefault.DB_MODE)
         process.env.DB_HOST = ifHas(process.env.DB_HOST, envdefault.DB_HOST)
         process.env.DB_USER = ifHas(process.env.DB_USER, envdefault.DB_USER)
         process.env.DB_PASS = ifHas(process.env.DB_PASS, envdefault.DB_PASS)
