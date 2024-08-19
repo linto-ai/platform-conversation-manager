@@ -9,6 +9,7 @@ import {
   focusField,
   unfocusField,
   turnEditText,
+  turnEditTextByDelta,
   turnInsertParagraph,
   turnMergeParagraph,
   turnEditSpeaker,
@@ -99,6 +100,14 @@ onmessage = (event) => {
       break
     case "turn_edit_text":
       turnEditText(
+        event.data.params,
+        conversationId,
+        conversation.getYdoc(),
+        syllabic
+      )
+      break
+    case "turn_edit_text_by_delta":
+      turnEditTextByDelta(
         event.data.params,
         conversationId,
         conversation.getYdoc(),

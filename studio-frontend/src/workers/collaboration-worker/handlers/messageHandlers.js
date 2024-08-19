@@ -145,6 +145,71 @@ export function turnEditText(params, conversationId, rootDoc, syllabic) {
   }, "conversation_text")
 }
 
+export function turnEditTextByDelta(params, conversationId, rootDoc, syllabic) {
+  
+  const { turnId, oldText, newText, words, delta } = params
+
+  debugturnEditText("oldText (trimed) >%s<", oldText.trim(), words)
+  debugturnEditText("newText (trimed) >%s<", newText.trim())
+  
+  // does not work, it's a letter diff and we need a word diff
+  const diff = delta.map((change) => {
+    if(change.retain) {
+      return {
+        count: change.retain
+      }
+    }
+
+    if(change.insert) {
+      return {
+        added: true,
+        count: change.insert.length
+      }
+    }
+
+    if(change.delete) {
+      return {
+        removed: true,
+        count: change.delete
+      }
+    }
+
+    return {}
+  })
+
+  console.log("diff", diff)
+
+  const splitText = newText.split(" ").map((word) => ({ word: word.trim() }))
+
+  const wordObjDelta = wordsDeltafromPlainDiff(splitText, words, diff, syllabic)
+
+  const index = findTurnIndex(rootDoc.getArray("text").toJSON(), turnId)
+
+  debugturnEditText("wordObjDelta %o", wordObjDelta)
+
+  rootDoc.transact(() => {
+    applyDeltaOnYArray(
+      rootDoc.getArray("text").get(index).get("words"),
+      wordObjDelta
+    )
+    debugturnEditText("WordObjDelta applied")
+
+    const wordsObj = rootDoc.getArray("text").get(index).get("words").toJSON()
+    let newSeg = ""
+    for (let word of wordsObj) {
+      if (word.word !== " " && word.word !== "") newSeg += word.word + " "
+    }
+    const deltaSegment = getYdelta(
+      rootDoc.getArray("text").get(index).get("segment").toString(),
+      newSeg.trim()
+    )
+    debugturnEditText("deltaSegment %o", deltaSegment)
+
+    rootDoc.getArray("text").get(index).get("segment").applyDelta(deltaSegment)
+    debugturnEditText("DeltaSegment applied")
+  }, "conversation_text")
+}
+
 export function turnInsertParagraph(params, conversationId, rootDoc, syllabic) {
   const { turnId, textBefore, textAfter, turn } = params
 
