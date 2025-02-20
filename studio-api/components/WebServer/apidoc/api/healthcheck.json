@@ -1,9 +1,7 @@
 {
   "/healthcheck": {
     "get": {
-      "tags": [
-        "healthcheck"
-      ],
+      "tags": ["healthcheck"],
       "summary": "Check the health of the service",
       "responses": {
         "200": {

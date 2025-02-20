@@ -1,0 +1,13 @@
+.status-led {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 2rem;
+  background-color: $redChart;
+  //background: #fd2f51;
+  //border: 1px solid #fd163c;
+  //color: #fd2f51;
+}
+
+.status-led.status-led--disable {
+  background-color: #62111e;
+}

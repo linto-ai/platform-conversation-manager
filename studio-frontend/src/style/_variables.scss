@@ -1,0 +1,76 @@
+$montserrat: "Montserrat", "Arial", "Helvetica", "verdana";
+$luciole: "Luciole", "Arial", "Helvetica", "verdana";
+$lato: "Lato", "Arial", "Helvetica", "verdana";
+$rubik: "Rubik", "Arial", "Helvetica", "verdana";
+$ubuntu: "Ubuntu", "Arial", "Helvetica", "verdana";
+$bitter: "BitterPro", "Arial", "Helvetica", "verdana";
+$noto: "Noto Sans", "Arial", "Helvetica", "verdana";
+
+$mainFont: $noto;
+$inputFocus: #f7faff;
+$yellowChart: #feb11d;
+$greenChart: #11977c;
+$greenLigth: #39d5b6;
+$redChart: #fe346e;
+$blueChart: #1c83d6;
+
+$primaryColor: $greenChart;
+$secondaryColor: $blueChart;
+$primaryContrast: #fff;
+
+body {
+  --background-header: var(--background-primary);
+
+  --text-vertical-center-offset: 0px;
+
+  --text-primary: var(--dark-100);
+  --text-secondary: var(--dark-80);
+  --text-disabled: #aaa;
+  --small-contrast: var(--dark-60);
+
+  --background-disabled: #f6f6f6;
+
+  --background-lock-turn: #e6e6e6;
+  --border-lock-turn: 1px solid #848484;
+
+  --background-inset-section: rgb(249, 249, 249);
+  --box-shadow-inset: 0px 0px 1px 0 rgba(67, 76, 95, 0.44) inset;
+
+  --border-button: 1px solid var(--dark-80);
+  --border-button-flat: 1px solid var(--neutral-60);
+  --border-input: 1px solid var(--dark-80);
+  --border-block: 1px solid var(--neutral-60);
+  --divider: 1px solid var(--neutral-60);
+
+  --input-focus: #f7faff;
+
+  --bg-highlight: #fff5a4;
+
+  --player-region-background: #a4d6ff54;
+  --player-region-background-playing: #39d5b655;
+
+  --tiny-gap: 0.25rem;
+  --small-gap: 0.5rem;
+  --medium-gap: 1rem;
+  --large-gap: 2rem;
+
+  --shadow-block: 0px 0px 8px 0 rgba(67, 76, 95, 0.15);
+  --shadow-block-selected: 0px 0px 20px 0 rgba(67, 76, 95, 0.5);
+  --shadow-block-left: 3px 0px 8px 0 rgba(67, 76, 95, 0.15);
+}
+
+// @media (prefers-color-scheme: dark) {}
+html[data-theme="dark"] body {
+  --text-disabled: #666;
+  --background-disabled: #333;
+
+  --border-button-glass: 1px solid #25252588;
+  --shadow-block: 0px 0px 8px 0 rgb(0, 0, 0, 0.5);
+  --shadow-block-selected: 0px 0px 20px 0 rgb(0, 0, 0, 0.7);
+  --shadow-block-left: 3px 0px 8px 0 rgb(0, 0, 0, 0.5);
+
+  --input-focus: #0c0c0c;
+
+  --bg-highlight: #484211;
+  --primary-contrast: #000;
+}

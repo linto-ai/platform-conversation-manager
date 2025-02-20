@@ -11,7 +11,11 @@
     <span class="breadcrumb__element">{{ userName }} – {{ RoleToString }}</span> -->
     <span
       class="icon right-arrow breadcrumb__separator"
-      v-if="mainListingPage" />
+      v-if="
+        (mainListingPage || sessionListingPage) &&
+        isAtLeastUploader &&
+        (canUploadInCurrentOrganization || canSessionInCurrentOrganization)
+      " />
     <!-- <span class="breadcrumb__element">{{ currentRoute.name }}</span> -->
     <router-link
       id="upload-media-button"
@@ -19,10 +23,14 @@
       to="/interface/conversations/create"
       class="btn nav-link green no-shrink"
       tag="button"
-      v-if="mainListingPage"
-      :disabled="!isAtLeastUploader">
+      v-if="
+        (mainListingPage || sessionListingPage) &&
+        isAtLeastUploader &&
+        (canUploadInCurrentOrganization || canSessionInCurrentOrganization)
+      ">
       <span class="icon new"></span>
-      <span class="label">{{ $t("navigation.conversation.create") }}</span>
+      <!-- <span class="label">{{ $t("navigation.conversation.create") }}</span> -->
+      <span class="label">{{ $t("navigation.conversation.start") }}</span>
     </router-link>
   </nav>
 </template>
@@ -31,11 +39,12 @@ import { Fragment } from "vue-fragment"
 
 import { userName } from "@/tools/userName"
 import { orgaRoleMixin } from "@/mixins/orgaRole.js"
+import { organizationPermissionsMixin } from "@/mixins/organizationPermissions.js"
 
 import OrganizationSelector from "@/components/OrganizationSelector.vue"
 
 export default {
-  mixins: [orgaRoleMixin],
+  mixins: [orgaRoleMixin, organizationPermissionsMixin],
   data() {
     return {}
   },
@@ -70,11 +79,21 @@ export default {
     mainListingPage() {
       return this.$route.meta?.mainListingPage
     },
+    sessionListingPage() {
+      return this.$route.meta?.sessionListingPage
+    },
     createTitle() {
       if (!this.isAtLeastUploader) {
         return this.$t("navigation.conversation.create_no_rights_error")
       } else {
         return this.$t("navigation.conversation.create")
+      }
+    },
+    createSessionTitle() {
+      if (!this.isAtLeastUploader) {
+        return this.$t("navigation.session.create_no_rights_error")
+      } else {
+        return this.$t("navigation.session.create")
       }
     },
   },

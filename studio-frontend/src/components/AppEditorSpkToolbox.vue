@@ -1,102 +1,175 @@
 <template>
-  <div
-    :class="['spk-toolbox', 'flex', 'col']"
-    @keydown="(e) => e.stopPropagation()">
-    <!-- TODO: use <form> and submit button for accessibility-->
-    <!-- Add speaker form -->
-    <div
-      v-if="showAddSpeakerForm"
-      class="speaker-toolbox-form flex col"
-      @keydown="addSpeakerKeyDown">
-      <div class="flex col">
-        <span class="speaker-toolbox-input-label">{{
-          $t("conversation.transcription.add_speaker")
-        }}</span>
-        <input
-          type="text"
-          :class="[
-            'speaker-toolbox-input',
-            addSpeakerName.error !== null ? 'error' : '',
-          ]"
-          :placeholder="$t('conversation.transcription.speaker_name')"
-          v-model="addSpeakerName.value" />
-        <span v-if="addSpeakerName.error !== null" class="error-field">{{
-          addSpeakerName.error
-        }}</span>
-      </div>
-      <div class="flex row justify-evenly">
-        <button
-          @click="toggleAddSpeaker()"
-          class="speaker-toolbox-input-btn red">
-          <span class="icon close"></span>
-        </button>
-        <button class="speaker-toolbox-input-btn green" @click="addSpeaker()">
-          <span class="icon valid"></span>
-        </button>
-      </div>
-    </div>
+  <!-- TODO: use <form> and submit button for accessibility-->
+  <!-- Add speaker form -->
+  <ContextMenu
+    first
+    :x="1"
+    :y="18"
+    name="speaker-menu"
+    @keydown="stopPropagation"
+    @click="stopPropagation"
+    class="context-menu__speaker reset-color">
+    <!-- -- -- Change speaker -- -- -->
 
-    <!-- Edit speaker form -->
-    <div
-      v-else-if="showEditSpeakerForm"
-      class="speaker-toolbox-form flex col"
-      @keydown="editSpeakerKeyDown">
-      <div class="flex col">
-        <span class="speaker-toolbox-input-label">{{
-          $t("conversation.transcription.edit_speaker")
-        }}</span>
-        <input
-          type="text"
-          :class="[
-            'speaker-toolbox-input',
-            editSpeakerName.error !== null ? 'error' : '',
-          ]"
-          :placeholder="$t('conversation.transcription.speaker_name')"
-          v-model="editSpeakerName.value"
-          @input="editSpeakerName.error = null" />
-        <span v-if="editSpeakerName.error !== null" class="error-field">{{
-          editSpeakerName.error
-        }}</span>
-      </div>
-      <div class="flex row justify-evenly">
-        <button
-          @click="toggleEditSpeaker()"
-          class="speaker-toolbox-input-btn red">
-          <span class="icon close"></span>
-        </button>
-        <button class="speaker-toolbox-input-btn green" @click="editSpeaker()">
-          <span class="icon valid"></span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Speaker list -->
-    <div v-show="showList" class="speaker-toolbox-list flex col">
+    <div class="context-menu__element" v-if="speakersList.length > 0">
       <button
-        v-for="spk of speakersList"
-        :key="spk.speaker_id"
-        class="speaker-toolbox-item"
-        @click="updateSpeaker(spk.speaker_id)">
-        <span class="label" style="">{{ spk.speaker_name }}</span>
+        class="transparent flex context-menu__action wrap"
+        :selected="state == STATES.CHANGE_SPEAKER"
+        @click="enterChangeSpeaker">
+        <span class="icon replace"></span>
+        <span class="label flex1">
+          {{ $t("conversation.speaker_toolbox.change_speaker_button") }}
+        </span>
+        <span class="icon right-arrow"></span>
       </button>
-      <button class="speaker-toolbox-item" @click="toggleEditSpeaker()">
-        <span class="icon edit"></span>
-        <span class="label">{{
-          $t("conversation.transcription.edit_speaker")
-        }}</span>
-      </button>
-      <button class="speaker-toolbox-item" @click="toggleAddSpeaker()">
-        <span class="icon add"></span>
-        <span class="label">{{
-          $t("conversation.transcription.add_speaker")
-        }}</span>
-      </button>
+
+      <ContextMenu
+        name="change-speaker"
+        v-if="state == STATES.CHANGE_SPEAKER"
+        class="overflow-vertical-auto">
+        <div class="flex col gap-small">
+          <button
+            v-for="spk of speakersList"
+            @click="updateSpeaker(spk.speaker_id)"
+            class="only-border">
+            <span class="icon speaker"></span>
+            <span class="label">{{ spk.speaker_name }}</span>
+          </button>
+        </div>
+      </ContextMenu>
     </div>
-  </div>
+
+    <!-- -- -- Edit speaker -- -- -->
+
+    <div class="context-menu__element">
+      <button
+        class="transparent flex context-menu__action wrap"
+        :selected="state == STATES.EDIT_SPEAKER"
+        @click="enterEditSpeaker">
+        <span class="icon edit"></span>
+        <span class="label flex1">
+          {{
+            $t("conversation.speaker_toolbox.edit_speaker_button", {
+              current: currentSpeakerName,
+            })
+          }}
+        </span>
+        <span class="icon right-arrow"></span>
+      </button>
+
+      <ContextMenu name="edit-speaker" v-if="state == STATES.EDIT_SPEAKER">
+        <form class="flex col gap-small">
+          <FormInput :field="editSpeakerName" v-model="editSpeakerName.value" />
+          <div class="flex row justify-evenly">
+            <!-- type=button so other button is used when enter key -->
+            <button
+              type="button"
+              @click="toggleEditSpeaker"
+              class="speaker-toolbox-input-btn red">
+              <span class="icon close"></span>
+            </button>
+            <button
+              class="speaker-toolbox-input-btn green"
+              type="submit"
+              default
+              @click="editSpeaker">
+              <span class="icon valid"></span>
+            </button>
+          </div>
+        </form>
+      </ContextMenu>
+    </div>
+
+    <!-- -- -- Merge speaker -- -- -->
+
+    <div
+      class="context-menu__element"
+      @click="enterMergeSpeaker"
+      v-if="speakersList.length > 0">
+      <button
+        class="transparent flex context-menu__action wrap"
+        :selected="state == STATES.MERGE_SPEAKER"
+        @click="enterMergeSpeaker">
+        <span class="icon merge"></span>
+        <span class="label flex1">
+          {{
+            $t("conversation.speaker_toolbox.merge_speaker_button", {
+              name: currentSpeakerName,
+            })
+          }}
+        </span>
+        <span class="icon right-arrow"></span>
+      </button>
+
+      <ContextMenu
+        name="change-speaker"
+        v-if="state == STATES.MERGE_SPEAKER"
+        class="overflow-vertical-auto">
+        <div class="flex col gap-small">
+          <button
+            v-for="spk of speakersList"
+            @click="mergeSpeaker(spk.speaker_id)"
+            class="only-border">
+            <span class="icon speaker"></span>
+            <span class="label">{{ spk.speaker_name }}</span>
+          </button>
+        </div>
+      </ContextMenu>
+    </div>
+
+    <!-- -- -- Create speaker -- -- -->
+
+    <div class="context-menu__element">
+      <button
+        class="transparent flex context-menu__action wrap"
+        :selected="state == STATES.CREATE_SPEAKER"
+        @click="enterCreateSpeaker">
+        <span class="icon add"></span>
+        <span class="label flex1">
+          {{ $t("conversation.speaker_toolbox.create_speaker_button") }}
+        </span>
+        <span class="icon right-arrow"></span>
+      </button>
+
+      <ContextMenu name="create-speaker" v-if="state == STATES.CREATE_SPEAKER">
+        <form class="flex col gap-small">
+          <FormInput :field="addSpeakerName" v-model="addSpeakerName.value" />
+          <div class="flex row justify-evenly">
+            <!-- type=button so other button is used when enter key -->
+            <button
+              type="button"
+              @click="toggleAddSpeaker"
+              class="speaker-toolbox-input-btn red">
+              <span class="icon close"></span>
+            </button>
+            <button
+              class="speaker-toolbox-input-btn green"
+              type="submit"
+              default
+              @click="addSpeaker">
+              <span class="icon valid"></span>
+            </button>
+          </div>
+        </form>
+      </ContextMenu>
+    </div>
+  </ContextMenu>
 </template>
 <script>
 import { workerSendMessage } from "../tools/worker-message.js"
 import { bus } from "../main.js"
+import EMPTY_FIELD from "@/const/emptyField.js"
+
+import ContextMenu from "./ContextMenu.vue"
+import FormInput from "./FormInput.vue"
+
+const STATES = {
+  CHANGE_SPEAKER: 1,
+  EDIT_SPEAKER: 2,
+  MERGE_SPEAKER: 3,
+  CREATE_SPEAKER: 4,
+}
+
 export default {
   props: {
     speakers: {
@@ -119,18 +192,21 @@ export default {
   data() {
     return {
       showAddSpeakerForm: false,
-      showEditSpeakerForm: false,
       editSpeakerName: {
-        value: "",
-        error: null,
-        valid: false,
+        ...EMPTY_FIELD,
+        value: this.currentSpeakerName,
+        label: this.$t("conversation.speaker_toolbox.edit_speaker_label"),
       },
       addSpeakerName: {
+        ...EMPTY_FIELD,
         value: "",
         error: null,
         valid: false,
+        label: this.$t("conversation.speaker_toolbox.create_speaker_label"),
       },
       spkBtn: null,
+      state: null,
+      STATES,
     }
   },
   computed: {
@@ -145,16 +221,37 @@ export default {
     "addSpeakerName.value"(val) {
       this.$options.filters.testFieldEmpty(this.addSpeakerName)
     },
+    currentSpeakerName() {
+      try {
+        return this.speakers.find((spk) => spk.speaker_id === this.speakerId)
+          .speaker_name
+      } catch (e) {
+        return "unknown speaker name"
+      }
+    },
   },
-  mounted() {
-    this.editSpeakerName = {
-      value: this.speakers.find((spk) => spk.speaker_id === this.speakerId)
-        .speaker_name,
-      error: null,
-      valid: true,
-    }
-  },
+  mounted() {},
   methods: {
+    stopPropagation(e) {
+      console.log("stopPropagation")
+      e.stopPropagation()
+    },
+    enterChangeSpeaker(e) {
+      this.state = STATES.CHANGE_SPEAKER
+      e.stopPropagation()
+    },
+    enterEditSpeaker(e) {
+      this.state = STATES.EDIT_SPEAKER
+      e.stopPropagation()
+    },
+    enterMergeSpeaker(e) {
+      this.state = STATES.MERGE_SPEAKER
+      e.stopPropagation()
+    },
+    enterCreateSpeaker(e) {
+      this.state = STATES.CREATE_SPEAKER
+      e.stopPropagation()
+    },
     addSpeakerKeyDown(e) {
       if (e.key === "Enter") {
         this.addSpeaker()
@@ -166,32 +263,22 @@ export default {
       }
     },
     toggleAddSpeaker() {
-      this.showAddSpeakerForm = !this.showAddSpeakerForm
-      // reset form
-      if (this.addSpeakerName.value !== "") {
-        this.addSpeakerName = {
-          value: "",
-          error: null,
-          valid: false,
-        }
-      }
+      this.state = null
+      this.addSpeakerName.value = ""
+      this.addSpeakerName.error = null
+      this.addSpeakerName.valid = false
     },
     toggleEditSpeaker() {
-      this.showEditSpeakerForm = !this.showEditSpeakerForm
-      // reset form
-      let currentSpeakerName = this.speakers.find(
-        (spk) => spk.speaker_id === this.speakerId
-      ).speaker_name
-      if (this.editSpeakerName.value !== currentSpeakerName) {
-        this.editSpeakerName = {
-          value: currentSpeakerName,
-          error: null,
-          valid: true,
-        }
-      }
+      this.state = null
+      this.editSpeakerName.value = this.currentSpeakerName
+      this.editSpeakerName.error = null
+      this.editSpeakerName.valid = true
     },
-    editSpeaker() {
+    editSpeaker(e) {
+      e?.preventDefault()
+      e?.stopPropagation()
       this.$options.filters.testFieldEmpty(this.editSpeakerName)
+      console.log("editSpeaker", this.editSpeakerName)
       if (this.editSpeakerName.valid) {
         let speakersNames = this.speakers.map((spk) => spk.speaker_name)
         // TODO: put this logic in testName ?
@@ -207,9 +294,11 @@ export default {
           workerSendMessage("update_conversation_speaker_name", payload)
         }
       }
-      return
+      return false
     },
-    addSpeaker() {
+    addSpeaker(e) {
+      e?.preventDefault()
+      e?.stopPropagation()
       this.$options.filters.testFieldEmpty(this.addSpeakerName)
       if (this.addSpeakerName.valid) {
         workerSendMessage("update_conversation_add_speaker", {
@@ -218,6 +307,7 @@ export default {
           turnIndex: this.turnIndex,
         })
       }
+      return false
     },
     updateSpeaker(newSpeakerId) {
       this.$options.filters.testFieldEmpty(this.addSpeakerName)
@@ -228,9 +318,16 @@ export default {
         newSpeakerId,
       })
     },
+    mergeSpeaker(newSpeakerId) {
+      workerSendMessage("turn_merge_speaker", {
+        currentSpeakerId: this.speakerId,
+        newSpeakerId,
+      })
+    },
     closeToolbox() {
       bus.$emit("close_spk_toolbox", { turnId: this.turnId })
     },
   },
+  components: { ContextMenu, FormInput },
 }
 </script>

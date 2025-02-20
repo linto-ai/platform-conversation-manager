@@ -285,7 +285,6 @@ async function generateSubtitle(req, res, next) {
       conv_name: conv.name,
       version: req.body.version,
     }
-
     let result
     if (conv_subtitle.length > 0) {
       subtitles._id = conv_subtitle[0]._id
@@ -314,8 +313,7 @@ async function getSubtitle(req, res, next) {
       if (req.query.type === "srt") {
         const srt = generateSrt(conv_subtitle[0].screens)
         res.status(200).send(srt)
-      }
-      if (req.query.type === "vtt") {
+      } else if (req.query.type === "vtt") {
         const vtt = generateVtt(conv_subtitle[0].screens)
         res.status(200).send(vtt)
       } else {

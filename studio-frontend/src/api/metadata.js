@@ -1,6 +1,8 @@
 import { sendRequest } from "../tools/sendRequest"
 
-const BASE_API = process.env.VUE_APP_CONVO_API
+import { getEnv } from "@/tools/getEnv"
+
+const BASE_API = getEnv("VUE_APP_CONVO_API")
 
 export function apiPostMetadata(
   scopeId,

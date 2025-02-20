@@ -1,0 +1,136 @@
+{
+    "TranscriberProfileRequest": {
+      "type": "object",
+      "properties": {
+        "config": {
+          "$ref": "#/components/schemas/TranscriberProfileData"
+        },
+        "organizationId": {
+          "type": "string",
+          "default": null
+        },
+        "quickMeeting": {
+          "type": "boolean",
+          "default": null
+        }
+      },
+      "required": [
+        "config"
+      ]
+    },
+    "TranscriberProfileAnswer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The ID of the transcriber profile"
+        },
+        "config": {
+          "allOf": [
+            { "$ref": "#/components/schemas/TranscriberProfileData" },
+            {
+              "type": "object",
+              "properties": {
+                "availableTranslations": {
+                  "type": "array",
+                  "description": "The available translations with this ASR",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "hasDiarization": {
+                  "description": "The ASR supports diarization",
+                  "type": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "organizationId": {
+          "type": "string",
+          "description": "Organization ID of the transcriber profile"
+        },
+        "quickMeeting": {
+          "type": "boolean",
+          "description": "True if this transcriber profile is available for a quick meeting"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation date of the transcriber profile"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Update date of the transcriber profile"
+        }
+      },
+      "required": [
+        "config"
+      ]
+    },
+    "TranscriberProfileData": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "microsoft",
+            "linto"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "candidate": {
+                "type": "string",
+                "description": "Language code BCP 47"
+              },
+              "endpoint": {
+                "type": "string"
+              }
+            },
+            "required": ["candidate"]
+          }
+        },
+        "key": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "endpoint": {
+          "type": "string"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "type",
+            "name",
+            "description",
+            "languages",
+            "key",
+            "region"
+          ]
+        },
+        {
+          "required": [
+            "type",
+            "name",
+            "description",
+            "languages",
+            "endpoint"
+          ]
+        }
+      ]
+    }
+  }

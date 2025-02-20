@@ -12,22 +12,18 @@
         {{ $t("conversation.status_page.generic_title") }}
       </h2>
 
-      <img
-        src="/img/drawing-people.svg"
-        alt="people drawing"
-        class="flex1 illustration" />
+      <DrawingLogo alt="people drawing" class="flex1 illustration" />
 
       <div class="conversation-status-line" v-if="jobState == 'started'">
-        <h3>
-          <span class="icon loading"></span> {{ currentStep }}... ({{
-            progress
-          }}%)
+        <h3 class="flex align-center">
+          <span class="icon loading"></span>
+          <span>{{ currentStep }}... ({{ progress }}%)</span>
         </h3>
         <progress :max="progressTotal" :value="progressValue"></progress>
       </div>
 
       <div v-else-if="jobState == 'pending'">
-        <h3>
+        <h3 class="flex align-center gap-small">
           <span class="icon loading"></span>
           {{ $t(`conversation.status.pending`) }}
         </h3>
@@ -53,7 +49,10 @@
 <script>
 import { Fragment } from "vue-fragment"
 import { bus } from "../main.js"
+
 import MainContent from "./MainContent.vue"
+import DrawingLogo from "@/svg/Drawing.vue"
+
 export default {
   props: {
     conversation: {
@@ -116,6 +115,6 @@ export default {
     },
   },
   methods: {},
-  components: { Fragment, MainContent },
+  components: { Fragment, MainContent, DrawingLogo },
 }
 </script>

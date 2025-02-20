@@ -1,7 +1,9 @@
-const debug = require('debug')(`linto:components:MongoMigration:controllers:version:1.1.0:organizations`)
+const debug = require("debug")(
+  `linto:components:MongoMigration:controllers:version:1.1.0:organizations`,
+)
 
-const collections_name = 'organizations'
-const previous_collections_name = 'organization'
+const collections_name = "organizations"
+const previous_collections_name = "organization"
 
 module.exports = {
   async up(db) {
@@ -10,5 +12,5 @@ module.exports = {
 
   async down(db) {
     db.collection(collections_name).rename(previous_collections_name)
-  }
+  },
 }

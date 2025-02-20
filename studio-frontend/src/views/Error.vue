@@ -1,24 +1,18 @@
 <template>
-  <div class="error-page" visible>
-    <h2 v-if="title">{{ title }}</h2>
-    <div class="">
-      <a
-        href="https://github.com/linto-ai/platform-conversation-manager/issues/new/choose"
-        target="_blank"
-        ><span class="label">{{ $t("error.bug_report") }}</span></a
-      >
-    </div>
-  </div>
+  <ErrorPage>
+    <RouterLink to="/" class="btn primary">
+      {{ $t("globalError.back_to_home") }}
+    </RouterLink>
+  </ErrorPage>
 </template>
 <script>
+import ErrorPage from "../components/ErrorPage.vue"
+
 export default {
-  props: {
-    customTitle: { required: false, type: String },
-  },
-  computed: {
-    title() {
-      return this.customTitle || this.$t("error.title")
-    },
+  props: {},
+  computed: {},
+  components: {
+    ErrorPage,
   },
 }
 </script>

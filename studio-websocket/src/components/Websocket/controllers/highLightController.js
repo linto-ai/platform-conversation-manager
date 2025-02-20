@@ -7,7 +7,7 @@ const debug = Debug("Websocket:debug:hightLightController")
 
 export default async function hightLightController(
   { conversationId, userToken, serviceScope, categoryName, categoryId },
-  io
+  io,
 ) {
   if (!categoryName || !conversationId || !userToken) {
     return
@@ -28,7 +28,7 @@ export default async function hightLightController(
     serviceScope,
     categoryName,
     categoryId,
-    true
+    true,
   )
 }
 
@@ -41,7 +41,7 @@ async function highLightFetchJob(
   serviceScope,
   categoryName,
   categoryId,
-  erase = false
+  erase = false,
 ) {
   try {
     const room = `conversation/${conversationId}`
@@ -82,9 +82,9 @@ async function highLightFetchJob(
             socket,
             serviceScope,
             categoryName,
-            categoryId
+            categoryId,
           ),
-        3000
+        3000,
       )
       io.to(room).emit("hightlight_update", {
         job: conversation.jobs[categoryName].toJSON(),

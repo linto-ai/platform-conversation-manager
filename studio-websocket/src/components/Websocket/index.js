@@ -78,7 +78,7 @@ export default class Websocket extends Component {
             data.userId,
             data.field,
             data.userToken,
-            callback
+            callback,
           )
 
           callback()
@@ -91,7 +91,7 @@ export default class Websocket extends Component {
             data.userId,
             socket,
             data.userToken,
-            true
+            true,
           )
         })
 
@@ -105,7 +105,7 @@ export default class Websocket extends Component {
           let subtitle = await SubtitleHelper.requestSubtitle(
             data.conversationId,
             data.subtitleId,
-            data.userToken
+            data.userToken,
           )
 
           socket.join(`subtitle/${data.subtitleId}`)
@@ -121,7 +121,7 @@ export default class Websocket extends Component {
             let newVersion = await SubtitleHelper.generateSubtitle(
               data.conversationId,
               data.data,
-              data.userToken
+              data.userToken,
             )
             socket.emit("new_version", newVersion)
 
@@ -138,7 +138,7 @@ export default class Websocket extends Component {
               data.conversationId,
               data.subtitleId,
               data.data,
-              data.userToken
+              data.userToken,
             )
             socket.emit("new_version", newVersion)
 
@@ -154,7 +154,7 @@ export default class Websocket extends Component {
             SubtitleHelper.deleteSubtitle(
               data.conversationId,
               data.subtitleIds,
-              data.userToken
+              data.userToken,
             )
             socket.emit("version_deleted", data.subtitleIds)
 
@@ -179,7 +179,7 @@ export default class Websocket extends Component {
           let res = apiDeleteTagFromConversation(
             data.conversationId,
             data.tagId,
-            data.userToken
+            data.userToken,
           )
           if (res.status === "error") {
             this.app.io.to(room).emit("api_error", res.data)
@@ -225,7 +225,7 @@ export default class Websocket extends Component {
     conversation =
       (await Conversations.getConversationByIdAndRefreshCache(
         conversationId,
-        userToken
+        userToken,
       )) || (await Conversations.requestConversation(conversationId, userToken))
     debug("Loading conversation", conversationId)
     const rights = await Conversations.getRights(conversationId, userToken)
@@ -233,7 +233,7 @@ export default class Websocket extends Component {
     if (!rights) {
       socket.emit(
         "error",
-        "You don't have the rights to access this conversation"
+        "You don't have the rights to access this conversation",
       )
       return
     }
@@ -263,7 +263,7 @@ export default class Websocket extends Component {
       conversation,
       conversationId,
       userToken,
-      this.app.io
+      this.app.io,
     )
   }
 }

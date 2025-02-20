@@ -22,11 +22,11 @@
         "type": "string",
         "description": "User picture"
       },
-      "emailIsVerified":{
+      "emailIsVerified": {
         "type": "boolean",
         "description": "User email validation status"
       },
-      "verifiedEmail" : {
+      "verifiedEmail": {
         "type": "array",
         "description": "User verified email",
         "items": {
@@ -99,9 +99,7 @@
       "img": "pictures/default.jpg",
       "favorites": [],
       "emailIsVerified": true,
-      "verifiedEmail": [
-        "studio@linagora.com"
-      ],
+      "verifiedEmail": ["studio@linagora.com"],
       "accountNotifications": {
         "updatePassword": false,
         "inviteAccount": false

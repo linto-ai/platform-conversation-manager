@@ -1,0 +1,22 @@
+.droparea {
+  cursor: pointer;
+  border: var(--border-button);
+  border-style: dashed;
+  text-align: center;
+  margin-bottom: 0px;
+  & .droparea__description {
+    padding: 0.5rem;
+    background: var(--background-primary-with-small-opacity);
+    width: fit-content;
+    font-size: 1rem;
+  }
+  & .droparea__label {
+    color: var(--text-primary);
+    font-size: inherit;
+    text-decoration: underline;
+  }
+}
+
+.droparea:hover .droparea__label {
+  color: var(--primary-color);
+}

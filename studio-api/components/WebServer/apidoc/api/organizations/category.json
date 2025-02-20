@@ -1,17 +1,17 @@
 {
   "/api/organizations/{organizationId}/categories": {
     "post": {
-      "tags": [
-        "organizations members"
-      ],
+      "tags": ["organizations members"],
       "summary": "Create a category in an organization",
-      "parameters": [{
-        "name": "organizationId",
-        "in": "path",
-        "description": "Organization ID",
-        "required": true,
-        "type": "string"
-      }],
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "path",
+          "description": "Organization ID",
+          "required": true,
+          "type": "string"
+        }
+      ],
       "requestBody": {
         "content": {
           "multipart/form-data": {
@@ -34,10 +34,7 @@
                   ]
                 }
               },
-              "required": [
-                "name",
-                "type"
-              ]
+              "required": ["name", "type"]
             }
           }
         }
@@ -72,11 +69,10 @@
       }
     },
     "get": {
-      "tags": [
-        "organizations members"
-      ],
+      "tags": ["organizations members"],
       "summary": "Retrieve all categories from an organization",
-      "parameters": [{
+      "parameters": [
+        {
           "name": "organizationId",
           "in": "path",
           "description": "Organization ID",
@@ -118,23 +114,24 @@
   },
   "/api/organizations/{organizationId}/categories/{categoryId}": {
     "get": {
-      "tags": [
-        "organizations members"
-      ],
+      "tags": ["organizations members"],
       "summary": "Retrieve a categories information from an organization",
-      "parameters": [{
-        "name": "organizationId",
-        "in": "path",
-        "description": "Organization ID",
-        "required": true,
-        "type": "string"
-      }, {
-        "name": "categoryId",
-        "in": "path",
-        "description": "categoryId ID",
-        "required": true,
-        "type": "string"
-      }],
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "path",
+          "description": "Organization ID",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "categoryId",
+          "in": "path",
+          "description": "categoryId ID",
+          "required": true,
+          "type": "string"
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",
@@ -156,11 +153,10 @@
       }
     },
     "patch": {
-      "tags": [
-        "organizations maintainers"
-      ],
+      "tags": ["organizations maintainers"],
       "summary": "Update a categories from an organization",
-      "parameters": [{
+      "parameters": [
+        {
           "name": "organizationId",
           "in": "path",
           "description": "Organization ID",
@@ -232,11 +228,10 @@
       }
     },
     "delete": {
-      "tags": [
-        "organizations maintainers"
-      ],
+      "tags": ["organizations maintainers"],
       "summary": "Delete a categories from an organization",
-      "parameters": [{
+      "parameters": [
+        {
           "name": "organizationId",
           "in": "path",
           "description": "Organization ID",
@@ -266,11 +261,10 @@
   },
   "/api/organizations/{organizationId}/categories/search": {
     "get": {
-      "tags": [
-        "organizations members"
-      ],
+      "tags": ["organizations members"],
       "summary": "Search categories based on the specified research type",
-      "parameters": [{
+      "parameters": [
+        {
           "name": "organizationId",
           "in": "path",
           "description": "Organization ID",

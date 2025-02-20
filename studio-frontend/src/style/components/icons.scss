@@ -1,0 +1,338 @@
+.icon {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: var(--text-primary);
+  margin: 0 5px 0 0;
+  vertical-align: top;
+  flex-shrink: 0;
+  &.diarization {
+    @include maskImage("../public/img/speaker-diarization.svg");
+  }
+  &.add,
+  &.new {
+    @include maskImage("../public/img/plus-rounded.svg");
+  }
+  &.plus {
+    @include maskImage("../public/img/plus.svg");
+  }
+  &.settings {
+    @include maskImage("../public/img/gear.svg");
+  }
+  &.search {
+    @include maskImage("../public/img/search.svg");
+  }
+  &.conv-list {
+    @include maskImage("../public/img/conv-list.svg");
+  }
+  &.transcription {
+    @include maskImage("../public/img/transcription.svg");
+  }
+  &.delete,
+  &.remove {
+    @include maskImage("../public/img/close-circle.svg");
+  }
+  &.trash {
+    @include maskImage("../public/img/trash-simple.svg");
+  }
+  &.apply,
+  &.valid {
+    @include maskImage("../public/img/apply.svg");
+  }
+  &.edit {
+    @include maskImage("../public/img/edit.svg");
+  }
+  &.copy {
+    @include maskImage("../public/img/copy.svg");
+  }
+  &.help {
+    @include maskImage("../public/img/help.svg");
+    margin-left: 0;
+  }
+  &.json {
+    @include maskImage("../public/img/json.svg");
+  }
+  &.speaker {
+    @include maskImage("../public/img/speaker.svg");
+  }
+  &.text {
+    @include maskImage("../public/img/text.svg");
+  }
+  &.back {
+    @include maskImage("../public/img/arrow-back.svg");
+  }
+  &.bottom-arrow {
+    @include maskImage("../public/img/line-arrow.svg");
+    @include transform(rotate(0deg));
+  }
+  &.top-arrow {
+    @include maskImage("../public/img/line-arrow.svg");
+    @include transform(rotate(180deg));
+  }
+  &.right-arrow {
+    @include maskImage("../public/img/line-arrow.svg");
+    @include transform(rotate(-90deg));
+  }
+  &.left-arrow {
+    @include maskImage("../public/img/line-arrow.svg");
+    @include transform(rotate(90deg));
+  }
+  &.close {
+    @include maskImage("../public/img/close.svg");
+    margin: 0;
+  }
+  &.zoom {
+    @include maskImage("../public/img/zoom.svg");
+    margin: 0;
+  }
+  &.unzoom {
+    @include maskImage("../public/img/unzoom.svg");
+    margin: 0;
+  }
+  &.generate {
+    @include maskImage("../public/img/state-loading.svg");
+  }
+  &.generating {
+    @include maskImage("../public/img/state-loading.svg");
+    @include rotate();
+  }
+  &.loading {
+    @include maskImage("../public/img/loading.svg");
+    @include rotate();
+    margin: 0;
+  }
+  &.loading {
+    @include maskImage("../public/img/loading.svg");
+    @include rotate();
+    margin: 0;
+  }
+  &.record {
+    @include maskImage("../public/img/microphone.svg");
+  }
+  &.record-live {
+    @include maskImage("../public/img/microphone-live.svg");
+  }
+  &.record-off {
+    @include maskImage("../public/img/microphone-off.svg");
+  }
+  &.upload {
+    @include maskImage("../public/img/upload.svg");
+  }
+  &.download {
+    @include maskImage("../public/img/download.svg");
+  }
+  &.play {
+    @include maskImage("../public/img/play.svg");
+  }
+  &.pause {
+    @include maskImage("../public/img/pause.svg");
+  }
+  &.stop {
+    @include maskImage("../public/img/stop.svg");
+  }
+  &.email-verified {
+    margin: -3px 5px 0 5px;
+    @include maskImage("../public/img/state-done.svg");
+    background-color: var(--green-chart);
+  }
+  &.send-mail {
+    @include maskImage("../public/img/send-mail.svg");
+  }
+  &.small-arrow-down {
+    @include maskImage("../public/img/triangle.svg");
+  }
+  &.discover {
+    @include maskImage("../public/img/discover.svg");
+  }
+  &.box {
+    @include maskImage("../public/img/box.svg");
+  }
+  &.star {
+    @include maskImage("../public/img/star.svg");
+  }
+  &.star-filled {
+    @include maskImage("../public/img/star-filled.svg");
+  }
+  &.flag {
+    @include maskImage("../public/img/flag.svg");
+  }
+  &.work {
+    @include maskImage("../public/img/briefcase.svg");
+  }
+  &.account {
+    @include maskImage("../public/img/edit.svg");
+  }
+  &.logout {
+    @include maskImage("../public/img/logout.svg");
+  }
+  &.home {
+    @include maskImage("../public/img/home.svg");
+  }
+  &.options {
+    @include maskImage("../public/img/options.svg");
+  }
+  &.share {
+    @include maskImage("../public/img/share.svg");
+  }
+  &.clock {
+    @include maskImage("../public/img/clock.svg");
+  }
+  &.document {
+    @include maskImage("../public/img/document.svg");
+  }
+  &.tag {
+    @include maskImage("../public/img/badge.svg");
+  }
+  &.error-death {
+    @include maskImage("../public/img/death.svg");
+  }
+  &.pen {
+    @include maskImage("../public/img/pen-fill.svg");
+  }
+  &.warning {
+    @include maskImage("../public/img/warning.svg");
+  }
+  &.moon {
+    @include maskImage("../public/img/moon.svg");
+  }
+  &.sun {
+    @include maskImage("../public/img/sun.svg");
+  }
+  &.ai {
+    @include maskImage("../public/img/AI.svg");
+  }
+  &.hide {
+    @include maskImage("../public/img/eye-off.svg");
+  }
+  &.show {
+    @include maskImage("../public/img/eye.svg");
+  }
+  &.merge {
+    @include maskImage("../public/img/link.svg");
+  }
+  &.link {
+    @include maskImage("../public/img/link.svg");
+  }
+  &.clear-history {
+    @include maskImage("../public/img/clear-history.svg");
+  }
+  &.reload {
+    @include maskImage("../public/img/reload.svg");
+  }
+  &.done {
+    @include maskImage("../public/img/state-done.svg");
+  }
+  &.next {
+    @include maskImage("../public/img/next.svg");
+  }
+
+  &.previous {
+    @include maskImage("../public/img/previous.svg");
+  }
+  &.equal {
+    @include maskImage("../public/img/equal.svg");
+  }
+  &.replace {
+    @include maskImage("../public/img/replace.svg");
+  }
+  &.merge2 {
+    @include maskImage("../public/img/merge.svg");
+  }
+  &.file-audio {
+    @include maskImage("../public/img/file-audio.svg");
+  }
+  &.profile {
+    @include maskImage("../public/img/profile.svg");
+  }
+  &.session {
+    @include maskImage("../public/img/session-2.svg");
+  }
+  &.save-cloud {
+    @include maskImage("../public/img/save-cloud.svg");
+  }
+  &.live {
+    @include maskImage("../public/img/live.svg");
+  }
+  &.save {
+    @include maskImage("../public/img/breeze/document-save.svg");
+  }
+  &.subtitle {
+    @include maskImage("../public/img/subtitle.svg");
+  }
+  &.linagora-small {
+    @include maskImage("../public/img/logo_linagora.webp");
+  }
+  &.information {
+    @include maskImage("../public/img/information.svg");
+  }
+  &.visio {
+    @include maskImage("../public/img/visio.svg");
+  }
+}
+
+.icon.small {
+  width: 1rem;
+  height: 1rem;
+}
+
+.icon.medium {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.icon.large {
+  width: 2rem;
+  height: 2rem;
+}
+
+.txt-icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 0 3px -10px 3px;
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &.key-merge {
+    background-image: url("../public/img/merge-turn.svg");
+  }
+
+  &.key-enter {
+    background-image: url("../public/img/key-enter.svg");
+  }
+  &.key-backspace {
+    background-image: url("../public/img/key-backspace.svg");
+  }
+  &.key-alt {
+    background-image: url("../public/img/key-alt.svg");
+  }
+  &.key-ctrl {
+    background-image: url("../public/img/key-ctrl.svg");
+  }
+  &.key-shift {
+    background-image: url("../public/img/key-shift.svg");
+  }
+  &.key-right-arrow {
+    background-image: url("../public/img/key-right-arrow.svg");
+  }
+  &.key-left-arrow {
+    background-image: url("../public/img/key-left-arrow.svg");
+  }
+  &.key-space {
+    background-image: url("../public/img/key-space.svg");
+  }
+}
+
+img.icon {
+  object-fit: contain;
+  background: transparent;
+}
+
+img.icon[black] {
+  filter: grayscale(100%);
+}
+
+.icon.secondary {
+  background-color: var(--text-secondary);
+}

@@ -2,6 +2,7 @@
   <div class="switch">
     <input
       type="checkbox"
+      :disabled="disabled"
       :id="id"
       :name="name"
       :checked="value"
@@ -20,6 +21,7 @@ export default {
     id: { type: String, default: "" },
     name: { type: String, default: "" },
     checkboxValue: { type: String, default: null },
+    disabled: { type: Boolean, default: false },
   },
   data() {
     return {}

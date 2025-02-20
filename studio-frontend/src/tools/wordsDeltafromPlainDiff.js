@@ -3,6 +3,7 @@ import uuidv4 from "uuid/v4.js"
 import { arraySum } from "./arraySum.js"
 import { countSyllabsFromWord } from "./countSyllabsFromWord.js"
 
+// not used see wordsDeltafromPlainDiffV2
 export function wordsDeltafromPlainDiff(newText, words, plainDiff, syllabic) {
   const newWordsPlain = newText.split(" ").filter((word) => word !== "")
   const wordsWithoutEmpty = words.filter((w) => w.word !== "")

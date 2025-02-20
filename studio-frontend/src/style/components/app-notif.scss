@@ -1,0 +1,111 @@
+#app-notif,
+.fixed-notif {
+  background: var(--background-primary);
+  width: 100%;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid;
+  box-sizing: border-box;
+  color: var(--text-primary);
+
+  &.success {
+    border-color: var(--green-chart);
+    color: var(--green-chart);
+  }
+  &.warning {
+    border-color: var(--yellow-chart);
+    color: var(--yellow-chart);
+  }
+  &.error {
+    border-color: var(--red-chart);
+    color: var(--red-chart);
+  }
+}
+
+// .fixed-notif {
+//   margin-bottom: 20px;
+//   font-weight: 600;
+// }
+
+#app-notif {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 150;
+  padding: 10px 0;
+  @include transition(all 0.2s ease);
+  &.closed {
+    margin: 0;
+    padding: 0;
+    height: 0;
+    border: none;
+    overflow: hidden;
+  }
+  &.visible {
+    overflow: visible;
+  }
+  .app-notif-msg {
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+  }
+  .app-notif-close {
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+  }
+  .app-notif__icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: top;
+    margin: 0 10px;
+  }
+  .app-notif__message {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  &.success {
+    border-color: var(--green-chart);
+    .app-notif__message {
+      color: var(--green-chart);
+    }
+    .app-notif__icon {
+      @include maskImage("../public/img/apply.svg");
+      background-color: var(--green-chart);
+    }
+  }
+  &.error {
+    border-color: var(--red-chart);
+    .app-notif__message {
+      color: var(--red-chart);
+    }
+    .app-notif__icon {
+      @include maskImage("../public/img/warning.svg");
+      background-color: var(--red-chart);
+    }
+  }
+  &.loading {
+    .app-notif__icon {
+      @include maskImage("../public/img/loading.svg");
+      @include rotate();
+      background-color: var(--text-primary);
+    }
+  }
+  .close-notif {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    @include maskImage("../public/img/close.svg");
+    background-color: var(--text-secondary);
+    border: none;
+    @include transition(all 0.2s ease);
+    &:hover {
+      background-color: var(--red-chart);
+    }
+  }
+}

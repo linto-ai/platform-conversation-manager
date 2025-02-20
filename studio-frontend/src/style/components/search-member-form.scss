@@ -1,0 +1,16 @@
+.conversation-share-list {
+  max-width: 30rem;
+}
+
+.conversation-share-list__search-form {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  border-bottom: var(--divider);
+}
+
+.search-member-img {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+}

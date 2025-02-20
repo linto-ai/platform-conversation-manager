@@ -27,9 +27,7 @@ class App {
           await this.use(componentFolderName)
         })
       }, Promise.resolve())
-      .then(() => {
-        // Do some stuff after all components being loaded
-      })
+      .then(() => {})
   }
 
   async use(componentFolderName) {
@@ -46,7 +44,7 @@ class App {
     } catch (e) {
       if (e.name == "COMPONENT_MISSING") {
         return spinner.warn(
-          `Skipping ${componentFolderName} - this component depends on : ${e.missingComponents}`
+          `Skipping ${componentFolderName} - this component depends on : ${e.missingComponents}`,
         )
       }
       spinner.fail(`Error in component loading : ${componentFolderName}`)

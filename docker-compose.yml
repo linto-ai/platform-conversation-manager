@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   studio-mongo:
@@ -11,9 +11,9 @@ services:
 
   studio-api:
     container_name: studio-api
-    image : linto-studio/studio-api
+    image: linto-studio/studio-api
     build:
-      context: ./studio-api 
+      context: ./studio-api
       dockerfile: Dockerfile
     env_file: ./studio-api/.dockerenv
     volumes:
@@ -28,7 +28,7 @@ services:
 
   studio-websocket:
     container_name: studio-websocket
-    image : linto-studio/studio-websocket
+    image: linto-studio/studio-websocket
     build:
       context: ./studio-websocket
       dockerfile: Dockerfile
@@ -40,7 +40,7 @@ services:
 
   studio-frontend:
     container_name: studio-frontend
-    image : linto-studio/studio-frontend
+    image: linto-studio/studio-frontend
     build:
       context: ./studio-frontend
       dockerfile: Dockerfile
@@ -54,7 +54,7 @@ services:
 
   studio-dashboard:
     container_name: studio-dashboard
-    image : linto-studio/studio-dashboard
+    image: linto-studio/studio-dashboard
     build:
       context: ./studio-dashboard
       dockerfile: Dockerfile

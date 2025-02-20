@@ -43,6 +43,6 @@
     "type": "keyword, conversation_text, conversation_metadata, commentaires, conversation_video",
     "organizationId": "63f4d9ed7d1b424dccabc375",
     "color": "white",
-    "tags" : []
+    "tags": []
   }
 }

@@ -1,0 +1,32 @@
+body {
+  font-size: 15px;
+}
+
+h1 {
+  font-size: 26px;
+  font-weight: 700;
+  //padding: 0 0 20px 0;
+  color: var(--text-primary);
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 8px 0 8px 0;
+  color: var(--text-primary);
+}
+
+h3,
+.h3 {
+  font-size: 18px;
+  font-weight: normal;
+  padding: 0 0 5px 0;
+  color: var(--text-primary);
+  //text-transform: capitalize;
+}
+
+h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}

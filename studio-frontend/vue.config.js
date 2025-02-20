@@ -1,9 +1,12 @@
 import path from "path"
 import { fileURLToPath } from "url"
 import { dirname } from "path"
+import getCurrentTheme from "./src/tools/getCurrentTheme.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
+
+const STYLE_PATH = getCurrentTheme()["stylePath"]
 
 export default {
   configureWebpack: (config) => {
@@ -25,7 +28,14 @@ export default {
   pluginOptions: {
     "style-resources-loader": {
       preProcessor: "scss",
-      patterns: [path.resolve(__dirname, "./public/sass/styles.scss")],
+      //patterns: [path.resolve(__dirname, "./public/sass/styles.scss")],
+    },
+  },
+  css: {
+    loaderOptions: {
+      scss: {
+        additionalData: `@import "${STYLE_PATH}";`,
+      },
     },
   },
 }

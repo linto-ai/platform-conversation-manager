@@ -2,7 +2,8 @@
   <div>
     <div class="login-form-container flex col">
       <LocalSwitcher></LocalSwitcher>
-      <img src="/img/conversation-manager-logo.svg" class="login-logo" />
+      <img :src="logo" class="login-logo" />
+      <h1 class="center-text">{{ title }}</h1>
 
       <form id="app-login" class="flex col" @submit.prevent="handleForm">
         <h2 class="login-title">{{ $t("login.recover_password") }}</h2>
@@ -43,6 +44,8 @@
   </div>
 </template>
 <script>
+import { getEnv } from "@/tools/getEnv"
+
 import AppNotif from "@/components/AppNotif.vue"
 import LocalSwitcher from "@/components/LocalSwitcher.vue"
 import EMPTY_FIELD from "@/const/emptyField.js"
@@ -57,6 +60,14 @@ export default {
       globalError: "",
       sending: false,
     }
+  },
+  computed: {
+    logo() {
+      return `/img/${getEnv("VUE_APP_LOGO")}`
+    },
+    title() {
+      return getEnv("VUE_APP_NAME")
+    },
   },
   methods: {
     testEmail() {

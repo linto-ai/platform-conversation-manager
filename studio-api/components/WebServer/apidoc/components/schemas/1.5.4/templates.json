@@ -1,0 +1,126 @@
+{
+    "SessionTemplateRequest": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string"
+            },
+            "owner": {
+                "type": "string",
+                "default": null
+            },
+            "organizationId": {
+                "type": "string",
+                "default": null
+            },
+            "visibility": {
+              "type": "string",
+              "enum": [
+                  "public",
+                  "organization",
+                  "private"
+              ],
+              "default": "private"
+            },
+            "autoStart": {
+                "type": "boolean",
+                "description": "Automatically start the session",
+                "default": false
+            },
+            "autoEnd": {
+                "type": "boolean",
+                "description": "Automatically end the session",
+                "default": false
+            },
+            "meta": {
+                "type": "json",
+                "default": null
+            },
+            "channels": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/ChannelTemplateRequest"
+                }
+            }
+        }
+    },
+    "SessionTemplatePaginationAnswer": {
+        "type": "object",
+        "properties": {
+            "sessions": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/SessionTemplateAnswer"
+                }
+            },
+            "totalItems": {
+                "type": "integer",
+                "description": "Total number of session templates matching the filters"
+            }
+        }
+    },
+    "SessionTemplateAnswer": {
+        "allOf": [
+            { "$ref": "#/components/schemas/SessionTemplateRequest" },
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "uuid"
+                    }
+                },
+                "channels": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/ChannelTemplateAnswer"
+                    }
+                }
+            }
+        ]
+    },
+    "ChannelTemplateRequest": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "description": "The name of the channel"
+            },
+            "transcriberProfileId": {
+                "type": "integer",
+                "description": "The id of the channel config"
+            },
+            "translations": {
+                "type": "array",
+                "description": "List of bcp47 strings.",
+                "items": {
+                    "type": "string"
+                },
+                "default": []
+            },
+            "keepAudio": {
+                "type": "boolean",
+                "description": "Save audio",
+                "default": false
+            },
+            "diarization": {
+                "type": "boolean",
+                "description": "Enable diarization",
+                "default": false
+            }
+        }
+    },
+    "ChannelTemplateAnswer": {
+        "allOf": [
+            { "$ref": "#/components/schemas/ChannelTemplateRequest" },
+            {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    }
+                }
+            }
+        ]
+    }
+}

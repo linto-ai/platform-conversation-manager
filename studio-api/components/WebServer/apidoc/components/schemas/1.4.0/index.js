@@ -1,3 +1,3 @@
 module.exports = {
-  ...require('./metadata.json')
+  ...require("./metadata.json"),
 }

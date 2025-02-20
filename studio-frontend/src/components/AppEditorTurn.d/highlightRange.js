@@ -3,7 +3,7 @@ import AppEditorHighlightDescToolbox from "@/components/AppEditorHighlightDescTo
 
 export default async function highlightRange(
   { range, category },
-  isFromHighlight = true
+  { functionToHighlightWord = highlightWord, functionArgs = [] } = {}
 ) {
   // AppEditorHighlightDescToolbox
   const color = category.color || "yellow"
@@ -13,31 +13,42 @@ export default async function highlightRange(
 
   let startWord = startContainer.children.item(startOffset)
   let endWord = endContainer.children.item(endOffset)
+  let isFirstWord = true
   //console.log("start", startWord, "end", endWord)
   if (!endWord || startWord === endWord) {
-    highlightWord(
+    functionToHighlightWord(
       startWord,
       color,
       range,
       category,
-      isFromHighlight,
-      this.$i18n
+      this.$i18n,
+      { isLastWord: true, isFirstWord: true },
+      ...functionArgs
     )
     startWord.setAttribute("highlighted--last-word", "true")
   } else {
     do {
-      highlightWord(
+      functionToHighlightWord(
         startWord,
         color,
         range,
         category,
-        isFromHighlight,
-        this.$i18n
+        this.$i18n,
+        { isLastWord: false, isFirstWord },
+        ...functionArgs
       )
+      isFirstWord = false
       startWord = startWord.nextSibling
     } while (startWord !== endWord)
-    highlightWord(endWord, color, range, category, isFromHighlight, this.$i18n)
-    endWord.setAttribute("highlighted--last-word", "true")
+    functionToHighlightWord(
+      endWord,
+      color,
+      range,
+      category,
+      this.$i18n,
+      { isLastWord: true, isFirstWord: false },
+      ...functionArgs
+    )
   }
 
   //highlightWord(startWord, color, range, category, isFromHighlight, this.$i18n)
@@ -48,13 +59,22 @@ function highlightWord(
   color,
   range,
   category,
-  isFromHighlight = true,
-  i18n
+  i18n,
+  { isLastWord = false, isFirstWord = false } = {},
+  isFromHighlight = true
 ) {
   const wordHasToolbox = word.querySelector(".conversation-highlight-toolbox")
 
   word.setAttribute("highlighted", "true")
   word.classList.add(`background-${color}-100`)
+
+  if (isLastWord) {
+    word.setAttribute("highlighted--last-word", "true")
+  }
+
+  if (isFirstWord) {
+    word.setAttribute("highlighted--first-word", "true")
+  }
 
   let toolboxDiv = document.createElement("div")
   toolboxDiv.style.display = "inline"

@@ -26,7 +26,7 @@ export default async function updateSubtitlesController(data) {
           this.emit("error")
         }
       },
-      data.userToken
+      data.userToken,
     )
   } catch (error) {
     console.log(error)

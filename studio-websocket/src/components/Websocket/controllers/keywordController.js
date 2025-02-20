@@ -57,7 +57,7 @@ async function fetchJob(conversation, conversationId, userToken, socket) {
     // fetch job
     setTimeout(
       () => fetchJob(conversation, conversationId, userToken, socket),
-      3000
+      3000,
     )
   } else {
     // fetch keywords

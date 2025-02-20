@@ -1,11 +1,10 @@
 {
   "/api/conversations/{conversationId}/tags/{tagId}": {
     "patch": {
-      "tags": [
-        "conversations taxonomy"
-      ],
+      "tags": ["conversations taxonomy"],
       "summary": "Add a tag to a conversation id",
-      "parameters": [{
+      "parameters": [
+        {
           "name": "conversationId",
           "in": "path",
           "description": "The conversation id",
@@ -56,11 +55,10 @@
       }
     },
     "delete": {
-      "tags": [
-        "conversations taxonomy"
-      ],
+      "tags": ["conversations taxonomy"],
       "summary": "Delete a tag to a conversation id",
-      "parameters": [{
+      "parameters": [
+        {
           "name": "conversationId",
           "in": "path",
           "description": "The conversation id",
@@ -110,11 +108,10 @@
   },
   "/api/conversations/{conversationId}/tags": {
     "post": {
-      "tags": [
-        "conversations taxonomy"
-      ],
+      "tags": ["conversations taxonomy"],
       "summary": "Add a tag to a conversation id",
-      "parameters": [{
+      "parameters": [
+        {
           "name": "conversationId",
           "in": "path",
           "description": "The conversation id",

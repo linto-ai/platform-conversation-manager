@@ -5,7 +5,7 @@ export async function handleScreenChange(
   transaction,
   conversationId,
   subtitleId,
-  userToken
+  userToken,
 ) {
   if (transaction.origin === "websocket") return true
   if (yEvent.length > 1) {
@@ -15,7 +15,7 @@ export async function handleScreenChange(
       yEvent,
       conversationId,
       subtitleId,
-      userToken
+      userToken,
     )
   }
 }
@@ -25,7 +25,7 @@ async function updateAllScreens(yEvent, conversationId, subtitleId, userToken) {
     conversationId,
     subtitleId,
     { screens: yEvent[0].currentTarget.toJSON() },
-    userToken
+    userToken,
   )
 
   return update.status === "success"
@@ -35,10 +35,13 @@ async function updateSingleScreen(
   yEvent,
   conversationId,
   subtitleId,
-  userToken
+  userToken,
 ) {
   let screenToUpdate = []
   for (const event of yEvent) {
+    if (event.changes.deleted.size > 0) {
+      return updateAllScreens(yEvent, conversationId, subtitleId, userToken)
+    }
     const screenIndex = event.path[0]
     const screen = event.currentTarget.get(screenIndex).toJSON()
     screenToUpdate.push(screen)
@@ -58,7 +61,7 @@ async function updateSingleScreen(
       subtitleId,
       screen.screen_id,
       screen,
-      userToken
+      userToken,
     )
 
     return res.status === "success"

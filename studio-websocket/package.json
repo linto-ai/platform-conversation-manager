@@ -33,18 +33,18 @@
       "js": true
     }
   },
-  "devDependencies": {
-    "ava": "^6.0.1",
-    "eslint": "^8.23.0",
-    "nodemon": "^2.0.20",
-    "prettier": "^2.7.1"
-  },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.7.2",
     "dotenv": "^16.0.2",
     "ora": "^6.1.2",
     "socket.io": "^4.5.2",
     "uuid": "^9.0.0",
     "yjs": "^13.5.41"
+  },
+  "devDependencies": {
+    "ava": "^6.0.1",
+    "eslint": "^8.23.0",
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.3"
   }
 }

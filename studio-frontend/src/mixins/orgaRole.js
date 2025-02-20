@@ -8,12 +8,20 @@ const ROLES = [
     value: 2,
   },
   {
-    name: "Maintainer",
+    name: "Quick meeting",
     value: 3,
   },
   {
-    name: "Administrator",
+    name: "Meeting Manager",
     value: 4,
+  },
+  {
+    name: "Maintainer",
+    value: 5,
+  },
+  {
+    name: "Administrator",
+    value: 6,
   },
 ]
 
@@ -30,7 +38,7 @@ export const orgaRoleMixin = {
     isAtLeastMaintainerOfOrganization(organizationId) {
       if (!this.isInOrganization(organizationId)) return false
       return (
-        this.$store.state.rolesInOrganizations.get(organizationId).myrole >= 3
+        this.$store.state.rolesInOrganizations.get(organizationId).myrole >= 4
       )
     },
   },
@@ -44,11 +52,17 @@ export const orgaRoleMixin = {
     isUploader() {
       return this.userRole === 2
     },
-    isMaintainer() {
+    isQuickMeeting() {
       return this.userRole === 3
     },
-    isAdmin() {
+    isMeetingManager() {
       return this.userRole === 4
+    },
+    isMaintainer() {
+      return this.userRole === 5
+    },
+    isAdmin() {
+      return this.userRole === 6
     },
     isAtLeastMember() {
       return this.userRole >= 1
@@ -56,17 +70,23 @@ export const orgaRoleMixin = {
     isAtLeastUploader() {
       return this.userRole >= 2
     },
-    isAtLeastMaintainer() {
+    isAtLeastQuickMeeting() {
       return this.userRole >= 3
     },
+    isAtLeastMeetingManager() {
+      return this.userRole >= 4
+    },
+    isAtLeastMaintainer() {
+      return this.userRole >= 5
+    },
     maxRoleValue() {
-      return 4
+      return 6
     },
     userRoles() {
       return ROLES
     },
     roleToString() {
-      if (this.userRole > 4 || this.userRole < 1) return this.$t("Unknown")
+      if (this.userRole > 6 || this.userRole < 1) return this.$t("Unknown")
 
       return ROLES_INDEXED_BY_VALUE[this.userRole].name
     },

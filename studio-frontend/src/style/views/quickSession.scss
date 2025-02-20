@@ -1,0 +1,21 @@
+.permission-microphone .illustration {
+  height: 15rem;
+}
+
+.permission-microphone-error .illustration {
+  height: 17rem;
+}
+
+.microphone-sound-detector {
+  border: var(--border-block);
+  padding: 0.5rem;
+}
+
+.microphone-sound-detector[microphoneWorked] {
+  border-color: $greenChart;
+  color: $greenChart;
+}
+
+.microphone-sound-detector__ok-icon {
+  background-color: $greenChart;
+}

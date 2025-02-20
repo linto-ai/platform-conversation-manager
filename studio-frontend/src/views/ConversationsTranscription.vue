@@ -6,19 +6,79 @@
     :error="error"
     sidebar>
     <template v-slot:sidebar>
-      <HighlightsList
-        v-if="status === 'done'"
-        :conversation="conversation"
-        :hightlightsCategories="hightlightsCategories"
-        :hightlightsCategoriesVisibility="hightlightsCategoriesVisibility"
-        @hide-category="onHideCategory"
-        @show-category="onShowCategory"
-        @delete-tag="onDeleteTag"
-        :conversationId="conversation._id" />
+      <div>
+        <div class="form-field flex col medium-margin gap-medium">
+          <AppEditorChannelsSelector
+            v-if="channels && channels.length > 0"
+            :channels="channels"
+            v-model="selectedChannel" />
+          <AppEditorTranslationSelector
+            v-if="translations && translations.length > 0"
+            :translations="translations"
+            v-model="selectedTranslation" />
+        </div>
+
+        <div class="form-field flex col medium-margin">
+          <label for="transcription-search">{{
+            $t("app_editor_search.label")
+          }}</label>
+          <div class="flex gap-small">
+            <input
+              class="flex1"
+              @keydown="($event) => $event.stopPropagation()"
+              type="search"
+              id="transcription-search"
+              v-model="transcriptionSearch" />
+            <button
+              :title="
+                $t('conversation.search_in_transcription.exact_word_match')
+              "
+              class="icon-only small only-border"
+              :class="{ 'green-border': exactMatching }"
+              @click="toggleExactMatching">
+              <span class="icon equal"></span>
+            </button>
+            <button
+              v-if="transcriptionSearch"
+              :title="$t('conversation.search_in_transcription.clear_search')"
+              class="icon-only small only-border"
+              @click="resetSearch">
+              <span class="icon close"></span>
+            </button>
+          </div>
+
+          <SearchResultPaginator
+            class="small-padding-top"
+            v-if="numberFound"
+            :numberFound="numberFound"
+            :selectedIndexResult="selectedIndexResult"
+            @previousResult="previousResult"
+            @nextResult="nextResult" />
+        </div>
+        <HighlightsList
+          v-if="status === 'done' && experimental_highlight"
+          :conversation="conversation"
+          :hightlightsCategories="hightlightsCategories"
+          :hightlightsCategoriesVisibility="hightlightsCategoriesVisibility"
+          @hide-category="onHideCategory"
+          @show-category="onShowCategory"
+          @delete-tag="onDeleteTag"
+          @clickOnTag="onClickOnTag"
+          :conversationId="conversation._id">
+          <template v-slot:content-under-tag="slotProps">
+            <SearchResultPaginator
+              v-if="slotProps.tag._id === searchedHighlightId"
+              :numberFound="totalHighlightResult"
+              :selectedIndexResult="currentHighlightResult"
+              @previousResult="onPreviousHighlightSearch(slotProps.tag)"
+              @nextResult="onNextHighlightSearch(slotProps.tag)" />
+          </template>
+        </HighlightsList>
+      </div>
     </template>
 
     <template v-slot:breadcrumb-actions>
-      <router-link :to="conversationListRoute" class="btn">
+      <router-link :to="conversationListRoute" class="btn secondary">
         <span class="icon close"></span>
         <span class="label">{{ $t("conversation.close_editor") }}</span>
       </router-link>
@@ -26,7 +86,7 @@
       <h1
         class="flex1 center-text text-cut"
         style="padding-left: 1rem; padding-right: 1rem">
-        {{ conversation.name }}
+        {{ name }}
       </h1>
 
       <router-link
@@ -43,6 +103,8 @@
     <div class="flex flex1">
       <AppEditor
         :conversation="conversation"
+        :rootConversation="rootConversation"
+        :channelId="selectedChannel"
         :usersConnected="usersConnected"
         :focusFields="focusFields"
         :conversationUsers="conversationUsers"
@@ -54,6 +116,9 @@
         :hightlightsCategories="hightlightsCategories"
         :hightlightsCategoriesVisibility="hightlightsCategoriesVisibility"
         @newHighlight="handleNewHighlight"
+        @foundExpression="onFoundExpression"
+        @updateSelectedResult="onUpdateSelectedResult"
+        @updateSelectedHighlight="onUpdateSelectedHighlight"
         ref="editor"
         v-if="status === 'done'"></AppEditor>
     </div>
@@ -77,6 +142,7 @@ import { nextTick } from "vue"
 
 import { bus } from "../main.js"
 import { apiPostMetadata, apiUpdateMetadata } from "@/api/metadata.js"
+import findExpressionInWordsList from "@/tools/findExpressionInWordsList.js"
 
 import { conversationMixin } from "@/mixins/conversation.js"
 
@@ -91,12 +157,15 @@ import ModalDeleteTagHighlight from "@/components/ModalDeleteTagHighlight.vue"
 import ConversationShare from "@/components/ConversationShare.vue"
 import TranscriptionHelper from "@/components/TranscriptionHelper.vue"
 import AppEditorMetadataModal from "@/components/AppEditorMetadataModal.vue"
-import ErrorView from "./Error.vue"
+import SearchResultPaginator from "@/components/SearchResultPaginator.vue"
+import AppEditorChannelsSelector from "@/components/AppEditorChannelsSelector.vue"
+import AppEditorTranslationSelector from "../components/AppEditorTranslationSelector.vue"
 
 export default {
   mixins: [conversationMixin],
   data() {
     return {
+      selfUrl: (convId) => `/interface/conversations/${convId}/transcription`,
       filterSpeakers: "default",
       helperVisible: false,
       status: null,
@@ -104,6 +173,16 @@ export default {
       tagToDelete: null,
       showMetadataModal: false,
       metadataModalData: null,
+      transcriptionSearch: "",
+      numberFound: 0,
+      selectedIndexResult: 0,
+      exactMatching: false,
+      searchedHighlightId: null,
+      currentHighlightResult: 0,
+      totalHighlightResult: 0,
+      turnsIndexedByid: {},
+      turns: [],
+      turnPages: [],
     }
   },
   mounted() {
@@ -111,9 +190,29 @@ export default {
       this.showMetadataModal = true
       this.metadataModalData = data
     })
+
+    bus.$on("segment_updated", (data) => {
+      this.turnsIndexedByid[data.turnId].segment = data.value
+    })
+
+    bus.$on("words_updated", (data) => {
+      this.turnsIndexedByid[data.turnId].words = data.value
+    })
+
+    bus.$on("turn_speaker_update", (data) => {
+      this.turnsIndexedByid[data.turnId].speaker_id = data.value
+    })
+
+    bus.$on("refresh_turns", () => {
+      this.setupTurns()
+    })
   },
   beforeDestroy() {
     bus.$off("open-metadata-modal")
+    bus.$off("segment_updated")
+    bus.$off("words_updated")
+    bus.$off("refresh_turns")
+    bus.$off("turn_speaker_update")
   },
   watch: {
     "conversation.speakers"(newVal, oldVal) {
@@ -130,8 +229,17 @@ export default {
         this.status = this.computeStatus(this.conversation?.jobs?.transcription)
       }
     },
+    transcriptionSearch(newVal, oldVal) {
+      if (newVal != oldVal) {
+        bus.$emit("player-pause")
+        this.$refs.editor.searchInTranscription(newVal, this.exactMatching)
+      }
+    },
   },
   computed: {
+    experimental_highlight() {
+      return process.env?.VUE_APP_EXPERIMENTAL_HIGHLIGHT === "true"
+    },
     conversationListRoute() {
       return { name: "inbox", hash: "#previous" }
     },
@@ -140,32 +248,34 @@ export default {
     },
     exportFileTitle() {
       return `${this.conversation.name.replace(/\s/g, "_")}_${moment().format(
-        "YYYYMMDDHHmmss"
+        "YYYYMMDDHHmmss",
       )}`
     },
-    turns() {
-      if (!this.conversation) return []
-      if (this.filterSpeakers && this.filterSpeakers != "default") {
-        const filterTurns = this.conversation.text.filter(
-          (turn) => turn.speaker_id == this.filterSpeakers
-        )
-        return filterTurns
-      } else {
-        // TODO:
-        // some words can be empty so this rule is not enough check segment instead ?
-        // it breaks turn merge. So we need to fix it but empty turns should not be in the conversation.
-        return this.conversation.text.filter((turn) => turn.words.length > 0)
-      }
+  },
+  methods: {
+    initConversationHook() {
+      this.setupTurns()
     },
-    turnPages() {
-      if (!this.turns) return []
-      let res = [[]]
+    setupTurns() {
+      this.turnPages = [[]]
+      this.turnsIndexedByid = {}
+      this.turns = []
+
       let currentPage = 0
       let nbCaracters = 0
       let nbTurns = 0
-      res[currentPage] = []
-      this.turns.forEach((turn, index) => {
-        res[currentPage].push(turn)
+      this.turnPages[currentPage] = []
+
+      for (let shadowTurn of this.conversation.text) {
+        if (shadowTurn.words.length === 0) {
+          continue
+        }
+        const turn = structuredClone(shadowTurn)
+        this.turnsIndexedByid[turn.turn_id] = turn
+        this.turns.push(turn)
+
+        // Split the turns in pages
+        this.turnPages[currentPage].push(turn)
         nbCaracters += turn.segment.length
         if (
           nbCaracters > parseInt(process.env.VUE_APP_MAX_CARACTERS_PER_PAGE)
@@ -173,23 +283,42 @@ export default {
           nbCaracters = 0
           nbTurns = 0
           currentPage += 1
-          res[currentPage] = []
+          this.turnPages[currentPage] = []
         }
         nbTurns += 1
         if (nbTurns > parseInt(process.env.VUE_APP_TURN_PER_PAGE)) {
-          nbTurns = 0
           nbCaracters = 0
+          nbTurns = 0
           currentPage += 1
-          res[currentPage] = []
+          this.turnPages[currentPage] = []
         }
-      })
-      if (res[res.length - 1].length === 0) {
-        res.pop()
       }
-      return res
+
+      if (this.turnPages.at(-1).length === 0) {
+        this.turnPages.pop()
+      }
     },
-  },
-  methods: {
+    onClickOnTag(tag) {
+      this.$refs.editor.nextHighlightSearch(tag._id)
+    },
+    onNextHighlightSearch(tag) {
+      this.$refs.editor.nextHighlightSearch(tag._id)
+    },
+    onPreviousHighlightSearch(tag) {
+      this.$refs.editor.previousHighlightSearch(tag._id)
+    },
+    onFoundExpression(number) {
+      this.numberFound = number
+    },
+    onUpdateSelectedResult(number) {
+      this.selectedIndexResult = number
+    },
+    nextResult() {
+      this.$refs.editor.nextResultFound()
+    },
+    previousResult() {
+      this.$refs.editor.previousResultFound()
+    },
     cancelMetadata() {
       this.showMetadataModal = false
     },
@@ -202,8 +331,8 @@ export default {
         schema.name,
         fields.reduce(
           (obj, field) => ({ ...obj, [field.key]: field.value }),
-          {}
-        )
+          {},
+        ),
       )
       // Todo: only update the right metadata
       await this.fetchHightlightsCategories(this.conversationId)
@@ -273,6 +402,24 @@ export default {
         [tag.categoryId]: true,
       }
     },
+    toggleExactMatching() {
+      this.exactMatching = !this.exactMatching
+      this.$refs.editor.searchInTranscription(
+        this.transcriptionSearch,
+        this.exactMatching,
+      )
+    },
+    resetSearch() {
+      this.transcriptionSearch = ""
+      this.numberFound = 0
+      this.selectedIndexResult = 0
+      this.$refs.editor.searchInTranscription("")
+    },
+    onUpdateSelectedHighlight({ tagId, total, current }) {
+      this.searchedHighlightId = tagId
+      this.currentHighlightResult = current
+      this.totalHighlightResult = total
+    },
   },
   components: {
     ConversationShare,
@@ -281,12 +428,14 @@ export default {
     Modal,
     UserInfoInline,
     AppEditor,
-    ErrorView,
     MainContentConversation,
     HighlightsList,
     MenuToolbox,
     ModalDeleteTagHighlight,
     AppEditorMetadataModal,
+    SearchResultPaginator,
+    AppEditorChannelsSelector,
+    AppEditorTranslationSelector,
   },
 }
 </script>

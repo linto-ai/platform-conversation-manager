@@ -1,12 +1,14 @@
-const debug = require('debug')(`linto:components:MongoMigration:controllers:version:1.0.3:users`)
+const debug = require("debug")(
+  `linto:components:MongoMigration:controllers:version:1.0.3:users`,
+)
 
-const collections_name = 'users'
+const collections_name = "users"
 
 const migration_update = {
   accountActivated: true,
   authLink: {
     magicId: null,
-    validityDate: null
+    validityDate: null,
   },
   accountNotifications: {
     updatePassword: false,
@@ -14,12 +16,12 @@ const migration_update = {
   },
   emailNotifications: {
     conversations: {
-      sharing: true
+      sharing: true,
     },
     organizations: {
-      invite: false
-    }
-  }
+      invite: false,
+    },
+  },
 }
 
 module.exports = {
@@ -30,5 +32,5 @@ module.exports = {
   down: async (db) => {
     // rollback code example
     db.collection(collections_name).updateMany({}, { $unset: migration_update })
-  }
+  },
 }

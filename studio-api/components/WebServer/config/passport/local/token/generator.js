@@ -1,36 +1,46 @@
-const debug = require('debug')('linto:conversation-manager:components:webserver:config:passport:tokenGenerator')
+const debug = require("debug")(
+  "linto:conversation-manager:components:webserver:config:passport:tokenGenerator",
+)
 
+const jwt = require("jsonwebtoken")
+const algorithm = process.env.JWT_ALGORITHM || "HS256"
 
-const jwt = require('jsonwebtoken')
+const DEFAULT_TOKEN_EXPIRATION = "7d"
+const DEFAULT_REFRESH_TOKEN_EXPIRATION = "14d"
 
-const TOKEN_DAYS_TIME = '7d'
-const REFRESH_TOKEN_DAYS_TIME = '14d'
+module.exports = function generateTokens(
+  tokenData,
+  generatingOptions = { refresh: true },
+) {
+  const { salt, ...payload } = tokenData
+  delete tokenData.salt
 
-module.exports = function (tokenData) {
-    const authSecret = tokenData.salt
-    delete tokenData.salt
+  const authSecret = salt + process.env.CM_JWT_SECRET
 
-    const token = generateJWT(tokenData, authSecret)
+  // Generate the tokens
+  const tokens = {
+    auth_token: generateJWT(payload, authSecret, generatingOptions.expires_in),
+    user_id: payload.userId,
+  }
 
-    return {
-        user_id: token.user_id,
-        auth_token: token.auth_token,
-        refresh_token: token.refresh_token
-    }
+  if (generatingOptions.refresh) {
+    tokens.refresh_token = generateJWT(
+      payload,
+      authSecret + process.env.CM_REFRESH_SECRET,
+      generatingOptions.expires_in ||
+        process.env.REFRESH_TOKEN_DAYS_TIME ||
+        DEFAULT_REFRESH_TOKEN_EXPIRATION,
+    )
+  }
+
+  return tokens
 }
 
-function generateJWT(data, authSecret) {
-    return {
-        auth_token: jwt.sign(
-            {
-                data,
-            }, authSecret + process.env.CM_JWT_SECRET, { algorithm: 'HS256', expiresIn: TOKEN_DAYS_TIME }
-        ),
-        refresh_token: jwt.sign(
-            {
-                data,
-            }, authSecret + process.env.CM_REFRESH_SECRET + process.env.CM_JWT_SECRET, { algorithm: 'HS256', expiresIn: REFRESH_TOKEN_DAYS_TIME }
-        ),
-        user_id: data.userId
-    }
+// Helper function to generate a single JWT
+function generateJWT(payload, secret, expiresIn) {
+  return jwt.sign({ data: payload }, secret, {
+    algorithm: algorithm,
+    expiresIn:
+      expiresIn || process.env.TOKEN_DAYS_TIME || DEFAULT_TOKEN_EXPIRATION,
+  })
 }

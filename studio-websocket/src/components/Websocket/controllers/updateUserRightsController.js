@@ -12,7 +12,7 @@ export default async function updateUserRightsController(data) {
       {
         "x-forwarded-host": origin.host,
         "x-forwarded-proto": origin.protocol.replace(":", ""),
-      }
+      },
     )
 
     let room = `conversation/${data.conversationId}`

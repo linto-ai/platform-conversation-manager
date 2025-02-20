@@ -9,10 +9,11 @@
       @searchInConversationsTitle="onSearchInConversationsTitle"
       @searchInConversationsText="onSearchInConversationsText" />
     <div class="form-field flex col" v-if="withSelector">
-      <label for="options-list">Trier par</label>
+      <label for="options-list">{{ $t("explore.sort_label") }}</label>
       <CustomSelect
         id="options-list"
         :options="options"
+        inline
         v-model="selectedOption"
         buttonClass="btn--input-color"></CustomSelect>
     </div>

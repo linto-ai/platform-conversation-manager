@@ -58,7 +58,7 @@ export default class Conversations {
       const keywords = await apiGetKeywords(
         conversationId,
         conversation.getOrganizationId(),
-        userToken
+        userToken,
       )
 
       //const keywords = []
@@ -135,7 +135,7 @@ export class Conversation {
           yTextEvent,
           transaction,
           this.id,
-          this.userTokenIndexedByTransactionName.get(transaction.origin)
+          this.userTokenIndexedByTransactionName.get(transaction.origin),
         )
 
         if (status) {
@@ -157,7 +157,7 @@ export class Conversation {
           yTextEvent,
           transaction,
           this.id,
-          this.userTokenIndexedByTransactionName.get(transaction.origin)
+          this.userTokenIndexedByTransactionName.get(transaction.origin),
         )
 
         if (status) {
@@ -181,7 +181,7 @@ export class Conversation {
         if (transaction.origin != "websocket") {
           this.updateObj(
             "subtitleVersions",
-            ytextEvent[0].currentTarget.toJSON()
+            ytextEvent[0].currentTarget.toJSON(),
           )
         }
       })
@@ -192,7 +192,7 @@ export class Conversation {
     transactionName,
     undo = false,
     callback,
-    userToken
+    userToken,
   ) {
     if (undo) {
       this.createUndoManager(transactionName)
@@ -216,7 +216,7 @@ export class Conversation {
         transactionName,
         new Y.UndoManager(this.watchProperties, {
           trackedOrigins: new Set([transactionName]),
-        })
+        }),
       )
     }
 
@@ -419,7 +419,12 @@ export class Conversation {
   }
 
   resetUsers(userId, userToken) {
-    this.users[userId].removeFocusField(userToken)
+    const user = this.users?.[userId]
+    if (user) {
+      this.users[userId].removeFocusField(userToken)
+    } else {
+      console.error("ResetUsers: User not found", userId)
+    }
   }
 
   getUsersList() {

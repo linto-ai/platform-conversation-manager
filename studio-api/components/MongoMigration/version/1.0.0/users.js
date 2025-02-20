@@ -1,7 +1,11 @@
-const debug = require('debug')(`linto:components:MongoMigration:controllers:version:1.0.0::users`)
+const debug = require("debug")(
+  `linto:components:MongoMigration:controllers:version:1.0.0::users`,
+)
 
-const initDb = require(`${process.cwd()}/components/MongoMigration/controllers/migration/init`)
-const collectionName = 'users'
+const initDb = require(
+  `${process.cwd()}/components/MongoMigration/controllers/migration/init`,
+)
+const collectionName = "users"
 
 module.exports = {
   async up(db) {
@@ -10,5 +14,5 @@ module.exports = {
 
   async down(db) {
     // No lower version for this migration
-  }
+  },
 }

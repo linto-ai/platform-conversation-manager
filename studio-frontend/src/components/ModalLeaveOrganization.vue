@@ -28,10 +28,6 @@ export default {
       type: Object,
       required: true,
     },
-    currentOrganizationScope: {
-      type: String,
-      required: true,
-    },
   },
   data() {
     return {}
@@ -39,7 +35,7 @@ export default {
   mounted() {},
   methods: {
     async deleteOrganization() {
-      const res = await apiLeaveOrganisation(this.currentOrganizationScope)
+      const res = await apiLeaveOrganisation(this.currentOrganization._id)
       this.$emit("on-confirm", res)
     },
   },

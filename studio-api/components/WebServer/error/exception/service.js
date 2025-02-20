@@ -1,21 +1,21 @@
 /****************
-**** Service ****
-*****************/
+ **** Service ****
+ *****************/
 
-const ExceptionType = 'service'
+const ExceptionType = "service"
 
 class ServiceError extends Error {
   constructor(message, err) {
     super()
-    this.name = 'ServiceError'
+    this.name = "ServiceError"
     this.type = ExceptionType
-    this.status = '400'
+    this.status = 400
     if (message) this.message = message
-    else this.message = 'Error during the operation'
+    else this.message = "Error during the operation"
     if (err) this.err = err
   }
 }
 
 module.exports = {
-  ServiceError
+  ServiceError,
 }

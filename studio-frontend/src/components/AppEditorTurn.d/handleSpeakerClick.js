@@ -1,6 +1,6 @@
 export default function handleSpeakerClick(e) {
   e.preventDefault()
   if (this.canEdit) {
-    this.displaySpeakerToolbox = !this.displaySpeakerToolbox
+    this.displaySpeakerToolbox = true
   }
 }

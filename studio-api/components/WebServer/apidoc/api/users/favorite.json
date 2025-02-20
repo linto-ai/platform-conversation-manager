@@ -1,17 +1,17 @@
 {
   "/api/users/self/favorites": {
     "get": {
-      "tags": [
-        "users favorites"
-      ],
+      "tags": ["users favorites"],
       "summary": "List favorites conversations of connected user",
-      "parameters": [{
-        "in": "query",
-        "name": "tags",
-        "required": false,
-        "description": "List of tags id to filter for",
-        "example": "5e9b1b9b0f9b2c0017b5f1b5,5e9b1b9b0f9b2c0017b5f1b6,..."
-      }],
+      "parameters": [
+        {
+          "in": "query",
+          "name": "tags",
+          "required": false,
+          "description": "List of tags id to filter for",
+          "example": "5e9b1b9b0f9b2c0017b5f1b5,5e9b1b9b0f9b2c0017b5f1b6,..."
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",
@@ -41,17 +41,17 @@
   },
   "/api/users/self/favorites/tags": {
     "get": {
-      "tags": [
-        "users favorites"
-      ],
+      "tags": ["users favorites"],
       "summary": "List tags from favorites conversations of the connected user",
-      "parameters": [{
-        "in": "query",
-        "name": "tags",
-        "required": false,
-        "description": "List of tags id to filter for",
-        "example": "5e9b1b9b0f9b2c0017b5f1b5,5e9b1b9b0f9b2c0017b5f1b6,..."
-      }],
+      "parameters": [
+        {
+          "in": "query",
+          "name": "tags",
+          "required": false,
+          "description": "List of tags id to filter for",
+          "example": "5e9b1b9b0f9b2c0017b5f1b5,5e9b1b9b0f9b2c0017b5f1b6,..."
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",
@@ -81,18 +81,18 @@
   },
   "/api/users/self/favorites/{conversationId}": {
     "put": {
-      "tags": [
-        "users favorites"
-      ],
+      "tags": ["users favorites"],
       "summary": "Add a favorite conversation to the connected user",
-      "parameters": [{
-        "in": "path",
-        "name": "conversationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for a conversation"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "conversationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for a conversation"
+        }
+      ],
       "responses": {
         "201": {
           "description": "OK",
@@ -122,18 +122,18 @@
       }
     },
     "delete": {
-      "tags": [
-        "users favorites"
-      ],
+      "tags": ["users favorites"],
       "summary": "Delete a conversation from the connected user favorites",
-      "parameters": [{
-        "in": "path",
-        "name": "conversationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for a conversation"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "conversationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for a conversation"
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",

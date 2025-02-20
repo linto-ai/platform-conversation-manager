@@ -20,15 +20,40 @@
         <label>{{ $t("conversation.acoustic_label") }}</label>
         {{ acoustic_value[value.accoustic] }}
       </div>
-      <div>
+
+      <!-- <div>
         <label>{{ $t("conversation.language_label") }}</label>
-        {{ languages[value.language] }}
-      </div>
+        {{ language_formatted }}
+      </div> -->
+
       <div>
         <label>{{ $t("conversation.model_quality_label") }}</label>
         {{ audio_quality_value[value.model_quality] }}
       </div>
     </div>
+
+    <!-- -- -- language -- -- -->
+    <!-- todo: reactivate lang selector when supported by api-->
+    <div class="form-field flex col" v-if="isWhisper && language === '*'">
+      <label :for="`service-${value.name}-language`">
+        {{ $t("conversation.transcription.language_label") }}
+      </label>
+      <select
+        v-model="languageField.value"
+        :id="`service-${value.name}-language`">
+        <option value="*">{{ this.$i18n.t("lang.automatic") }}</option>
+        <option value="fr">{{ this.$i18n.t("lang.fr") }}</option>
+        <option value="en">{{ this.$i18n.t("lang.en") }}</option>
+      </select>
+    </div>
+
+    <LabeledValue
+      v-else
+      selectLike
+      :label="$t('conversation.transcription.language_label')"
+      :value="language_formatted"></LabeledValue>
+
+    <!-- -- -- punctuation  -- -- -->
     <div class="form-field flex col" v-if="isModelWithPunctuation">
       <label :for="`service-${value.name}-punctuation`">
         {{ $t("conversation.transcription.punctuation_label") }}
@@ -49,10 +74,13 @@
     </div>
     <LabeledValue
       v-else
+      selectLike
       :label="$t('conversation.transcription.punctuation_label')"
       :value="
         $t('conversation.transcription.punctuation_value_whisper')
       "></LabeledValue>
+
+    <!-- -- -- diarization -- -- -->
     <div class="form-field flex col">
       <label :for="`service-${value.name}-diarization`">
         {{ $t("conversation.transcription.diarization_label") }}
@@ -99,6 +127,7 @@ import EMPTY_FIELD from "../const/emptyField"
 import ACOUSTIC from "../const/acoustic"
 import AUDIO_QUALITY from "../const/audioQuality"
 import LabeledValue from "./LabeledValue.vue"
+import generateServiceConfig from "../tools/generateServiceConfig"
 
 export default {
   props: {
@@ -128,11 +157,7 @@ export default {
       speakersNumber: { ...EMPTY_FIELD, value: "auto" },
       acoustic_value: ACOUSTIC((key) => this.$i18n.t(key)),
       audio_quality_value: AUDIO_QUALITY((key) => this.$i18n.t(key)),
-      languages: {
-        "fr-FR": this.$i18n.t("lang.fr"),
-        "en-US": this.$i18n.t("lang.en"),
-        en_GB: this.$i18n.t("lang.en"),
-      },
+      languageField: { ...EMPTY_FIELD, value: "*" },
     }
   },
   computed: {
@@ -148,6 +173,20 @@ export default {
     isWhisper() {
       return this.modelType === "whisper"
     },
+    language() {
+      return this.value?.language || "*"
+    },
+    language_formatted() {
+      if (!this.value.language) {
+        return this.$i18n.t("lang.automatic")
+      }
+
+      let languageNames = new Intl.DisplayNames([this.$i18n.locale], {
+        type: "language",
+      })
+
+      return languageNames.of(this.value.language)
+    },
   },
   watch: {
     "diarization.value"() {
@@ -157,6 +196,9 @@ export default {
       this.select(null)
     },
     "speakersNumber.value"() {
+      this.select(null)
+    },
+    "languageField.value"() {
       this.select(null)
     },
     multiTrack() {
@@ -174,46 +216,17 @@ export default {
 
     select(event) {
       event?.preventDefault()
-      this.$emit("select", {
-        serviceName: this.value.serviceName,
-        endpoint: this.removeLeadingSlash(this.value.endpoints[0].endpoint),
-        lang: this.value.language,
-        config: {
-          punctuationConfig: {
-            enablePunctuation: this.punctuation.value !== "disabled",
-            serviceName:
-              this.punctuation.value !== "disabled"
-                ? this.punctuation.value
-                : null,
-          },
-          diarizationConfig: {
-            enableDiarization: this.diarization.value !== "disabled",
-            numberOfSpeaker:
-              this.diarization.value !== "disabled" &&
-              this.speakersNumber.value > 0
-                ? parseInt(this.speakersNumber.value)
-                : null,
-            maxNumberOfSpeaker:
-              this.diarization.value !== "disabled" ? 8 : null,
-            serviceName:
-              this.diarization.value !== "disabled"
-                ? this.diarization.value
-                : null,
-          },
-          enableNormalization: true,
-          vadConfig: this.isWhisper
-            ? {
-                enableVAD: true,
-                methodName: "WebRTC",
-                minDuration: 30,
-              }
-            : {
-                enableVAD: true,
-                methodName: "WebRTC",
-                minDuration: 0,
-              },
-        },
-      })
+      this.$emit(
+        "select",
+        generateServiceConfig(this.value, {
+          punctuationValue: this.punctuation.value,
+          diarizationValue: this.diarization.value,
+          speakersNumberValue: this.speakersNumber.value,
+          languageValue: this.isWhisper
+            ? this.languageField.value
+            : this.value.language,
+        }),
+      )
     },
   },
   components: { LabeledValue },

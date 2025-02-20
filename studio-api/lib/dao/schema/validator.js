@@ -1,17 +1,16 @@
-const Validator = new (require('jsonschema').Validator)
+const Validator = new (require("jsonschema").Validator)()
 
 function validateJson(jsonToValidate, schemaName) {
   try {
-    if(!jsonToValidate) return false
-    else if(typeof jsonToValidate !== 'object') jsonToValidate = JSON.parse(jsonToValidate)
-    
+    if (!jsonToValidate) return false
+    else if (typeof jsonToValidate !== "object")
+      jsonToValidate = JSON.parse(jsonToValidate)
+
     const schema = require(`${process.cwd()}/lib/dao/schema/${schemaName}.json`)
 
-    if(schema === 'undefined') return false
+    if (schema === "undefined") return false
 
     const validationResult = Validator.validate(jsonToValidate, schema)
-
-
 
     if (validationResult.errors.length === 0) {
       return true
@@ -27,4 +26,4 @@ function validateJson(jsonToValidate, schemaName) {
   }
 }
 
-module.exports = validateJson 
+module.exports = validateJson

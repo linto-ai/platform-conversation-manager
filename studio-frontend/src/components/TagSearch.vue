@@ -95,7 +95,7 @@ export default {
     apiSearchTags(search, signal) {
       if (this.categoriesList !== null) {
         return Promise.resolve(
-          filterTagsOnCategoryList(this.categoriesList, search)
+          filterTagsOnCategoryList(this.categoriesList, search),
         )
       }
 
@@ -105,7 +105,7 @@ export default {
           search,
           this.searchCategoryType,
           { scope: "conversation", possess: this.possess },
-          signal
+          signal,
         )
       } else {
         return apiSearchTags(
@@ -113,14 +113,14 @@ export default {
           search,
           this.searchCategoryType,
           { scope: "organization" },
-          signal
+          signal,
         )
       }
     },
     apiSearchCategories(search, signal) {
       if (this.categoriesList !== null) {
         return Promise.resolve(
-          filterTagsOnCategoryList(this.categoriesList, search)
+          filterTagsOnCategoryList(this.categoriesList, search),
         )
       }
 
@@ -130,7 +130,7 @@ export default {
           search,
           "conversation_metadata",
           { scope: "conversation", possess: this.possess },
-          signal
+          signal,
         )
       }
 
@@ -139,7 +139,7 @@ export default {
         search,
         "conversation_metadata",
         { scope: "organization" },
-        signal
+        signal,
       )
     },
     async fetchSearchResult(newSearch) {
@@ -148,13 +148,13 @@ export default {
       } else {
         this.searchedTags = await this.debouncedSearch(
           this.apiSearchTags.bind(this),
-          newSearch
+          newSearch,
         )
 
         if (this.withCategories) {
           this.searchedCategories = await this.debouncedSearch(
             this.apiSearchCategories.bind(this),
-            newSearch
+            newSearch,
           )
         } else {
           this.searchedCategories = []
@@ -163,10 +163,13 @@ export default {
 
       this.mergedTags = mergeArrayOnId(
         this.searchedTags,
-        this.searchedCategories
+        this.searchedCategories,
       )
         // don't display tags that are already selected
         .map((catTags) => {
+          if (!catTags.tags) {
+            return catTags
+          }
           catTags.tags = catTags.tags.filter((tag) => {
             return !this.value.find((valueTag) => valueTag._id === tag._id)
           })
@@ -180,7 +183,7 @@ export default {
       this.allCategories = await apiGetAllCategories(
         this.conversationId,
         "conversation_metadata",
-        "conversation"
+        "conversation",
       )
       this.loading = false
     },

@@ -1,11 +1,10 @@
 {
   "/api/conversations/{conversationId}/turns/{turnId}": {
     "post": {
-      "tags": [
-        "conversations turn"
-      ],
+      "tags": ["conversations turn"],
       "summary": "Add a conversation turn after the indicated turnId",
-      "parameters": [{
+      "parameters": [
+        {
           "in": "path",
           "name": "conversationId",
           "type": "string",
@@ -58,11 +57,10 @@
       }
     },
     "patch": {
-      "tags": [
-        "conversations turn"
-      ],
+      "tags": ["conversations turn"],
       "summary": "Update a conversation turn",
-      "parameters": [{
+      "parameters": [
+        {
           "in": "path",
           "name": "conversationId",
           "type": "string",
@@ -115,11 +113,10 @@
       }
     },
     "delete": {
-      "tags": [
-        "conversations turn"
-      ],
+      "tags": ["conversations turn"],
       "summary": "Delete a conversation turn",
-      "parameters": [{
+      "parameters": [
+        {
           "in": "path",
           "name": "conversationId",
           "type": "string",
@@ -165,11 +162,10 @@
   },
   "/api/conversations/{conversationId}/turns/{turnId}/merge/{direction}": {
     "patch": {
-      "tags": [
-        "conversations turn"
-      ],
+      "tags": ["conversations turn"],
       "summary": "Merge the indicated turn with the next or previous turn",
-      "parameters": [{
+      "parameters": [
+        {
           "in": "path",
           "name": "conversationId",
           "type": "string",
@@ -189,10 +185,7 @@
           "in": "path",
           "name": "direction",
           "type": "string",
-          "enum": [
-            "next",
-            "previous"
-          ],
+          "enum": ["next", "previous"],
           "required": true,
           "description": "Direction to merge the turn with the next or previous turn (value is either 'next' or 'previous')"
         }
@@ -222,11 +215,10 @@
   },
   "/api/conversations/{conversationId}/turns/search": {
     "get": {
-      "tags": [
-        "conversations turn"
-      ],
+      "tags": ["conversations turn"],
       "summary": "Search for a text in the conversation turns",
-      "parameters": [{
+      "parameters": [
+        {
           "in": "path",
           "name": "conversationId",
           "type": "string",
@@ -251,10 +243,7 @@
                 "item": {
                   "type": "string"
                 },
-                "example": [
-                  "turnId1",
-                  "turnId2"
-                ]
+                "example": ["turnId1", "turnId2"]
               }
             }
           }

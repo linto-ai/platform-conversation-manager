@@ -1,18 +1,18 @@
 {
   "/api/nlp/conversations/{conversationId}/keywords": {
     "post": {
-      "tags": [
-        "conversations nlp"
-      ],
+      "tags": ["conversations nlp"],
       "summary": "Generate nlp keyword to a conversation",
-      "parameters": [{
-        "in": "path",
-        "name": "conversationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an conversation"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "conversationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an conversation"
+        }
+      ],
       "requestBody": {
         "content": {
           "multipart/form-data": {
@@ -29,10 +29,7 @@
                 }
               }
             },
-            "required": [
-              "endpoint",
-              "serviceName"
-            ]
+            "required": ["endpoint", "serviceName"]
           }
         }
       },

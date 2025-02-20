@@ -4,12 +4,31 @@ Vue.use(VueI18n)
 import enUS from "./locales/en-US.json"
 import frFR from "./locales/fr-FR.json"
 
-const locales = ["fr-FR", "en-US"]
+import getCurrentTheme from "./tools/getCurrentTheme.js"
+
+const locales = getCurrentTheme()?.["locales"] || ["en-US"]
 
 function loadLocaleMessages() {
+  const messagesFromTheme = getCurrentTheme()?.["localesStrings"] || {}
+
   const messages = {}
   messages["en-US"] = enUS
   messages["fr-FR"] = frFR
+
+  // Merge messages from theme with default messages
+  for (const locale of locales) {
+    let currentMessages = {}
+
+    if (!messagesFromTheme[locale]) {
+      currentMessages = messages?.[locale] || {}
+    } else if (!messages[locale]) {
+      currentMessages = messagesFromTheme[locale]
+    } else {
+      currentMessages = { ...messages[locale], ...messagesFromTheme[locale] }
+    }
+
+    messages[locale] = currentMessages
+  }
   return messages
 }
 

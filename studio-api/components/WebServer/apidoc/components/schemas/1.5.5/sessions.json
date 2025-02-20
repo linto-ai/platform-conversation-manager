@@ -1,0 +1,408 @@
+{
+    "SessionRequest": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string"
+            },
+            "scheduleOn": {
+                "type": "string",
+                "format": "date-time",
+                "default": null
+            },
+            "endOn": {
+                "type": "string",
+                "format": "date-time",
+                "default": null
+            },
+            "owner": {
+                "type": "string",
+                "default": null
+            },
+            "organizationId": {
+                "type": "string",
+                "default": null
+            },
+            "visibility": {
+              "type": "string",
+              "enum": [
+                  "public",
+                  "organization",
+                  "private"
+              ],
+              "default": "private"
+            },
+            "autoStart": {
+                "type": "boolean",
+                "description": "Automatically start the session",
+                "default": false
+            },
+            "autoEnd": {
+                "type": "boolean",
+                "description": "Automatically end the session",
+                "default": false
+            },
+            "meta": {
+                "type": "json",
+                "default": null
+            },
+            "channels": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/ChannelRequest"
+                }
+            }
+        }
+    },
+    "SessionUpdateRequest": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string"
+            },
+            "scheduleOn": {
+                "type": "string",
+                "format": "date-time",
+                "default": null
+            },
+            "endOn": {
+                "type": "string",
+                "format": "date-time",
+                "default": null
+            },
+            "owner": {
+                "type": "string",
+                "default": null
+            },
+            "organizationId": {
+                "type": "string",
+                "default": null
+            },
+            "visibility": {
+              "type": "string",
+              "enum": [
+                  "public",
+                  "organization",
+                  "private"
+              ],
+              "default": "private"
+            },
+            "autoStart": {
+                "type": "boolean",
+                "description": "Automatically start the session",
+                "default": false
+            },
+            "autoEnd": {
+                "type": "boolean",
+                "description": "Automatically end the session",
+                "default": false
+            },
+            "meta": {
+                "type": "json",
+                "default": null
+            },
+            "channels": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/ChannelUpdateRequest"
+                }
+            }
+        }
+    },
+    "SessionPaginationAnswer": {
+        "type": "object",
+        "properties": {
+            "sessions": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/SessionAnswer"
+                }
+            },
+            "totalItems": {
+                "type": "integer",
+                "description": "Total number of sessions matching the filters"
+            }
+        }
+    },
+    "SessionAnswerBase": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string",
+                "format": "uuid"
+            },
+            "status": {
+                "type": "string",
+                "enum": [
+                    "pending_creation",
+                    "ready",
+                    "active",
+                    "errored",
+                    "terminated"
+                ]
+            },
+            "name": {
+                "type": "string"
+            },
+            "owner": {
+                "type": "string"
+            },
+            "organizationId": {
+                "type": "string"
+            },
+            "visibility": {
+              "type": "string",
+              "enum": [
+                  "public",
+                  "organization",
+                  "private"
+              ],
+              "default": "private"
+            },
+            "startTime": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "endTime": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "scheduleOn": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "endOn": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "erroredOn": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "autoStart": {
+                "type": "boolean"
+            },
+            "autoEnd": {
+                "type": "boolean"
+            },
+            "meta": {
+                "type": "json",
+                "default": null
+            }
+        }
+    },
+    "SessionAnswer": {
+        "allOf": [
+            { "$ref": "#/components/schemas/SessionAnswerBase" },
+            {
+                "type": "object",
+                "properties": {
+                    "channels": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ChannelAnswer"
+                        }
+                    }
+                }
+            }
+        ]
+    },
+    "SessionAnswerWithCaptions": {
+        "allOf": [
+            { "$ref": "#/components/schemas/SessionAnswerBase" },
+            {
+                "type": "object",
+                "properties": {
+                    "channels": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ChannelAnswerWithCaptions"
+                        }
+                    }
+                }
+            }
+        ]
+    },
+    "ChannelRequest": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "description": "The name of the channel"
+            },
+            "transcriberProfileId": {
+                "type": "integer",
+                "description": "The id of the channel config"
+            },
+            "translations": {
+                "type": "array",
+                "description": "List of bcp47 strings.",
+                "items": {
+                    "type": "string"
+                },
+                "default": []
+            },
+            "keepAudio": {
+                "type": "boolean",
+                "description": "Save audio",
+                "default": false
+            },
+            "diarization": {
+                "type": "boolean",
+                "description": "Enable diarization",
+                "default": false
+            },
+            "async": {
+              "type": "boolean",
+              "description": "Save audio as WAV instead of MP3.",
+              "default": false
+            },
+            "meta": {
+                "type": "json",
+                "default": null
+            }
+        }
+    },
+    "ChannelUpdateRequest": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer",
+                "description": "The id of the channel"
+            },
+            "name": {
+                "type": "string",
+                "description": "The name of the channel"
+            },
+            "transcriberProfileId": {
+                "type": "integer",
+                "description": "The id of the transcriber profile"
+            },
+            "translations": {
+                "type": "array",
+                "description": "List of bcp47 strings.",
+                "items": {
+                    "type": "string"
+                },
+                "default": []
+            },
+            "keepAudio": {
+                "type": "boolean",
+                "description": "Save audio",
+                "default": false
+            },
+            "diarization": {
+                "type": "boolean",
+                "description": "Enable diarization",
+                "default": false
+            },
+            "async": {
+              "type": "boolean",
+              "description": "Save audio as WAV instead of MP3."
+            },
+            "meta": {
+                "type": "json",
+                "default": null
+            }
+        }
+    },
+    "ChannelAnswer": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer",
+                "description": "The ID of the channel"
+            },
+            "index": {
+                "type": "integer",
+                "description": "The index of the channel in the channels list"
+            },
+            "keepAudio": {
+                "type": "boolean",
+                "description": "The audio is saved"
+            },
+            "diarization": {
+                "type": "boolean",
+                "description": "The diarization is enabled"
+            },
+            "async": {
+              "type": "boolean",
+              "description": "Audio is saved as WAV instead of MP3."
+            },
+            "transcriberId": {
+                "type": "string",
+                "description": "The id of the transcriber that is currently transcribing this channel"
+            },
+            "name": {
+                "type": "string",
+                "description": "The name of the channel"
+            },
+            "languages": {
+                "type": "array",
+                "description": "The language of the channel as a BCP-47 language tag (fr-FR, en-US, ...) and endpoints"
+            },
+            "translations": {
+                "type": "array",
+                "description": "The translations enabled for the channel as a BCP-47 language tag"
+            },
+            "transcriberProfileId": {
+                "type": "integer",
+                "description": "The id of the channel config"
+            },
+            "streamEndpoints": {
+                "type": "object",
+                "description": "The available stream endpoints for this channel",
+                "properties": {
+                    "srt": {
+                        "type": "string",
+                        "description": "The stream endpoint for SRT stream"
+                    },
+                    "rtmp": {
+                        "type": "string",
+                        "description": "The stream endpoint for RTMP stream"
+                    },
+                    "ws": {
+                        "type": "string",
+                        "description": "The stream endpoint for WEBSOCKET stream"
+                    }
+                }
+            },
+            "streamStatus": {
+                "type": "string",
+                "description": "The status of the stream",
+                "enum": [
+                    "active",
+                    "inactive",
+                    "errored"
+                ]
+            },
+            "audioFile": {
+                "type": "string",
+                "description": "URL to the audio file"
+            }
+        }
+    },
+    "ChannelAnswerWithCaptions": {
+        "allOf": [
+            { "$ref": "#/components/schemas/ChannelAnswer" },
+            {
+                "type": "object",
+                "properties": {
+                    "closedCaptions": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "example": {
+                                "astart": "date-time",
+                                "start": 0.0,
+                                "end": 3.12,
+                                "text": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+
+}

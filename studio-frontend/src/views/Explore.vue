@@ -34,13 +34,12 @@
 
     <template v-slot:sidebar>
       <div class="sidebar-divider"></div>
-
-      <SidebarTagList
-        :selected-tags="selectedTags"
+      <SidebarFilters
         :custom-filters="customFilters"
-        @addSearchCriterion="openExploreModal"
+        :selected-tags="selectedTags"
         @onUpdateSelectedTags="onUpdateSelectedTags"
-        @onUpdateCustomFilters="onUpdateCustomFilters"></SidebarTagList>
+        @onUpdateCustomFilters="onUpdateCustomFilters"
+        @addSearchCriterion="openExploreModal" />
     </template>
 
     <section class="flex col flex1 gap-small reset-overflows">
@@ -54,9 +53,9 @@
         <h2>
           {{ $t("explore.title") }}
         </h2>
-        <span>
+        <!-- <span>
           {{ $t("explore.subtitle") }}
-        </span>
+        </span> -->
       </ConversationListHeader>
 
       <!-- search -->
@@ -94,6 +93,7 @@ import { apiSearchTagsById, apiCategoriesTree } from "@/api/tag.js"
 import {
   apiGetConversationsByTags,
   apiGetConversationsByOrganization,
+  apiGetConversationsWithoutTagsByOrganization,
 } from "@/api/conversation.js"
 import { debounceMixin } from "@/mixins/debounce"
 import { conversationListOrgaMixin } from "@/mixins/conversationListOrga.js"
@@ -102,15 +102,14 @@ import ConversationList from "@/components/ConversationList.vue"
 import Tag from "@/components/Tag.vue"
 import MainContent from "@/components/MainContent.vue"
 import ExploreModalVue from "@/components/ExploreModal.vue"
-import { extractTagsFromCategoryTree } from "../tools/extractTagsFromCategoryTree"
-import SidebarTagList from "../components/SidebarTagList.vue"
-import ConversationListSearch from "../components/ConversationListSearch.vue"
-import Pagination from "../components/Pagination.vue"
+import { extractTagsFromCategoryTree } from "@/tools/extractTagsFromCategoryTree"
+import ConversationListSearch from "@/components/ConversationListSearch.vue"
+import Pagination from "@/components/Pagination.vue"
 import ModalDeleteConversations from "@/components/ModalDeleteConversations.vue"
 import ConversationShareMultiple from "@/components/ConversationShareMultiple.vue"
 import SelectedConversationIndicator from "@/components/SelectedConversationIndicator.vue"
-import ConversationListHeader from "../components/ConversationListHeader.vue"
-import { apiGetConversationsWithoutTagsByOrganization } from "../api/conversation"
+import ConversationListHeader from "@/components/ConversationListHeader.vue"
+import SidebarFilters from "@/components/SidebarFilters.vue"
 
 export default {
   mixins: [debounceMixin, conversationListOrgaMixin],
@@ -158,7 +157,7 @@ export default {
       if (this.selectedOption == "notags") {
         res = await apiGetConversationsWithoutTagsByOrganization(
           this.currentOrganizationScope,
-          this.currentPageNb
+          this.currentPageNb,
         )
       } else if (
         (!this.selectedTags || this.selectedTags.length == 0) &&
@@ -170,7 +169,7 @@ export default {
           this.currentPageNb,
           {
             sortField: this.selectedOption,
-          }
+          },
         )
       } else {
         res = await apiGetConversationsByTags(
@@ -181,7 +180,7 @@ export default {
           this.currentPageNb,
           {
             sortField: this.selectedOption,
-          }
+          },
         )
       }
       this.loadingConversations = false
@@ -192,7 +191,7 @@ export default {
       try {
         this.conversations = await this.debouncedSearch(
           this.apiSearchConversations.bind(this),
-          this.searchTextInConversations
+          this.searchTextInConversations,
         )
       } catch (error) {
         this.conversations = []
@@ -207,7 +206,7 @@ export default {
     },
     async getSelectedTags() {
       const tagsFromStorage = JSON.parse(
-        localStorage.getItem("exploreSelectedTags")
+        localStorage.getItem("exploreSelectedTags"),
       )
       if (
         localStorage.getItem("exploreSelectedTags") &&
@@ -216,7 +215,7 @@ export default {
         // check if tag exists by querying the API
         const tagTreeFromApi = await apiSearchTagsById(
           this.currentOrganizationScope,
-          tagsFromStorage.map((t) => t._id)
+          tagsFromStorage.map((t) => t._id),
         )
         const tags = extractTagsFromCategoryTree(tagTreeFromApi)
         return tags
@@ -230,7 +229,7 @@ export default {
         this.currentOrganizationScope,
         this.selectedTags.map((tag) => tag._id),
         this.selectedTags.map((tag) => tag.categoryId),
-        "conversation_metadata"
+        "conversation_metadata",
       )
 
       // const highlight_cat = await apiCategoriesTree(
@@ -247,7 +246,7 @@ export default {
       const tagTreeFromApi = await apiSearchTagsById(
         this.currentOrganizationScope,
         tagsFromStorage.map((t) => t._id),
-        "organization"
+        "organization",
       )
       return extractTagsFromCategoryTree(tagTreeFromApi)
     },
@@ -267,13 +266,13 @@ export default {
     ConversationList,
     Tag,
     ExploreModalVue,
-    SidebarTagList,
     ConversationListSearch,
     Pagination,
     ModalDeleteConversations,
     ConversationShareMultiple,
     SelectedConversationIndicator,
     ConversationListHeader,
+    SidebarFilters,
   },
 }
 </script>

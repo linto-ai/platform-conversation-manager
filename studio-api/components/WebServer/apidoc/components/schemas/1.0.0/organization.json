@@ -21,10 +21,7 @@
       "type": {
         "type": "string",
         "description": "The organization type",
-        "enum": [
-          "private",
-          "public"
-        ]
+        "enum": ["private", "public"]
       },
       "personal": {
         "type": "boolean",

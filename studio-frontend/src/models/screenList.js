@@ -1,6 +1,8 @@
+import { bus } from "../main.js"
+
 export class ScreenList {
   constructor() {
-    this.screens = new Map()
+    this.screens = {}
     this.size = 0
     this.first = null
   }
@@ -13,7 +15,7 @@ export class ScreenList {
         if (currentScreen) {
           let value = currentScreen
           currentId = currentScreen.next
-          currentScreen = this.screens.get(currentId)
+          currentScreen = this.screens[currentId]
           return { value: value, done: false }
         }
         return { done: true }
@@ -24,11 +26,11 @@ export class ScreenList {
   static from(screens) {
     let obj = new ScreenList()
     for (let [i, screen] of screens.entries()) {
-      obj.screens.set(screen.screen_id, {
+      obj.screens[screen.screen_id] = {
         screen: screen,
         prev: i > 0 ? screens[i - 1].screen_id : null,
         next: i < screens.length - 1 ? screens[i + 1].screen_id : null,
-      })
+      }
     }
     if (screens.length > 0) {
       obj.first = screens[0].screen_id
@@ -37,17 +39,27 @@ export class ScreenList {
     return obj
   }
 
+  getNextByN(screenId, n) {
+    let currentScreen = this.get(screenId)
+    let nextScreen = currentScreen
+    for (let i = 0; i < n; i++) {
+      nextScreen = this.get(nextScreen.next)
+    }
+    return nextScreen
+  }
+
   get(screenId) {
-    return this.screens.get(screenId)
+    return this.screens[screenId]
   }
 
   set(screenId, screen) {
-    if (this.screens.has(screenId)) {
-      this.screens.set(screenId, screen)
+    if (screenId in this.screens) {
+      this.screens[screenId] = screen
     }
   }
 
-  add(screenId, newScreen, after) {
+  // add a new screen after or before the screen with screenId
+  add(screenId, newScreen, after = false) {
     let addedScreen = {
       prev: null,
       next: null,
@@ -75,8 +87,17 @@ export class ScreenList {
       target.prev = newScreen.screen_id
     }
 
-    this.screens.set(newScreen.screen_id, addedScreen)
+    this.screens[newScreen.screen_id] = addedScreen
     this.size++
+  }
+
+  // add a list of new screens after the screen with screenId
+  addNScreens(screenId, newScreens) {
+    for (let i = 0; i < newScreens.length; i++) {
+      this.add(screenId, newScreens[i], after)
+      screenId = newScreens[i].screen_id
+    }
+    return screenId
   }
 
   merge(screenId, mergeWithNextSCreen) {
@@ -107,7 +128,6 @@ export class ScreenList {
 
   delete(screenId) {
     let target = this.get(screenId)
-
     let prev = this.get(target.prev)
     let next = this.get(target.next)
 
@@ -126,9 +146,34 @@ export class ScreenList {
       // start of list
       next.prev = target.prev
     }
-
-    this.screens.delete(screenId)
+    this.screens[screenId] = null
     this.size--
+    bus.$emit("delete_screen", { screenId })
     return screenId
+  }
+
+  deleteByN(screenId, n) {
+    let target = this.get(screenId)
+    for (let i = 0; i < n; i++) {
+      this.delete(screenId)
+      screenId = target.next
+    }
+    return screenId
+  }
+
+  applyDelta(delta) {
+    // delta is an array composed of {retain: n}, {insert: screen}, {delete: n}
+    let currentScreenId = this.first
+    for (let i = 0; i < delta.length; i++) {
+      let op = delta[i]
+      if (op.retain) {
+        currentScreenId = this.getNextByN(currentScreenId, op.retain).screen
+          .screen_id
+      } else if (op.insert) {
+        this.addNScreens(currentScreenId, op.insert)
+      } else if (op.delete) {
+        currentScreenId = this.deleteByN(currentScreenId, op.delete)
+      }
+    }
   }
 }

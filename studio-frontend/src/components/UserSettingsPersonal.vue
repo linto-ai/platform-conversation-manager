@@ -9,7 +9,7 @@
 
       <FormInput :field="lastName" v-model="lastName.value" />
 
-      <FormInput :field="email" v-model="email.value">
+      <FormInput :field="email" v-model="email.value" :disabled="fromSso">
         <template v-slot:content-after-label>
           <span
             class="icon email-verified"
@@ -57,6 +57,7 @@ import { bus } from "../main.js"
 import { formsMixin } from "@/mixins/forms.js"
 
 import { apiUpdateUserInfo, apiSendVerificationLink } from "@/api/user.js"
+import { apiAdminUpdateUser } from "@/api/admin.js"
 
 import { testName } from "@/tools/fields/testName"
 import { testEmail } from "@/tools/fields/testEmail"
@@ -69,6 +70,10 @@ export default {
     userInfo: {
       type: Object,
       required: true,
+    },
+    isAdminPage: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -100,6 +105,11 @@ export default {
     }
   },
   mounted() {},
+  computed: {
+    fromSso() {
+      return this.userInfo.fromSso
+    },
+  },
   methods: {
     async update(event) {
       event?.preventDefault()
@@ -108,20 +118,39 @@ export default {
         const payload = {
           firstname: this.firstName.value,
           lastname: this.lastName.value,
-          email: this.email.value,
         }
 
-        let req = await apiUpdateUserInfo(payload, {
-          timeout: 3000,
-          redirect: false,
-        })
+        if (!this.fromSso) {
+          payload["email"] = this.email.value
+        }
+
+        let req = null
+
+        if (!this.isAdminPage) {
+          req = await apiUpdateUserInfo(payload, {
+            timeout: 3000,
+            redirect: false,
+          })
+
+          if (req.status === "success") {
+            if (this.email.value !== this.userInfo.email) {
+              await this.sendVerificationEmail()
+            }
+          }
+        } else {
+          req = await apiAdminUpdateUser(this.userInfo._id, payload)
+        }
 
         if (req.status === "success") {
-          if (this.email.value !== this.userInfo.email) {
-            await this.sendVerificationEmail()
-          }
-          bus.$emit("user_settings_update", {})
+          bus.$emit("app_notif", {
+            status: "success",
+            message: this.$t("usersettings.notif_success"),
+          })
         } else {
+          bus.$emit("app_notif", {
+            status: "error",
+            message: this.$t("usersettings.notif_error"),
+          })
         }
       }
 

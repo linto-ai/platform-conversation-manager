@@ -1,5 +1,5 @@
 <template>
-  <!-- TODO: use api popover https://developer.mozilla.org/fr/docs/Web/API/Popover_API/Using -->
+  <!--  -->
   <div
     class="context-menu flex col"
     :style="style"
@@ -16,6 +16,31 @@ import { Fragment } from "vue-fragment"
 import findParentByClass from "../tools/findParentByClass"
 import { bus } from "../main.js"
 
+/*
+=== TODO ===
+  Placement is handmade, it's not perfect.
+  Use a lib like https://floating-ui.com/
+  or use api popover https://developer.mozilla.org/fr/docs/Web/API/Popover_API/Using (only supported by latest firefox ESR, end 2024 (no debian <= 12))
+  see https://mdn.github.io/dom-examples/popover-api/nested-popovers/ as example
+*/
+
+/* 
+=== USAGE ===
+  <container class="popover-parent">
+    <!-- First context-menu in the chain, set "overflow" prop if needed so it will not extend beyond the edge of the screen -->
+    <ContextMenu first>
+      <div class="context-menu__element">
+        content
+        <!-- Nested context-menu, will appear left or right and top or bottom depending of space on screen -->
+        <ContextMenu>
+        </ContextMenu>
+      </div>
+      <div class="context-menu__element">
+        another content
+      </div>
+    </ContextMenu>
+  </container>
+*/
 export default {
   props: {
     x: {
@@ -46,6 +71,10 @@ export default {
     },
     // this prop works only for last context-menu in the chain else next context-menu will be hidden
     overflow: {
+      type: Boolean,
+      default: false,
+    },
+    getContainerSize: {
       type: Boolean,
       default: false,
     },
@@ -86,7 +115,7 @@ export default {
 
       switch (this.positionMenuVertical) {
         case "top":
-          res["bottom"] = `${this.heightContainer - this.y}px`
+          res["bottom"] = `1rem`
           break
         case "bottom":
           res["top"] = `${this.YpositionBottom}px`
@@ -100,6 +129,13 @@ export default {
         case "right":
           res["left"] = `${this.Xposition}px`
           break
+      }
+
+      if (this.getContainerSize) {
+        const widthRelativeParent = this._topRelativeParent.clientWidth
+        res["min-width"] = `${widthRelativeParent}px`
+        res["width"] = "auto"
+        res["box-sizing"] = "border-box"
       }
 
       return res
@@ -143,7 +179,7 @@ export default {
           this.heightContent = this.$refs.content.clientHeight
           this.widthContent = this.$refs.content.clientWidth
           this.computeElementPosition()
-        }.bind(this)
+        }.bind(this),
       )
 
       this.resizeObserverContent.observe(this.$refs.content)
@@ -168,7 +204,7 @@ export default {
           this.heightContainer = this.container.clientHeight
           this.widthContainer = this.container.clientWidth
           this.computeElementPosition()
-        }.bind(this)
+        }.bind(this),
       )
 
       this.resizeObserverContainer.observe(this.container)
@@ -176,7 +212,7 @@ export default {
     computeElementPosition() {
       const relativeParent = findParentByClass(
         this.$refs.content,
-        "context-menu__element"
+        "context-menu__element",
       )
       // TODO: see https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API to update current position when scrolling
       if (this.first) {

@@ -77,9 +77,24 @@ export default {
       fields: ["versionName", "maxLength", "maxDuration"],
       selectOptions: {
         action: [
-          { value: 1, text: "Don't split" },
-          { value: 2, text: "Split over 2 lines" },
-          { value: 3, text: "Split over 3 lines" },
+          {
+            value: 1,
+            text: this.$i18n.t(
+              "conversation.subtitles.split_selection.no_split"
+            ),
+          },
+          {
+            value: 2,
+            text: this.$i18n.t(
+              "conversation.subtitles.split_selection.split_over_two_lines"
+            ),
+          },
+          {
+            value: 3,
+            text: this.$i18n.t(
+              "conversation.subtitles.split_selection.split_over_three_lines"
+            ),
+          },
         ],
       },
       selectedOptionValue: 1,
@@ -93,7 +108,7 @@ export default {
     },
     selectedOPtion() {
       return this.selectOptions.action.find(
-        (elem) => elem.value === this.selectedOptionValue,
+        (elem) => elem.value === this.selectedOptionValue
       )
     },
   },

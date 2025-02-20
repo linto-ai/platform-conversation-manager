@@ -1,35 +1,34 @@
 {
   "/api/conversations/{conversationId}/": {
     "get": {
-      "tags": [
-        "conversations member"
-      ],
+      "tags": ["conversations member"],
       "summary": "Retrieve a conversation based on an ID",
-      "parameters": [{
-        "in": "path",
-        "name": "conversationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an conversation"
-      },
-      {
-        "in": "query",
-        "name": "key",
-        "type": "string",
-        "required": false,
-        "example" : "tags,metadata",
-        "description": "Allow to filter key"
-      },
-      {
-        "in": "query",
-        "name": "projection",
-        "type": "integer",
-        "required": false,
-        "example": 1,
-        "description": "Allow to search or not the key filter `0` or `1` (default 1)"
-      }
-    ],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "conversationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an conversation"
+        },
+        {
+          "in": "query",
+          "name": "key",
+          "type": "string",
+          "required": false,
+          "example": "tags,metadata",
+          "description": "Allow to filter key"
+        },
+        {
+          "in": "query",
+          "name": "projection",
+          "type": "integer",
+          "required": false,
+          "example": 1,
+          "description": "Allow to search or not the key filter `0` or `1` (default 1)"
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",
@@ -51,18 +50,18 @@
       }
     },
     "patch": {
-      "tags": [
-        "conversations member"
-      ],
+      "tags": ["conversations member"],
       "summary": "Update a conversation based on an ID",
-      "parameters": [{
-        "in": "path",
-        "name": "conversationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an conversation"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "conversationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an conversation"
+        }
+      ],
       "requestBody": {
         "content": {
           "application/json": {
@@ -111,18 +110,18 @@
       }
     },
     "delete": {
-      "tags": [
-        "conversations member"
-      ],
+      "tags": ["conversations member"],
       "summary": "Delete a conversation based on an ID",
-      "parameters": [{
-        "in": "path",
-        "name": "conversationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an conversationId"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "conversationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an conversationId"
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK"
@@ -135,11 +134,10 @@
   },
   "/api/conversations/{conversationId}/user/{userId}": {
     "patch": {
-      "tags": [
-        "conversations member"
-      ],
+      "tags": ["conversations member"],
       "summary": "Grant access to a conversation from a member of an organization",
-      "parameters": [{
+      "parameters": [
+        {
           "in": "path",
           "name": "conversationId",
           "type": "string",
@@ -168,9 +166,7 @@
                 }
               }
             },
-            "required": [
-              "right"
-            ]
+            "required": ["right"]
           }
         }
       },
@@ -206,18 +202,18 @@
   },
   "/api/conversations/{conversationId}/users": {
     "get": {
-      "tags": [
-        "conversations member"
-      ],
+      "tags": ["conversations member"],
       "summary": "List all users who have an access to the conversation",
-      "parameters": [{
-        "in": "path",
-        "name": "conversationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an conversation"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "conversationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an conversation"
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",
@@ -245,24 +241,28 @@
               },
               "example": {
                 "conversationUsers": {
-                  "external_members": [{
-                    "_id": "6392f74a32d603288c910185",
-                    "email": "me@linagora.com",
-                    "firstname": "me",
-                    "lastname": "last",
-                    "img": "pictures/default.jpg",
-                    "role": 0,
-                    "right": "3"
-                  }],
-                  "organization_members": [{
-                    "_id": "634eae867d29b677f13e7e6c",
-                    "email": "first@linagora.com",
-                    "firstname": "name",
-                    "lastname": "second",
-                    "img": "pictures/default.jpg",
-                    "role": 3,
-                    "right": 31
-                  }]
+                  "external_members": [
+                    {
+                      "_id": "6392f74a32d603288c910185",
+                      "email": "me@linagora.com",
+                      "firstname": "me",
+                      "lastname": "last",
+                      "img": "pictures/default.jpg",
+                      "role": 0,
+                      "right": "3"
+                    }
+                  ],
+                  "organization_members": [
+                    {
+                      "_id": "634eae867d29b677f13e7e6c",
+                      "email": "first@linagora.com",
+                      "firstname": "name",
+                      "lastname": "second",
+                      "img": "pictures/default.jpg",
+                      "role": 3,
+                      "right": 31
+                    }
+                  ]
                 }
               }
             }
@@ -279,18 +279,18 @@
   },
   "/api/conversations/{conversationId}/rights": {
     "get": {
-      "tags": [
-        "conversations member"
-      ],
+      "tags": ["conversations member"],
       "summary": "Retrieve information about the access rights to the conversation",
-      "parameters": [{
-        "in": "path",
-        "name": "conversationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an conversation"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "conversationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an conversation"
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",
@@ -327,11 +327,10 @@
   },
   "/api/conversations/{conversationId}/download": {
     "post": {
-      "tags": [
-        "conversations member"
-      ],
+      "tags": ["conversations member"],
       "summary": "Download a conversation's subtitle in a desired format.",
-      "parameters": [{
+      "parameters": [
+        {
           "in": "path",
           "name": "conversationId",
           "type": "string",
@@ -346,14 +345,14 @@
           "schema": {
             "$ref": "#/components/schemas/DownloadConversationType"
           },
-          "description": "Dwonload type of media type:\n * `json` - Segment information with timestamp and speaker \n * `text` - Raw transcription \n * `docx` / `verbatim` - Generate a .docx file to download \n * `cri` / `cra` / `cred` / `resume` -  LLM request WIP (openai or mixtral) \n"
+          "description": "Download type of media type:\n * `json` - Segment information with timestamp and speaker \n * `text` - Raw transcription \n * `docx` / `verbatim` - Generate a .docx file to download \n * `cri` / `cra` / `cred` / `resume` -  LLM request WIP (openai or mixtral) \n"
         },
         {
           "in": "path",
           "name": "preview",
           "type": "boolean",
           "required": false,
-          "example" : "false",
+          "example": "false",
           "description": "Allow to generate a pdf preview on docx generated output"
         },
         {
@@ -361,7 +360,7 @@
           "name": "regenerate",
           "type": "boolean",
           "required": false,
-          "example" : "false",
+          "example": "false",
           "description": "Allow to regenerate an llm request"
         },
         {
@@ -400,9 +399,7 @@
   },
   "/api/conversations/{conversationId}/export/list": {
     "get": {
-      "tags": [
-        "conversations member"
-      ],
+      "tags": ["conversations member"],
       "summary": "Retrieve and list all the export requests that have been generated by an llm api",
       "responses": {
         "200": {

@@ -1,6 +1,8 @@
-const debug = require('debug')(`linto:components:MongoMigration:controllers:version:1.1.2:users`)
+const debug = require("debug")(
+  `linto:components:MongoMigration:controllers:version:1.1.2:users`,
+)
 
-const collections_name = 'users'
+const collections_name = "users"
 
 const migration_update = {
   emailNotifications: {
@@ -8,28 +10,34 @@ const migration_update = {
       share: {
         update: false,
         delete: false,
-        add: true
-      }
+        add: true,
+      },
     },
     organizations: {
       update: false,
       delete: false,
-      add: true
-    }
-  }
+      add: true,
+    },
+  },
 }
 
 const migration_to_remove = {
-  'emailNotifications.conversations.sharing': true
+  "emailNotifications.conversations.sharing": true,
 }
 
 module.exports = {
   up: async (db) => {
     db.collection(collections_name).updateMany({}, { $set: migration_update })
-    db.collection(collections_name).updateMany({}, { $unset: migration_to_remove })
+    db.collection(collections_name).updateMany(
+      {},
+      { $unset: migration_to_remove },
+    )
   },
   down: async (db) => {
     db.collection(collections_name).updateMany({}, { $unset: migration_update })
-    db.collection(collections_name).updateMany({}, { $set: migration_to_remove })
-  }
+    db.collection(collections_name).updateMany(
+      {},
+      { $set: migration_to_remove },
+    )
+  },
 }

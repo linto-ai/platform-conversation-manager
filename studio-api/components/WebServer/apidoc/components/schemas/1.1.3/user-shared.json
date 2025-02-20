@@ -25,7 +25,8 @@
       }
     },
     "example": {
-      "users": [{
+      "users": [
+        {
           "id": "64930e7dca6260263d8c9870",
           "right": 2
         },

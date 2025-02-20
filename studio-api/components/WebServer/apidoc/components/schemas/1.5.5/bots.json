@@ -1,0 +1,71 @@
+{
+    "BotAnswer": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer"
+            },
+            "url": {
+                "type": "string"
+            },
+            "provider": {
+                "type": "string"
+            },
+            "channelId": {
+                "type": "integer"
+            },
+            "enableLiveTranscripts": {
+                "type": "boolean"
+            },
+            "enableDisplaySub": {
+                "type": "boolean"
+            },
+            "subSource": {
+                "type": "string"
+            }
+        }
+    },
+    "BotRequest": {
+        "type": "object",
+        "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "description": "The URL to start the bot."
+            },
+            "channelId": {
+              "type": "integer",
+              "description": "The id of the channel."
+            },
+            "enableLiveTranscripts": {
+                "type": "boolean",
+                "description": "Set to False to disable transcription.",
+                "default": true
+            },
+            "enableDisplaySub": {
+                "type": "boolean",
+                "description": "Display the subtitles through the webcam.",
+                "default": true
+            },
+            "subSource": {
+                "type": "string",
+                "description": "Language candidate.",
+                "default": null
+            },
+            "provider": {
+              "type": "string",
+              "description": "The type of bot to start.",
+              "enum": [
+                "jitsi",
+                "youtube",
+                "bigbluebutton"
+              ]
+            }
+        },
+        "required": [
+          "url",
+          "channelId",
+          "botType"
+        ]
+    }
+}

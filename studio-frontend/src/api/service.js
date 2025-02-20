@@ -1,7 +1,9 @@
 import nextServices from "../const/nextServices"
 import { sendRequest } from "../tools/sendRequest"
 
-const BASE_API = process.env.VUE_APP_CONVO_API
+import { getEnv } from "@/tools/getEnv"
+
+const BASE_API = getEnv("VUE_APP_CONVO_API")
 
 function getLangCode(lang) {
   const lang_code = {
@@ -25,13 +27,22 @@ export async function apiGetTranscriptionService(lang, signal) {
     `${BASE_API}/services`,
     { method: "get", signal },
     {},
-    null
+    null,
   )
 
   try {
-    return getTranscriptionService?.data.filter(
-      (service) => lang_code_alias[lang].indexOf(service.language) !== -1
+    const res = getTranscriptionService?.data ?? []
+    const transcriptionServicesList = res.filter(
+      (service) => !service?.desc?.type,
     )
+
+    if (lang && lang !== "*") {
+      return transcriptionServicesList.filter(
+        (service) => lang_code_alias[lang].indexOf(service.language) !== -1,
+      )
+    } else {
+      return transcriptionServicesList
+    }
   } catch (e) {
     return []
   }
@@ -42,7 +53,7 @@ export async function apiGetNlpService(notif) {
     `${BASE_API}/services`,
     { method: "get" },
     {},
-    notif
+    notif,
   )
 
   const res = (getHighlightsService?.data ?? [])
@@ -57,7 +68,7 @@ export async function getLLMService() {
     `${BASE_API}/services/llm`,
     { method: "get" },
     {},
-    null
+    null,
   )
 
   if (req.status === "success") {
@@ -72,7 +83,7 @@ export async function apiGetMetadataLLMService(conversationId) {
     `${BASE_API}/conversations/${conversationId}/export/list`,
     { method: "get" },
     {},
-    null
+    null,
   )
 
   if (req.status === "success") {

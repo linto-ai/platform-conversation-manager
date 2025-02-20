@@ -1,8 +1,9 @@
-const debug = require('debug')('linto:components:WebServer:controller:filterRules')
+const debug = require("debug")(
+  "linto:components:WebServer:controller:filterRules",
+)
 
-const segmentWordResize = require('./segmentWordResize')
-const segmentCharResize = require('./segmentCharResize')
-
+const segmentWordResize = require("./segmentWordResize")
+const segmentCharResize = require("./segmentCharResize")
 
 function executeFilterRule(segments, filter) {
   let segment_filtered = []
@@ -22,7 +23,6 @@ function executeFilterRule(segments, filter) {
   }
 }
 
-
 module.exports = {
-  executeFilterRule
+  executeFilterRule,
 }

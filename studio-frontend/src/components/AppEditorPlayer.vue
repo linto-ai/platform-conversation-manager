@@ -1,5 +1,5 @@
 <template>
-  <div id="conversation-audio-player" class="flex col">
+  <div id="conversation-audio-player" class="flex col" v-if="!noPlayer">
     <AppPlayerHeader
       :playerError="playerError"
       :currentTime="currentTimeHMS"
@@ -15,6 +15,9 @@
       <div id="waveform" style="min-width: 300px; height: 40px"></div>
       <div id="waveform-timeline" style="min-width: 300px; height: 20px"></div>
     </div>
+  </div>
+  <div id="conversation-audio-player" v-else>
+    <slot></slot>
   </div>
 </template>
 <script>
@@ -74,10 +77,24 @@ export default {
         }
       }
     })
+
+    bus.$on("player-play", () => {
+      if (this.player) {
+        this.player.play()
+      }
+    })
+
+    bus.$on("player-pause", () => {
+      if (this.player) {
+        this.player.pause()
+      }
+    })
   },
   beforeDestroy() {
     bus.$off("refresh_audio_regions")
     bus.$off("player_set_time")
+    bus.$off("player-play")
+    bus.$off("player-pause")
   },
   computed: {
     currentTurn() {
@@ -154,7 +171,12 @@ export default {
     async initAudioPlayer() {
       try {
         await this.getAudioFile()
-        await this.getAudiowaveform()
+
+        if (!this.audioFile) {
+          this.noPlayer = true
+          throw "Audio is empty"
+        }
+        // await this.getAudiowaveform() audio waveform is now only generated front-end side
         this.player = WaveSurfer.create({
           container: "#waveform",
           waveColor: "#000",
@@ -187,6 +209,7 @@ export default {
         this.player.on("ready", () => {
           this.playerReady = true
           this.playerLoading = false
+          this.duration = this.player.getDuration()
           bus.$emit("player-ready")
         })
         this.player.once("decode", () => {
@@ -197,10 +220,10 @@ export default {
             this.regionsPlugin.regionsContainer.style.zIndex = "0"
             for (let region of this.regionsPlugin.regions) {
               let time = `(${timeToHMS(region.start)} - ${timeToHMS(
-                region.end
+                region.end,
               )})`
               let name = this.speakersTurnsTimebox.find(
-                (e) => e.turn_id == region.id
+                (e) => e.turn_id == region.id,
               )
               region.element.title = `${name.speakerName} ${time}`
             }

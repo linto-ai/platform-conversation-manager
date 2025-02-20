@@ -1,0 +1,114 @@
+{
+  "ServicesLlm": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "backend": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "object",
+          "properties": {
+            "fr": {
+              "type": "string"
+            },
+            "en": {
+              "type": "string"
+            },
+            "lang_x": {
+              "type": "string"
+            }
+          }
+        },
+        "flavor": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "createNewTurnAfter": {
+                "type": "integer",
+                "example": 256
+              },
+              "maxGenerationLength": {
+                "type": "integer",
+                "example": 1024
+              },
+              "maxNewTurns": {
+                "type": "integer",
+                "example": 5
+              },
+              "modelName": {
+                "type": "string",
+                "example": "llama"
+              },
+              "name": {
+                "type": "string",
+                "example": "llama3"
+              },
+              "summaryTurns": {
+                "type": "integer",
+                "example": 5
+              },
+              "temperature": {
+                "type": "number",
+                "format": "float",
+                "example": 0.5
+              },
+              "tokenizerClass": {
+                "type": "string",
+                "example": "LlamaTokenizer"
+              },
+              "top_p": {
+                "type": "number",
+                "format": "float",
+                "example": 0.5
+              },
+              "totalContextLength": {
+                "type": "integer",
+                "example": 1024
+              }
+            }
+          }
+        }
+      }
+    },
+    "example": [
+      [
+        {
+          "backend": "vLLM",
+          "description": {
+            "en": "Speaker turn summary",
+            "fr": "Résumé des tours de parole"
+          },
+          "fields": 2,
+          "flavor": [
+            {
+              "createNewTurnAfter": 256,
+              "maxGenerationLength": 1024,
+              "maxNewTurns": 5,
+              "modelName": "llama",
+              "name": "llama3",
+              "summaryTurns": 5,
+              "temperature": 0.5,
+              "tokenizerClass": "LlamaTokenizer",
+              "top_p": 0.5,
+              "totalContextLength": 1024
+            }
+          ],
+          "name": "summary",
+          "type": "summary"
+        }
+      ]
+    ]
+  }
+}

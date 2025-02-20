@@ -1,5 +1,12 @@
+LOG_LEVEL=debug
+LOG_FORMAT=text
+
 COMPONENTS=WebServer,MongoMigration
 WEBSERVER_HTTP_PORT=80
+WEBSERVER_SESSION_SECRET=secret
+
+FRONTEND_DOMAIN=
+DEFAULT_USER_ROLE=1
 
 # Optional for swagger
 WEBSERVER_SWAGGER_HTTP_HOST=localhost
@@ -14,13 +21,14 @@ DB_PASS=example
 DB_NAME=conversations
 
 # Request a specific version of the database (optional)
-DB_MIGRATION_TARGET=1.4.2
+DB_MIGRATION_TARGET=1.5.6
 
 # STT Config
 GATEWAY_SERVICES=https://api.linto.ai
 
 # LLM Config
 LLM_GATEWAY_SERVICES=
+LLM_GATEWAY_SERVICES_WS=
 
 # NLP Service
 NLP_SERVICES=<nlp_service_host>
@@ -49,11 +57,44 @@ SMTP_AUTH=
 SMTP_PSWD=
 NO_REPLY_EMAIL=
 
-OPENAI_API_KEY=
-MIXTRAL_API_HOST=
-
 VOLUME_FOLDER=storages
 VOLUME_AUDIO_PATH=audios
 VOLUME_PROFILE_PICTURE_PATH=pictures
 
 DISABLE_USER_CREATION=false
+DISABLE_DEFAULT_ORGANIZATION_CREATION=false
+
+EXPORT_TEMPLATE=default
+
+# ORGANIZATION_DEFAULT_PERMISSIONS supported value are "upload,summary,session"
+ORGANIZATION_DEFAULT_PERMISSIONS=upload,summary,session
+
+
+SUPER_ADMIN_EMAIL=
+SUPER_ADMIN_PWD=
+
+# Bellow are the settings require for the session service
+SESSION_API_ENDPOINT=
+
+BROKER_HOST=localhost
+BROKER_PORT=1883
+BROKER_USERNAME=
+BROKER_PASSWORD=
+BROKER_KEEPALIVE=60
+BROKER_PROTOCOL=mqtt
+
+# Token duration settings possible in m, h, d
+TOKEN_DAYS_TIME=7d
+REFRESH_TOKEN_DAYS_TIME=14d
+
+# Authentification settings
+JWT_ALGORITHM=HS256
+LOCAL_AUTH_ENABLED=true
+
+# OIDC Type supported are : linagora
+OIDC_TYPE=
+OIDC_URL=
+OIDC_CLIENT_ID=
+OIDC_CLIENT_SECRET=
+OIDC_CALLBACK_URI=
+OIDC_SCOPE=openid,email,profile

@@ -7,7 +7,7 @@ def buildDockerfile(folder_name, version) {
         def image = docker.build(completeImageName, "-f ${folder_name}/Dockerfile ./${folder_name}")
 
         echo "Prepare to release newer version ${completeImageName}:${version}"
-        docker.withRegistry('https://registry.linto.ai', env.DOCKER_HUB_CRED) {
+        docker.withRegistry('https://registry.hub.docker.com', env.DOCKER_HUB_CRED) {
             if (version  == 'latest-unstable') {
                 image.push('latest-unstable')
             } else {
@@ -44,8 +44,8 @@ def performBuildForFile(changedFiles, version) {
 pipeline {
     agent any
     environment {
-        DOCKER_HUB_REPO = "linto-studio"
-        DOCKER_HUB_CRED = 'harbor-jenkins-robot'
+        DOCKER_HUB_REPO = "lintoai"
+        DOCKER_HUB_CRED = 'docker-hub-credentials'
     }
 
     stages {

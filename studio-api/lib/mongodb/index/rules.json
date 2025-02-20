@@ -1,43 +1,46 @@
 {
-    "categories": [{
-            "name": 1,
-            "organizationId": 1
-        },
-        {
-            "tags": 1,
-            "organizationId ": 1
-        }
-    ],
+  "categories": [
+    {
+      "name": 1,
+      "organizationId": 1
+    },
+    {
+      "tags": 1,
+      "organizationId ": 1
+    }
+  ],
 
-    "tags": [{
-            "name": 1,
-            "organizationId": 1
-        },
-        {
-            "categoryId": 1,
-            "organizationId": 1
-        },
-        {
-            "categoryId": 1
-        }
-    ],
+  "tags": [
+    {
+      "name": 1,
+      "organizationId": 1
+    },
+    {
+      "categoryId": 1,
+      "organizationId": 1
+    },
+    {
+      "categoryId": 1
+    }
+  ],
 
-    "conversations": [{
-            "name": 1,
-            "organization.organizationId": 1
-        },
-        {
-            "text": 1,
-            "organization.organizationId": 1
-        },
-        {
-            "tags": 1,
-            "organization.organizationId": 1
-        },
-        {
-            "_id": 1,
-            "name": 1,
-            "text": 1
-        }
-    ]
+  "conversations": [
+    {
+      "name": 1,
+      "organization.organizationId": 1
+    },
+    {
+      "text": 1,
+      "organization.organizationId": 1
+    },
+    {
+      "tags": 1,
+      "organization.organizationId": 1
+    },
+    {
+      "_id": 1,
+      "name": 1,
+      "text": 1
+    }
+  ]
 }

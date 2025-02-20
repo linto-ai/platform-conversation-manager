@@ -1,0 +1,228 @@
+#conversation.subtitles {
+  padding: 0;
+}
+
+#subtitle-editor {
+  box-shadow: 0px 0px 16px 0 rgba(67, 76, 95, 0.75);
+  background-color: var(--background-primary);
+  z-index: 2;
+}
+
+#conversation-audio-player.conversation-audio-player--subtitle {
+  border-top: none;
+}
+
+#player-seekbar {
+  width: 100%;
+  margin-left: 1rem;
+}
+
+#subtitle-player ::part(scroll) {
+  overflow: hidden !important;
+}
+
+#subtitle-player ::part(region) {
+  height: fit-content !important;
+  border: 1px solid var(--secondary-color) !important;
+  border-radius: 5px !important;
+  display: flex;
+  align-items: center;
+  background-color: var(--player-region-background) !important;
+  height: 70px !important;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(0.5px);
+}
+
+#subtitle-player ::part(playing) {
+  border-color: var(--primary-color) !important;
+  background-color: var(--player-region-background-playing) !important;
+}
+
+#subtitle-player ::part(region-content) {
+  padding: 0 0 0 1rem !important;
+  margin: 0 !important;
+  overflow: hidden;
+  max-height: 100%;
+  flex: 1;
+}
+
+.subtitle-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+#version-list {
+  max-width: calc(100% - 3rem);
+  width: 50rem;
+}
+
+.subtitle-list-item {
+  border: var(--border-block);
+  border-radius: 4px;
+  box-shadow: var(--shadow-block);
+  background-color: var(--background-primary);
+  margin: 0;
+  padding: 1rem;
+
+  & h3 {
+    padding: 0;
+    overflow: hidden;
+    & > a {
+      color: var(--blue-chart);
+      text-overflow: ellipsis;
+      max-width: 100%;
+      font-weight: inherit;
+    }
+  }
+
+  & .actions {
+    margin-left: 1rem;
+  }
+}
+
+.screen-timestamp {
+  font-family: Noto Sans Mono, monospace;
+  margin: 0.25rem 0;
+  width: 6rem;
+  margin-right: 2rem;
+}
+
+.screen-timestamp-line {
+  line-height: 1em;
+  text-align: right;
+}
+
+.screen {
+  border: 1px solid transparent;
+  padding-right: 0.25rem;
+  font-family: $luciole;
+  background-color: var(--background-primary);
+  border: var(--border-block);
+  margin-bottom: 0.5rem;
+  padding: 0.25rem;
+
+  &.playing {
+    // border-radius: 10px;
+    // border: 1px solid var(--green-chart);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+}
+
+.empty-screen-block {
+  text-align: center;
+  font-style: italic;
+  align-self: center;
+}
+
+#screen-editor {
+  margin: 0 auto 1rem auto;
+  padding: 0.5rem 1rem 0 1rem;
+  border-top: var(--border-button);
+  background-color: var(--background-primary);
+}
+
+.screen-preview {
+  padding: 0.25rem;
+  box-sizing: border-box;
+  height: calc(3em + 1.75rem + 2px);
+  overflow: auto;
+
+  &.current {
+    border: 1px solid var(--green-chart);
+    border-radius: 3px;
+    background-color: var(--input-background);
+  }
+
+  &.locked {
+    background-color: var(--background-lock-turn);
+    border: var(--border-lock-turn);
+  }
+
+  p,
+  div {
+    margin: 0rem 0;
+  }
+}
+
+#current-screen-label {
+  color: var(--green-chart);
+}
+
+#screen-list {
+  overflow-y: scroll;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  // background-color: var(--background-primary);
+  // border-left: var(--border-block);
+
+  & > div:first-child {
+    margin-top: 1rem;
+  }
+
+  & > div:last-child {
+    margin-bottom: 1rem;
+  }
+}
+
+#video-player {
+  margin: 3rem 5rem 3rem 5rem;
+  position: relative;
+
+  & .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  & .video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    align-items: center;
+    & .video-content {
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+    & video,
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+}
+
+#video {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  max-height: 100%;
+}
+
+#video-preview {
+  width: 100%;
+  height: auto;
+}
+
+.screen-container {
+  position: absolute;
+  align-items: center;
+  bottom: 3rem;
+  left: 0;
+  width: 100%;
+  font-size: 1.2rem;
+
+  & .screen-line {
+    color: white;
+    width: fit-content;
+    text-align: center;
+    background: black;
+  }
+}

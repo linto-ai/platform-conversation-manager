@@ -1,0 +1,107 @@
+{
+  "components": [
+    {
+      "tag": "qr-code",
+      "dependencies": [],
+      "componentClass": "BpQRCode",
+      "componentPath": "components/qr-code/qr-code.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/qr-code/qr-code.css"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "contents",
+          "type": "String",
+          "attr": "contents",
+          "watch": [
+            "updateQR"
+          ]
+        },
+        {
+          "name": "maskXToYRatio",
+          "type": "Number",
+          "attr": "mask-x-to-y-ratio",
+          "watch": [
+            "updateQR"
+          ]
+        },
+        {
+          "name": "moduleColor",
+          "type": "String",
+          "attr": "module-color",
+          "watch": [
+            "updateQR"
+          ]
+        },
+        {
+          "name": "positionCenterColor",
+          "type": "String",
+          "attr": "position-center-color",
+          "watch": [
+            "updateQR"
+          ]
+        },
+        {
+          "name": "positionRingColor",
+          "type": "String",
+          "attr": "position-ring-color",
+          "watch": [
+            "updateQR"
+          ]
+        },
+        {
+          "name": "protocol",
+          "type": "String",
+          "attr": "protocol",
+          "watch": [
+            "updateQR"
+          ]
+        },
+        {
+          "name": "squares",
+          "type": "Boolean",
+          "attr": "squares",
+          "watch": [
+            "updateQR"
+          ]
+        }
+      ],
+      "states": [
+        {
+          "name": "data"
+        },
+        {
+          "name": "moduleCount"
+        }
+      ],
+      "methods": [
+        {
+          "name": "animateQRCode"
+        },
+        {
+          "name": "getModuleCount"
+        }
+      ],
+      "hostElement": {
+        "name": "qrCodeElement"
+      },
+      "events": [
+        {
+          "event": "codeRendered"
+        }
+      ],
+      "shadow": true
+    }
+  ],
+  "collections": [],
+  "compiler": {
+    "name": "@stencil/core",
+    "version": "0.10.10",
+    "typescriptVersion": "2.9.2"
+  },
+  "bundles": []
+}

@@ -1,38 +1,43 @@
-FROM node:16.2.0
+FROM node:20.15.1
 
 RUN apt-get update -y && \
-  apt-get install gettext -y && \
-  apt-get install ffmpeg -y && \
-  apt-get install cron -y  && \
-  apt-get install zip -y
+  apt-get install -y \
+  gettext \
+  ffmpeg \
+  cron \
+  zip \
+  build-essential \
+  libboost-program-options-dev \
+  libboost-filesystem-dev \
+  libboost-date-time-dev \
+  libboost-regex-dev \
+  libmad0-dev \
+  libid3tag0-dev \
+  libgd-dev && \
+  apt-get install -y libreoffice --fix-missing 
 
-
-RUN apt-get install -y \
-    build-essential \
-    libboost-program-options-dev \
-    libboost-filesystem-dev \
-    libboost-date-time-dev \
-    libboost-regex-dev \
-    libmad0-dev \
-    libid3tag0-dev \ 
-    libgd-dev
-    
 RUN apt update -y && apt install -y libreoffice --fix-missing
 
 WORKDIR /usr/src/app/conversation-manager
 COPY . /usr/src/app/conversation-manager
 
-RUN cp /usr/src/app/conversation-manager/config/bin/audiowaveform /usr/local/bin/audiowaveform
+# Move binaries to their respective locations
+RUN cp config/bin/yt-dlp_linux /usr/local/bin/yt-dlp
 
 RUN npm install
 
-RUN chmod 0644 /usr/src/app/conversation-manager/config/cron/backup-cron && \
-  crontab /usr/src/app/conversation-manager/config/cron/backup-cron
+# Set up cron job with
+RUN chmod 0644 config/cron/backup-cron && \
+  crontab config/cron/backup-cron
 
-#LOCAL END
-HEALTHCHECK CMD curl -f http://localhost
+RUN service cron start
+
+RUN chown -R node:node /usr/src/app/
+USER node
+
+HEALTHCHECK CMD curl -f http://localhost || exit 1
 EXPOSE 80
 
-COPY ./wait-for-it.sh /
-COPY ./docker-entrypoint.sh /
+COPY wait-for-it.sh /
+COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]

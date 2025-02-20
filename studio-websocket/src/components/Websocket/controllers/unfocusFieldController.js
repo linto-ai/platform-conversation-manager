@@ -5,7 +5,7 @@ export function unfocusField(
   userId,
   socket,
   userToken,
-  selfMsg
+  selfMsg,
 ) {
   let conversation = Conversations.getById(conversationId)
   conversation.resetUsers(userId, userToken)

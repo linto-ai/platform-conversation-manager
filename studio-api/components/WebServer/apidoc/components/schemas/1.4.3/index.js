@@ -1,3 +1,3 @@
 module.exports = {
-  ...require('./export-list.json')
+  ...require("./export-list.json"),
 }

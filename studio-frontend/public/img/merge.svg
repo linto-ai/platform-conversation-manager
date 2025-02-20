@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   fill="none"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="merge.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     showguides="true"
+     inkscape:zoom="30.958333"
+     inkscape:cx="10.384926"
+     inkscape:cy="11.983849"
+     inkscape:window-width="1920"
+     inkscape:window-height="1007"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6">
+    <sodipodi:guide
+       position="0.96904441,15.149394"
+       orientation="1,0"
+       id="guide1518"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <path
+     d="m 1.9663527,16.935397 h 2.73524 c 1.40505,0 2.6101756,-0.931009 3.365367,-1.748191 l 3.6372893,-3.27345"
+     stroke="#292929"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path2"
+     sodipodi:nodetypes="cscc" />
+  <path
+     d="m 1.9663527,6.1640925 h 2.73524 c 1.40505,0 2.6101756,0.931009 3.365367,1.748191 L 11.70425,11.185733"
+     stroke="#292929"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path943"
+     sodipodi:nodetypes="cscc" />
+  <path
+     d="m 21.769853,11.822342 -2,2 m 2,-2 -2,-1.9999996"
+     stroke="#292929"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path1003"
+     sodipodi:nodetypes="cccc" />
+  <path
+     d="m 11.915209,11.655344 8.84022,0.0323"
+     stroke="#292929"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path1520"
+     sodipodi:nodetypes="cc" />
+</svg>

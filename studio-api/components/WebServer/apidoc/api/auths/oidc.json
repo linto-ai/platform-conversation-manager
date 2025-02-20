@@ -1,0 +1,35 @@
+{
+  "/auth/oidc/login": {
+    "get": {
+      "tags": ["auth"],
+      "summary": "Authenticate user with the configured OIDC provider. There is no success response due to the redirection to the OIDC provider.",
+      "requestBody": {},
+      "responses": {
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "500": {
+          "$ref": "#/components/responses/InternalServer"
+        }
+      }
+    }
+  },
+
+  "/auth/oidc/token": {
+    "get": {
+      "tags": ["auth"],
+      "summary": "Allow to get the user token for it's OIDC login",
+      "responses": {
+        "200": {
+          "$ref": "#/components/responses/Authenticate"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "500": {
+          "$ref": "#/components/responses/InternalServer"
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
-const debug = require('debug')('linto:lib:Mailer:templates:builder:html')
+const debug = require("debug")("linto:lib:Mailer:templates:builder:html")
 
-const mailTitle = require('./title')
-const mailBody = require('./body')
+const mailTitle = require("./title")
+const mailBody = require("./body")
 
 module.exports = function (Type, payload) {
   return `

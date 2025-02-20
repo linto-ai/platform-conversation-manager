@@ -82,7 +82,7 @@ app.get("/users/:id", async function (req, res) {
   }
 })
 
-app.listen(80) //as stated in dockerfile : EXPOSE 80
+app.listen(process.env.WEBSERVER_HTTP_PORT)
 console.log(
   `Back Office Dashboard Started`
 )

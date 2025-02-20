@@ -3,7 +3,8 @@
     noBreadcrumb
     :organizationPage="organizationPage"
     :sidebar="sidebar"
-    fullwidthContent
+    :box="box"
+    :fullwidthContent="!box"
     v-if="dataLoaded && status == 'done'">
     <template v-slot:breadcrumb-actions>
       <slot name="breadcrumb-actions"></slot>
@@ -23,7 +24,7 @@
       :conversation="conversation"></conversationStatusError>
   </div>
   <div v-else-if="!error" id="conversation-is-loading">
-    <Loading></Loading>
+    <Loading :title="dataLoadedStatus"></Loading>
   </div>
   <div v-else>
     <ErrorView></ErrorView>
@@ -49,6 +50,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    dataLoadedStatus: {
+      type: String,
+      default: null,
+    },
     error: {
       type: Boolean,
       required: true,
@@ -62,6 +67,10 @@ export default {
       default: false,
     },
     organizationPage: {
+      type: Boolean,
+      default: false,
+    },
+    box: {
       type: Boolean,
       default: false,
     },

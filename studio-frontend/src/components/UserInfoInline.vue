@@ -1,7 +1,7 @@
 <template>
   <div class="flex align-center user-info-inline gap-small flex1">
     <img :src="imgFullPath(user.img)" class="user-info-inline__avatar" />
-    <span v-if="user" class="flex col align-top flex1">
+    <div v-if="user" class="flex col align-top flex1 text-cut">
       <div class="user-info-inline__name flex align-top fullwidth gap-tiny">
         <span
           class="flex1 text-cut"
@@ -10,9 +10,9 @@
         >
         <span class="user-info-inline__external" v-if="external">External</span>
       </div>
-      <div class="user-info-inline__email">({{ userData.email }})</div>
-    </span>
-    <span v-else> - </span>
+      <div class="user-info-inline__email text-cut">({{ userData.email }})</div>
+    </div>
+    <div v-else>-</div>
     <slot></slot>
   </div>
 </template>

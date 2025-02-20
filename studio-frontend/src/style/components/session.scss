@@ -1,0 +1,154 @@
+.session-content {
+  overflow: auto;
+  font-size: 18px;
+}
+
+.session-content__turns {
+  container-type: inline-size;
+  container-name: session-content;
+  gap: 0.75em;
+}
+
+.session-content__action-bar {
+  position: absolute;
+  top: 0;
+  background-color: var(--background-primary);
+  border-bottom: var(--divider);
+  box-shadow: var(--shadow-block);
+  z-index: 4;
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  padding: 0.5rem 2rem;
+}
+
+.channel-turn {
+  display: grid;
+  grid-template-columns: auto 60em;
+  margin-inline: auto;
+  gap: 1em;
+}
+
+@container session-content (max-width: 70em) {
+  .channel-turn {
+    grid-template-columns: auto 1fr;
+    margin-inline: 1rem;
+  }
+}
+
+.channel-turn__text {
+  text-align: justify;
+  font-family: luciole;
+  line-height: 1.3em;
+  padding: calc(0.25rem + 1px);
+}
+
+.channel-turn__text[selected] {
+  border: 1px solid var(--primary-color);
+  background-color: var(--selected-background);
+  padding: calc(0.25rem + 0px);
+  border-radius: 3px;
+}
+
+// not supported in firefox ESR (2024 / v121), so we need js code
+.session-content__turns:has(+ .session-content__subtitle) {
+  margin-bottom: calc(96px + 40px);
+}
+
+// TODO: remove this when firefox ESR will support :has
+.session-content__turns.has_subtitles {
+  margin-bottom: calc(96px + 40px);
+}
+
+.channel-turn__metadata {
+  text-align: right;
+  font-size: 0.8em;
+  width: 10rem;
+}
+
+.session-content__title {
+  font-size: 2em;
+}
+
+.session-content__subtitle {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: black;
+  color: white;
+
+  box-sizing: border-box;
+  //padding-top: 20px;
+  //padding-bottom: 20px;
+}
+
+#scroller {
+  // height: 96px;
+  //line-height: 1.2em;
+  overflow: hidden;
+}
+
+.bottom-session-button {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+
+  &.has_subtitles {
+    bottom: calc(96px + 40px + 1rem);
+  }
+}
+
+.session-endpoint-label {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.session-settings-topbar {
+}
+
+.session-settings-topbar[haschanged] {
+  background-color: var(--bg-highlight);
+}
+
+.session-settings-qr-code {
+  max-width: 300px;
+}
+
+.session-status {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  text-decoration: none !important;
+}
+
+.session-on-air {
+  border-radius: 55px;
+  //background-color: red;
+  color: $redChart;
+  font-weight: bold;
+  font-variant: all-petite-caps;
+  .icon {
+    background-color: white;
+  }
+}
+
+.session-on-air.session-on-air--muted {
+  color: var(--text-primary);
+
+  .icon {
+    background-color: var(--text-primary);
+    margin: 0;
+  }
+}
+
+.session-on-air.session-on-air--off {
+  color: #62111e;
+}
+
+.session-microphone-status {
+  padding: 1rem;
+  border: var(--divider);
+  margin: 0 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+}

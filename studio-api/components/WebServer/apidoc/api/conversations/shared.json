@@ -1,17 +1,17 @@
 {
   "/api/conversations/shared/tags": {
     "get": {
-      "tags": [
-        "conversations"
-      ],
+      "tags": ["conversations"],
       "summary": "List tags from favorites conversations of the connected user",
-      "parameters": [{
-        "in": "query",
-        "name": "tags",
-        "required": false,
-        "description": "List of tags id to filter for",
-        "example": "5e9b1b9b0f9b2c0017b5f1b5,5e9b1b9b0f9b2c0017b5f1b6,..."
-      }],
+      "parameters": [
+        {
+          "in": "query",
+          "name": "tags",
+          "required": false,
+          "description": "List of tags id to filter for",
+          "example": "5e9b1b9b0f9b2c0017b5f1b5,5e9b1b9b0f9b2c0017b5f1b6,..."
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",
@@ -41,9 +41,7 @@
   },
   "/api/conversations/shared/access": {
     "post": {
-      "tags": [
-        "conversations"
-      ],
+      "tags": ["conversations"],
       "summary": "Add access to user from a conversation list",
       "requestBody": {
         "content": {
@@ -67,10 +65,7 @@
                 }
               }
             },
-            "required": [
-              "conversations",
-              "users"
-            ]
+            "required": ["conversations", "users"]
           }
         }
       },
@@ -98,9 +93,7 @@
       }
     },
     "patch": {
-      "tags": [
-        "conversations"
-      ],
+      "tags": ["conversations"],
       "summary": "Update access to user from a conversation list",
       "requestBody": {
         "content": {
@@ -124,10 +117,7 @@
                 }
               }
             },
-            "required": [
-              "conversations",
-              "users"
-            ]
+            "required": ["conversations", "users"]
           }
         }
       },
@@ -155,9 +145,7 @@
       }
     },
     "delete": {
-      "tags": [
-        "conversations"
-      ],
+      "tags": ["conversations"],
       "summary": "Remove access to user from a conversation list",
       "requestBody": {
         "content": {
@@ -181,10 +169,7 @@
                 }
               }
             },
-            "required": [
-              "conversations",
-              "users"
-            ]
+            "required": ["conversations", "users"]
           }
         }
       },

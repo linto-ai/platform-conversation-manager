@@ -1,0 +1,15 @@
+.highlights-list {
+  padding: 0 0.5rem;
+  margin: 0 0.5rem;
+  // border: var(--border-block);
+}
+
+.highlights-list__title {
+  //font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: underline;
+}

@@ -44,8 +44,6 @@ export const conversationMixin = {
           bus.$emit("words_updated", {
             ...event.data.params,
           })
-          this.conversation.text[event.data.params.turnIndex].words =
-            event.data.params.value
           break
         case "segment_updated":
           bus.$emit("segment_updated", {
@@ -59,6 +57,7 @@ export const conversationMixin = {
           break
         case "turn_list_updated":
           this.updateConversationTurns(event.data.params)
+          bus.$emit("refresh_turns", {})
           bus.$emit("refresh_spk_timebox", {})
           break
         case "speaker_list_updated":

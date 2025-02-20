@@ -1,0 +1,32 @@
+.overview-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: inherit;
+  // border: var(--border-block);
+  // background-color: var(--background-primary);
+  padding: 1rem 2rem 1rem 2rem;
+  //margin-top: 2rem;
+  gap: 1rem;
+}
+
+.overview-container .overview__main-section {
+  border: var(--border-block);
+  background-color: var(--background-primary);
+  margin-top: 1rem;
+  padding: 1rem 2rem 1rem 2rem;
+  border-radius: 4px;
+  box-shadow: var(--shadow-block);
+}
+
+.conversation-overview-h1 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.conversation-overview-links {
+  padding: 10px;
+
+  a {
+    color: var(--blue-chart);
+  }
+}

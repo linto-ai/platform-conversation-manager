@@ -1,7 +1,16 @@
 import { sendRequest } from "../tools/sendRequest"
 import { sendMultipartFormData } from "../tools/sendMultipartFormData"
 
-const BASE_API = process.env.VUE_APP_CONVO_API
+import { getEnv } from "@/tools/getEnv"
+
+const BASE_API = getEnv("VUE_APP_CONVO_API")
+const BASE_AUTH = getEnv("VUE_APP_CONVO_AUTH")
+
+export async function apiGetUsers() {
+  const res = await sendRequest(`${BASE_API}/users`, { method: "get" })
+
+  return res?.data || []
+}
 
 export async function apiGetPersonalUserInfo() {
   const getUserInfos = await sendRequest(`${BASE_API}/users/self`, {
@@ -24,7 +33,7 @@ export async function apiGetUsersByConversationId(conversationId, notif) {
     `${BASE_API}/conversations/${conversationId}/users`,
     { method: "get" },
     null,
-    notif
+    notif,
   )
 
   return res?.data?.conversationUsers
@@ -34,13 +43,13 @@ export async function apiUpdateUserRightInConversation(
   conversationId,
   userId,
   right,
-  notif
+  notif,
 ) {
   return await sendRequest(
     `${BASE_API}/conversations/${conversationId}/users/${userId}`,
     { method: "patch" },
     { right: right },
-    notif
+    notif,
   )
 }
 
@@ -48,7 +57,7 @@ export async function apiUpdateMultipleUsersInMultipleConversations(
   conversationsIds,
   users,
   organizationId,
-  notif
+  notif,
 ) {
   return await sendRequest(
     `${BASE_API}/conversations/shared/access`,
@@ -58,44 +67,44 @@ export async function apiUpdateMultipleUsersInMultipleConversations(
       users: JSON.stringify({ users }),
       organizationId,
     },
-    notif
+    notif,
   )
 }
 
 export async function apiRemoveUserFromOrganisation(
   organizationId,
   userId,
-  notif
+  notif,
 ) {
   return await sendRequest(
     `${BASE_API}/organizations/${organizationId}/users`,
     { method: "delete" },
     { userId },
-    notif
+    notif,
   )
 }
 
 export async function apiLoginUser(email, password) {
   return await sendRequest(
-    `${process.env.VUE_APP_CONVO_AUTH}/login`,
+    `${BASE_AUTH}/login`,
     { method: "post" },
     {
       email,
       password,
     },
-    {}
+    {},
   )
 }
 
 export async function apiLoginUserMagicLink(magicId) {
   return await sendRequest(
-    `${process.env.VUE_APP_CONVO_AUTH}/login/magic-link`,
+    `${BASE_AUTH}/login/magic-link`,
     { method: "post" },
     {
       psw: "psw", // Needed
       magicId,
     },
-    {}
+    {},
   )
 }
 
@@ -103,16 +112,16 @@ export async function apiAddUserToOrganisation(
   organizationId,
   email,
   role = 1,
-  notif
+  notif,
 ) {
   return await sendRequest(
-    `${process.env.VUE_APP_CONVO_API}/organizations/${organizationId}/users`,
+    `${BASE_API}/organizations/${organizationId}/users`,
     { method: "post" },
     {
       email,
       role,
     },
-    notif
+    notif,
   )
 }
 
@@ -120,73 +129,81 @@ export async function apiUpdateUserRoleInOrganisation(
   organizationId,
   userId,
   role,
-  notif
+  notif,
 ) {
   return await sendRequest(
-    `${process.env.VUE_APP_CONVO_API}/organizations/${organizationId}/users`,
+    `${BASE_API}/organizations/${organizationId}/users`,
     { method: "patch" },
     {
       role,
       userId,
     },
-    notif
+    notif,
   )
 }
 
-// export async function apiUpdateSelfVisibility(
-//   organizationId,
-//   visibility,
-//   notif
-// ) {
-//   return await sendRequest(
-//     `${process.env.VUE_APP_CONVO_API}/organizations/${organizationId}/self`,
-//     { method: "patch" },
-//     { visibility },
-//     notif
-//   )
-// }
-
 export async function apiSearchUser(search, signal, notif) {
   return await sendRequest(
-    `${process.env.VUE_APP_CONVO_API}/users/search`,
+    `${BASE_API}/users/search`,
     { method: "get", signal },
     { search },
-    notif
+    notif,
   )
 }
 
 export async function apiUpdateUserInfo(payload, notif) {
   return await sendRequest(
-    `${process.env.VUE_APP_CONVO_API}/users/self`,
+    `${BASE_API}/users/self`,
     { method: "put" },
     payload,
-    notif
+    notif,
   )
 }
 
 export async function apiRecoverPassword(email, notif) {
   return await sendRequest(
-    `${process.env.VUE_APP_CONVO_API}/users/self/reset-password`,
+    `${BASE_API}/users/self/reset-password`,
     { method: "post" },
     { email },
-    notif
+    notif,
   )
 }
 
 export async function apiCreateUser(payload, notif) {
   return await sendMultipartFormData(
-    `${process.env.VUE_APP_CONVO_API}/users`,
+    `${BASE_API}/users`,
     "post",
     payload,
-    notif
+    notif,
   )
 }
 
 export async function apiSendVerificationLink(notif) {
   return await sendMultipartFormData(
-    `${process.env.VUE_APP_CONVO_API}/users/self/verify-email`,
+    `${BASE_API}/users/self/verify-email`,
     "patch",
     {},
-    notif
+    notif,
+  )
+}
+
+export async function getLoginMethods() {
+  const req = await sendRequest(`${BASE_AUTH}/list`, {
+    method: "get",
+  })
+
+  return req.data || []
+}
+
+export async function getOidcToken() {
+  return await sendRequest(
+    `${BASE_AUTH}/oidc/token`,
+    {
+      method: "get",
+    },
+    {},
+    false,
+    {},
+    true,
   )
 }

@@ -1,25 +1,27 @@
 <template>
-  <div
+  <label
     class="droparea flex1 flex col justify-center align-center"
-    @click="$refs['input'].click()"
+    for="fileInput"
     @dragenter.prevent
     @dragover.prevent
     @dragleave.prevent
     @drop.prevent="handleDrop($event)">
-    <div class="droparea-description">
+    <div class="droparea__description">
       <slot></slot>
       <div class="defaultOption">
-        <label for="fileInput">{{ $t("droparea.openFileExplorer") }}</label>
+        <div for="fileInput" class="droparea__label">
+          {{ $t("droparea.openFileExplorer") }}
+        </div>
         <input
           type="file"
           id="fileInput"
           ref="input"
           :accept="acceptString"
           :multiple="multiple"
-          @change="handleInputChange()" />
+          @change="handleInputChange" />
       </div>
     </div>
-  </div>
+  </label>
 </template>
 <script>
 export default {
@@ -73,8 +75,10 @@ export default {
         this.$emit("error", { msg: this.$t("droparea.error.wrongFormat") })
       }
     },
-    async handleInputChange() {
+    async handleInputChange(e) {
+      e.stopPropagation()
       let input = document.getElementById("fileInput")
+      console.log("input.files 0", input.files)
       if (input.files.length > 0) {
         if (await this.checkFilesValidity(input.files)) {
           this.$emit("drop", input.files)
@@ -82,6 +86,8 @@ export default {
           this.$emit("error", { msg: this.$t("droparea.error.wrongFormat") })
         }
       }
+
+      input.value = ""
     },
   },
 }

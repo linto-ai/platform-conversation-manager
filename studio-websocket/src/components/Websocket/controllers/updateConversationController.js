@@ -27,7 +27,7 @@ export default async function updateConversationController(data) {
           this.emit("error")
         }
       },
-      data.userToken
+      data.userToken,
     )
   } catch (error) {
     this.emit("error")

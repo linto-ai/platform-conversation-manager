@@ -1,17 +1,17 @@
 {
   "/api/organizations/{organizationId}/tags": {
     "post": {
-      "tags": [
-        "organizations members"
-      ],
+      "tags": ["organizations members"],
       "summary": "Create a tag for an organization",
-      "parameters": [{
-        "name": "organizationId",
-        "in": "path",
-        "description": "Organization ID",
-        "required": true,
-        "type": "string"
-      }],
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "path",
+          "description": "Organization ID",
+          "required": true,
+          "type": "string"
+        }
+      ],
       "requestBody": {
         "content": {
           "multipart/form-data": {
@@ -25,10 +25,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "name",
-                "categoryId"
-              ]
+              "required": ["name", "categoryId"]
             }
           }
         }
@@ -65,11 +62,10 @@
   },
   "/api/organizations/{organizationId}/tags/search": {
     "get": {
-      "tags": [
-        "organizations members"
-      ],
+      "tags": ["organizations members"],
       "summary": "Retrieve tag information related between conversation",
-      "parameters": [{
+      "parameters": [
+        {
           "name": "organizationId",
           "in": "path",
           "description": "Organization ID",
@@ -124,23 +120,24 @@
   },
   "/api/organizations/{organizationId}/tags/{tagId}": {
     "get": {
-      "tags": [
-        "organizations members"
-      ],
+      "tags": ["organizations members"],
       "summary": "Retrieve tag information",
-      "parameters": [{
-        "name": "organizationId",
-        "in": "path",
-        "description": "Organization ID",
-        "required": true,
-        "type": "string"
-      }, {
-        "name": "tagId",
-        "in": "path",
-        "description": "Tag ID",
-        "required": true,
-        "type": "string"
-      }],
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "path",
+          "description": "Organization ID",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "tagId",
+          "in": "path",
+          "description": "Tag ID",
+          "required": true,
+          "type": "string"
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",
@@ -162,23 +159,24 @@
       }
     },
     "patch": {
-      "tags": [
-        "organizations members"
-      ],
+      "tags": ["organizations members"],
       "summary": "Update tag information",
-      "parameters": [{
-        "name": "organizationId",
-        "in": "path",
-        "description": "Organization ID",
-        "required": true,
-        "type": "string"
-      }, {
-        "name": "tagId",
-        "in": "path",
-        "description": "Tag ID",
-        "required": true,
-        "type": "string"
-      }],
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "path",
+          "description": "Organization ID",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "tagId",
+          "in": "path",
+          "description": "Tag ID",
+          "required": true,
+          "type": "string"
+        }
+      ],
       "requestBody": {
         "content": {
           "multipart/form-data": {
@@ -229,23 +227,24 @@
       }
     },
     "delete": {
-      "tags": [
-        "organizations maintainers"
-      ],
+      "tags": ["organizations maintainers"],
       "summary": "Delete tag information",
-      "parameters": [{
-        "name": "organizationId",
-        "in": "path",
-        "description": "Organization ID",
-        "required": true,
-        "type": "string"
-      }, {
-        "name": "tagId",
-        "in": "path",
-        "description": "Tag ID",
-        "required": true,
-        "type": "string"
-      }],
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "path",
+          "description": "Organization ID",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "tagId",
+          "in": "path",
+          "description": "Tag ID",
+          "required": true,
+          "type": "string"
+        }
+      ],
       "responses": {
         "200": {
           "$ref": "#/components/responses/OK"

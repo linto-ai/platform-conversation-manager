@@ -7,7 +7,7 @@
       <span class="app-notif__icon" :class="`app-notif__icon-${status}`"></span>
       <span class="app-notif__message">{{ message }}</span>
     </div>
-    <div class="flex row app-notif-close">
+    <div class="flex row app-notif-close" v-if="!cantBeClosed">
       <button class="close-notif" @click="close()"></button>
     </div>
   </div>
@@ -22,6 +22,7 @@ export default {
       status: "",
       showNotif: false,
       redirect: false,
+      cantBeClosed: false,
     }
   },
   mounted() {
@@ -29,6 +30,7 @@ export default {
       this.message = data.message
       this.timeout = data.timeout || 4000
       this.status = data.status
+      this.cantBeClosed = data?.cantBeClosed ?? false
       if (data?.redirect) {
         this.$router.push({ name: data?.redirect })
       }

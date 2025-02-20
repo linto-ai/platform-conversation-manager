@@ -1,0 +1,31 @@
+.stat-card {
+  border: var(--divider);
+  padding: 1rem;
+  background: var(--background-primary);
+  min-width: 10rem;
+  border-radius: 2px;
+  width: fit-content;
+}
+
+.stat-card__header {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.stat-card .icon {
+  width: 2rem;
+  height: 2rem;
+  margin: 0;
+}
+
+.stat-card__header-right {
+  width: 1em;
+}
+
+.stat-card__count {
+  text-align: center;
+}
+
+.stat-card__title {
+  text-align: center;
+}

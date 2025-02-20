@@ -1,5 +1,5 @@
-const debug = require('debug')('linto:components:utility:axios')
-const axios = require('axios').default
+const debug = require("debug")("linto:components:utility:axios")
+const axios = require("axios").default
 
 class Axios {
   async get(host, options = { headers: {} }) {
@@ -13,17 +13,20 @@ class Axios {
 
   async post(host, options) {
     const requestOptions = {
-      method: 'POST',
+      method: "POST",
       url: host,
       headers: options.headers,
-      data: options.data
+      data: options.data,
     }
 
-    let result = axios.request(requestOptions).then(function (response) {
-      return response.data
-    }).catch(function (error) {
-      throw error
-    })
+    let result = axios
+      .request(requestOptions)
+      .then(function (response) {
+        return response.data
+      })
+      .catch(function (error) {
+        throw error
+      })
 
     return result
   }
@@ -31,27 +34,27 @@ class Axios {
   // Create an axios POST request
   async postFormData(url, form) {
     let options = {
-      ...form
+      ...form,
     }
 
-    let result = await axios.post(url,
-      options.formData,
-      {
+    let result = await axios
+      .post(url, options.formData, {
         headers: { ...options.headers },
         maxContentLength: process.env.AXIOS_SIZE_FILE_MAX,
         maxBodyLength: process.env.AXIOS_SIZE_FILE_MAX,
-      }).then(function (response) {
+      })
+      .then(function (response) {
         return response.data
-      }).catch(function (error) {
+      })
+      .catch(function (error) {
         throw error
       })
     return result
   }
 
-
   async put(host, form) {
     let options = {
-      ...form
+      ...form,
     }
     try {
       const resp = await axios.put(host, options)

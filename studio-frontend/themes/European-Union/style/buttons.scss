@@ -1,0 +1,198 @@
+a {
+  font-weight: 500;
+  &:hover {
+    text-decoration: underline;
+  }
+  border: none;
+  background-color: transparent;
+  color: var(--text-primary);
+  font-family: inherit;
+}
+
+a.underline {
+  text-decoration: underline;
+}
+
+button,
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  border: 2px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--primary-contrast);
+  text-decoration: none;
+  min-height: 40px;
+  min-width: 40px;
+  box-sizing: border-box;
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &.inline {
+    display: inline-flex;
+    padding: 0;
+    flex-shrink: 0;
+    block-size: auto;
+    min-height: auto;
+  }
+
+  &:hover {
+    //background-color: var(--button-background-hover);
+    background-image: none;
+    text-decoration: none;
+  }
+
+  & > * {
+    vertical-align: top;
+  }
+
+  & > .label {
+    font-size: inherit;
+    position: relative;
+    top: var(--text-vertical-center-offset);
+  }
+
+  & > .icon {
+    background-color: var(--primary-contrast);
+  }
+
+  .small-arrow-down {
+    position: relative;
+    top: var(--text-vertical-center-offset);
+  }
+
+  &.transparent {
+    background-color: transparent;
+    background-image: none;
+    text-decoration: underline;
+    border: none;
+    color: var(--text-primary);
+    .icon {
+      background-color: var(--text-primary);
+    }
+
+    &:hover {
+      background-color: transparent;
+      text-decoration: underline;
+    }
+
+    &[disabled] {
+      background-color: transparent;
+      text-decoration: underline;
+      border: none;
+      &:hover {
+        background-color: transparent;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &.only-border {
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid #b9c5e9;
+    color: var(--text-primary);
+    &:hover {
+      background-color: transparent;
+      text-decoration: underline;
+    }
+    .icon {
+      background-color: var(--text-primary);
+    }
+  }
+
+  &.red,
+  &.hover-red,
+  &.red-border,
+  &.yellow,
+  &.secondary {
+    background-color: var(--background-primary);
+    background-image: none;
+    //  border: 1px solid var(--red-chart);
+    .label {
+      color: var(--primary-color);
+    }
+    .icon {
+      background-color: var(--primary-color);
+    }
+  }
+
+  &.call-to-action {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    .label {
+      color: var(--text-primary);
+    }
+    .icon {
+      background-color: var(--text-primary);
+    }
+  }
+
+  &.black {
+    background-color: var(--text-primary);
+    background-image: none;
+    color: var(--background-primary);
+    border: 1px solid var(--text-primary);
+    .icon {
+      background-color: var(--background-primary);
+    }
+  }
+
+  &[disabled] {
+    background-color: var(--background-disabled);
+    border: var(--border-button-flat);
+    color: var(--text-secondary);
+    .icon {
+      background-color: var(--text-secondary);
+    }
+
+    .label {
+      color: var(--text-secondary);
+    }
+
+    &:hover {
+      background-color: var(--background-disabled);
+      text-decoration: none;
+      .icon {
+        background-color: var(--text-secondary);
+      }
+      .label {
+        color: var(--text-secondary);
+      }
+    }
+  }
+
+  &.btn--input-color {
+    border: var(--border-input);
+    background-color: var(--input-background);
+    background-image: none;
+    padding: 0.3rem 0.6rem;
+  }
+}
+
+.pagination-btn {
+  height: auto !important;
+  line-height: normal !important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+#audio-player-play {
+  background-color: white;
+  border: var(--border-block);
+}
+
+#upload-media-button {
+  font-weight: 800;
+  box-shadow:
+    0px 0px 0px 5px rgba(10, 84, 175, 0.17),
+    0px 0px 25px 8px rgba(10, 84, 175, 0.17);
+  //width: 8rem;
+  font-size: 1.1rem;
+  min-width: 8rem !important;
+  margin: 8px;
+}

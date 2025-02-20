@@ -52,13 +52,15 @@
       "_id": "639312d5b36cdb549eb1deab",
       "name": "orga-name",
       "description": "",
-      "users": [{
-        "_id": "634e6ab183f5db343dfc40d2",
-        "email": "email@linagora.com",
-        "firstname": "firstname",
-        "lastname": "lastname",
-        "role": 3
-      }],
+      "users": [
+        {
+          "_id": "634e6ab183f5db343dfc40d2",
+          "email": "email@linagora.com",
+          "firstname": "firstname",
+          "lastname": "lastname",
+          "role": 3
+        }
+      ],
       "owner": "634e6ab183f5db343dfc40d2"
     }
   }

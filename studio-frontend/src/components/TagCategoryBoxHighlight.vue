@@ -6,7 +6,9 @@
     scope="conversation"
     :scopeId="conversationId"
     :selectable="false"
-    :fixed="empty">
+    :fixed="empty || loading"
+    :closeBox="closeBox"
+    @clickOnTag="(tag) => $emit('clickOnTag', tag)">
     <template v-slot:content-just-before-title="slotProps">
       <span class="icon ai"></span>
     </template>
@@ -27,9 +29,12 @@
     </template>
 
     <template v-slot:content-after-tag="slotProps">
-      <button class="transparent" @click="deleteTag(slotProps)">
+      <button class="icon-only small transparent" @click="deleteTag(slotProps)">
         <span class="icon trash"></span>
       </button>
+    </template>
+    <template v-slot:content-under-tag="slotProps">
+      <slot name="content-under-tag" v-bind:tag="slotProps.tag"></slot>
     </template>
   </TagCategoryBox>
 </template>
@@ -51,6 +56,7 @@ export default {
   data() {
     return {
       reload: false,
+      closeBox: false,
     }
   },
   watch: {
@@ -82,6 +88,13 @@ export default {
     },
   },
   mounted() {},
+  watch: {
+    loading: function (val) {
+      if (val) {
+        this.closeBox = !this.closeBox
+      }
+    },
+  },
   methods: {
     getName(scope) {
       return (

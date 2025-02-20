@@ -1,63 +1,50 @@
-const debug = require('debug')('linto:conversation-manager:routes:auth')
+const debug = require("debug")("linto:conversation-manager:routes:auth")
 
-const { logout, recoveryAuth } = require(`${process.cwd()}/components/WebServer/routecontrollers/users/users.js`)
-const auth_middleware = require(`${process.cwd()}/components/WebServer/config/passport/local/middleware`)
-
+const { logout, recoveryAuth } = require(
+  `${process.cwd()}/components/WebServer/routecontrollers/users/users.js`,
+)
 
 module.exports = (webServer) => {
-    return [
-        {
-            path: '/login',
-            method: 'post',
-            requireAuth: false,
-            controller: [
-                auth_middleware.authenticate,
-                (req, res, next) => {
-                    res.status(202).json(req.user)
-                }
-            ]
-        },
-        {
-            path: '/refresh',
-            method: 'get',
-            requireRefresh: true,
-            controller: [
-                auth_middleware.refresh,
-                (req, res, next) => {
-                    res.status(202).json(req.user)
-                }
-            ]
-        },
-        {
-            path: '/login/magic-link',
-            method: 'post',
-            requireAuth: false,
-            controller: [
-                auth_middleware.authenticate_reset,
-                (req, res, next) => {
-                    res.status(202).json(req.user)
-                }
-            ]
-        },
-        {
-            path: '/logout',
-            method: 'get',
-            requireAuth: true,
-            controller: logout
-        },
-        {
-            path: '/isAuth',
-            method: 'get',
-            requireAuth: true,
-            controller: async (req, res, next) => {
-                res.status(200).send('Ok')
-            }
-        },
-        {
-            path: '/recovery',
-            method: 'post',
-            requireAuth: false,
-            controller: recoveryAuth
+  return [
+    {
+      path: "/logout",
+      method: "get",
+      requireAuth: true,
+      controller: logout,
+    },
+    {
+      path: "/isAuth",
+      method: "get",
+      requireAuth: true,
+      controller: async (req, res, next) => {
+        res.status(200).send("Ok")
+      },
+    },
+    {
+      path: "/recovery",
+      method: "post",
+      requireAuth: false,
+      controller: recoveryAuth,
+    },
+    {
+      path: "/list",
+      method: "get",
+      requireAuth: false,
+      controller: (req, res, next) => {
+        let list = []
+        if (process.env.LOCAL_AUTH_ENABLED === "true") {
+          list.push({ path: "local", from: "studio", name: "studio" })
         }
-    ]
+        if (process.env.OIDC_TYPE !== "") {
+          list.push({
+            path: "oidc",
+            from: process.env.OIDC_TYPE,
+            name: process.env.OIDC_TYPE,
+          })
+        }
+
+        res.status(200).send(list)
+      },
+    },
+  ]
 }

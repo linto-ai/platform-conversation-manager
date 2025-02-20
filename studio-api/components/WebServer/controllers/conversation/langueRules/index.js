@@ -1,15 +1,17 @@
-const debug = require('debug')('linto:components:WebServer:controller:langueRules')
+const debug = require("debug")(
+  "linto:components:WebServer:controller:langueRules",
+)
 
-const frFr = require('./french')
-const enUs = require('./english')
-const ruleless = require('./ruleless')
+const frFr = require("./french")
+const enUs = require("./english")
+const ruleless = require("./ruleless")
 
 function selectLang(lang) {
   if (lang !== undefined) {
-    const langPrefix = lang.split('-')[0]
+    const langPrefix = lang.split("-")[0]
     const languageMap = {
-      'fr': frFr,
-      'en': enUs
+      fr: frFr,
+      en: enUs,
     }
     return languageMap[langPrefix] || ruleless
   }
@@ -32,9 +34,9 @@ function executeLangRule(lang, segment_text, words, loop_data) {
     }
 
     // handle different rules
-    if (typeof res === 'object' && res.original !== undefined) {
+    if (typeof res === "object" && res.original !== undefined) {
       segment_text = res
-    } else if (typeof res === 'object') {
+    } else if (typeof res === "object") {
       return res
     } else if (Array.isArray(res)) {
       return res
@@ -49,9 +51,9 @@ function executeRulesByName(lang, rule_name, segment_text, words, loop_data) {
       let res = {}
       try {
         res = func(segment_text, words, loop_data)
-        if (typeof res === 'object' && res.original !== undefined) {
+        if (typeof res === "object" && res.original !== undefined) {
           segment_text = res
-        } else if (typeof res === 'object') {
+        } else if (typeof res === "object") {
           return res
         } else if (Array.isArray(res)) {
           return res
@@ -68,5 +70,5 @@ function executeRulesByName(lang, rule_name, segment_text, words, loop_data) {
 module.exports = {
   selectLang,
   executeLangRule,
-  executeRulesByName
+  executeRulesByName,
 }

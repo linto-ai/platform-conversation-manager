@@ -1,0 +1,57 @@
+@layer base, theme;
+
+@layer theme {
+  @import "buttons.scss";
+  @import "checkbox.scss";
+  @import "forms.scss";
+  @import "tabs.scss";
+  @import "select.scss";
+  @import "text.scss";
+  @import "tables.scss";
+  @import "sidebar.scss";
+  @import "radio.scss";
+  @import "login.scss";
+
+  body {
+    --blue-chart: #3860ed;
+    --red-chart: #fe346e;
+
+    --primary-color: #3860ed;
+    --primary-contrast: #fff;
+
+    --secondary-color: #ffcb7c;
+
+    --dark-100: #26324b;
+    --dark-80: #546fa6;
+    --dark-60: #99aacc;
+
+    --neutral-100: #b9c5e9;
+    --neutral-80: #cdd5ef;
+    --neutral-60: #b9c5e9;
+
+    --background-app: rgb(250, 250, 250);
+
+    --background-primary: #fff;
+    --background-primary-with-small-opacity: rgba(255, 255, 255, 0.85);
+
+    --input-background: #f7faff;
+
+    --selected-background: #f3f5fb;
+  }
+
+  html[data-theme="dark"] body {
+    --dark-100: #ccc;
+    --dark-80: #aaa;
+    --dark-60: #666;
+
+    --background-app: rgb(48, 48, 48);
+    --background-primary: #252525;
+    --background-primary-with-small-opacity: rgba(37, 37, 37, 0.85);
+
+    --button-background: #1a1a1a;
+    --button-image-background: linear-gradient(#1a1a1a, #1a1a1a);
+    --button-background-hover: #333;
+
+    --input-background: #1a1a1a;
+  }
+}

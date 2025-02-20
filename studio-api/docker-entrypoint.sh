@@ -14,7 +14,7 @@ while [ "$1" != "" ]; do
         ;;
     --skip)
         echo 'Skip starup param'
-    ;;
+        ;;
     *)
         echo "ERROR: Bad argument provided \"$1\""
         exit 1
@@ -25,12 +25,9 @@ done
 
 echo "RUNNING : $script"
 cd /usr/src/app/conversation-manager
-mkdir -p storages
-mkdir -p storages/audios
-mkdir -p storages/audios/original
-mkdir -p storages/pictures
-mkdir -p storages/audiowaveform
+mkdir -p storages/audios/original storages/pictures storages/audiowaveform
 
-cron
+# We make sure that a docker volume will not overwrite the default image
+cp /usr/src/app/conversation-manager/config/pictures/default.jpg /usr/src/app/conversation-manager/storages/pictures/default.jpg
 
 eval "$script"

@@ -1,0 +1,139 @@
+{
+  "/bots": {
+    "get": {
+      "tags": [
+        "bots"
+      ],
+      "summary": "Get all bots",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "limit",
+          "description": "Maximum number of bots in the answer",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "offset",
+          "description": "Offset from the start the number of bots",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "channelId",
+          "description": "Return only the bot for this channelId",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+      }],
+      "responses": {
+        "200": {
+          "description": "The list of bots",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BotAnswer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "post": {
+      "tags": [
+        "bots"
+      ],
+      "summary": "Create a new bot",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BotRequest"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BotAnswer"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/bots/{id}": {
+    "get": {
+      "tags": [
+        "bots"
+      ],
+      "summary": "Get a bot by ID",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Bot ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "The bot",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BotAnswer"
+              }
+            }
+          }
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      }
+    },
+    "delete": {
+      "tags": [
+        "bots"
+      ],
+      "summary": "Delete a bot by ID",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Bot ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Bot successfully deleted"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      }
+    }
+  }
+}

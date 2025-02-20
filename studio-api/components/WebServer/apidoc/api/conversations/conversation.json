@@ -1,11 +1,10 @@
 {
   "/api/conversations/shared": {
     "get": {
-      "tags": [
-        "conversations"
-      ],
+      "tags": ["conversations"],
       "summary": "List all conversations that have been shared with the connected user",
-      "parameters": [{
+      "parameters": [
+        {
           "in": "query",
           "name": "size",
           "required": false,
@@ -78,18 +77,18 @@
   },
   "/api/conversations/{conversationId}/invite": {
     "post": {
-      "tags": [
-        "conversations"
-      ],
+      "tags": ["conversations"],
       "summary": "Invite an external user to access the conversation",
-      "parameters": [{
-        "in": "path",
-        "name": "conversationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an conversation"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "conversationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an conversation"
+        }
+      ],
       "requestBody": {
         "content": {
           "multipart/form-data": {
@@ -105,9 +104,7 @@
                   "description": "Right of the user"
                 }
               },
-              "required": [
-                "email"
-              ]
+              "required": ["email"]
             }
           }
         }
@@ -140,17 +137,15 @@
           "$ref": "#/components/responses/InternalServer"
         }
       }
-
     }
   },
   "/api/conversations/{conversationId}/media": {
     "get": {
-      "tags": [
-        "conversations"
-      ],
+      "tags": ["conversations"],
       "summary": "Download media files (e.g. audio, transcription) from a conversation",
       "description": "Set response type to \"audio/mpeg\" to get the mp3 file, or to \"application/json\" to get audiowavesurfer json file.",
-      "parameters": [{
+      "parameters": [
+        {
           "in": "path",
           "name": "conversationId",
           "type": "string",
@@ -175,6 +170,44 @@
             },
             "application/json": {
               "$ref": "#/components/schemas/Audiowaveform"
+            }
+          }
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      }
+    }
+  },
+  "/api/conversations/{conversationId}/child": {
+    "get": {
+      "tags": ["conversations member"],
+      "summary": "Retrieve a conversation based on the parent ID",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "conversationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an conversation"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ConversationList"
+                }
+              }
             }
           }
         },

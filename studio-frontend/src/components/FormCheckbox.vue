@@ -1,13 +1,19 @@
 <template>
-  <div class="form-field flex row align-center form-field-checkbox">
-    <div class="flex gap-small align-center">
-      <input
+  <div class="form-field flex row align-center form-field-checkbox gap-small">
+    <div class="flex align-center">
+      <!-- <input
         type="checkbox"
         ref="input"
         v-model="value"
         :id="id"
-        v-if="!switchDisplay" />
+        v-if="!switchDisplay" /> -->
+      <Checkbox
+        v-model="value"
+        :id="id"
+        v-if="!switchDisplay"
+        :disabled="p_disabled" />
       <SwitchInput
+        :disabled="p_disabled"
         v-model="value"
         :id="id"
         v-else
@@ -32,6 +38,7 @@ import { bus } from "../main.js"
 
 import LabeledValue from "@/components/LabeledValue.vue"
 import SwitchInput from "@/components/SwitchInput.vue"
+import Checkbox from "./Checkbox.vue"
 export default {
   props: {
     /*
@@ -72,7 +79,12 @@ export default {
       this.value = this.field.value
     },
   },
+  computed: {
+    p_disabled() {
+      return this.disabled || this.field.disabled
+    },
+  },
   methods: {},
-  components: { Fragment, LabeledValue, SwitchInput },
+  components: { Fragment, LabeledValue, SwitchInput, Checkbox },
 }
 </script>

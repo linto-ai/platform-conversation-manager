@@ -1,18 +1,18 @@
 {
   "/api/organizations/{organizationId}/users": {
     "post": {
-      "tags": [
-        "organizations maintainers"
-      ],
+      "tags": ["organizations maintainers"],
       "summary": "Add a user with a specific role to the organization",
-      "parameters": [{
-        "in": "path",
-        "name": "organizationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an organization"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "organizationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an organization"
+        }
+      ],
       "requestBody": {
         "content": {
           "multipart/form-data": {
@@ -26,10 +26,7 @@
                   "type": "integer"
                 }
               },
-              "required": [
-                "email",
-                "role"
-              ]
+              "required": ["email", "role"]
             }
           }
         }
@@ -70,18 +67,18 @@
       }
     },
     "patch": {
-      "tags": [
-        "organizations maintainers"
-      ],
+      "tags": ["organizations maintainers"],
       "summary": "Update a user with a different role to the organization",
-      "parameters": [{
-        "in": "path",
-        "name": "organizationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an organization"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "organizationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an organization"
+        }
+      ],
       "requestBody": {
         "content": {
           "multipart/form-data": {
@@ -95,10 +92,7 @@
                   "type": "integer"
                 }
               },
-              "required": [
-                "userId",
-                "role"
-              ]
+              "required": ["userId", "role"]
             }
           }
         }
@@ -136,18 +130,18 @@
       }
     },
     "delete": {
-      "tags": [
-        "organizations maintainers"
-      ],
+      "tags": ["organizations maintainers"],
       "summary": "Remove a user from the organization",
-      "parameters": [{
-        "in": "path",
-        "name": "organizationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an organization"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "organizationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an organization"
+        }
+      ],
       "requestBody": {
         "content": {
           "multipart/form-data": {
@@ -158,9 +152,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "userId"
-              ]
+              "required": ["userId"]
             }
           }
         }
@@ -197,18 +189,18 @@
   },
   "/api/organizations/{organizationId}/conversations": {
     "delete": {
-      "tags": [
-        "organizations maintainers"
-      ],
+      "tags": ["organizations maintainers"],
       "summary": "Remove all desired conversation from the organization",
-      "parameters": [{
-        "in": "path",
-        "name": "organizationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an organization"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "organizationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an organization"
+        }
+      ],
       "requestBody": {
         "content": {
           "multipart/form-data": {
@@ -219,9 +211,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "conversationsId"
-              ]
+              "required": ["conversationsId"]
             }
           }
         }

@@ -1,77 +1,52 @@
 <template>
   <MainContent sidebar box>
-    <ConversationHelper
-      :showHelper="helperVisible"
-      @close="closeHelper()"></ConversationHelper>
+    <template v-slot:breadcrumb-actions> </template>
 
-    <template v-slot:breadcrumb-actions>
-      <button class="btn" @click="showHelper()" style="min-width: 80px">
-        <span class="icon help"></span>
-        <span class="label">{{
-          $t("conversation.transcription_help.help_button_label")
-        }}</span>
-      </button>
-    </template>
+    <div class="flex col flex1">
+      <Tabs
+        v-model="currentTab"
+        :tabs="mainTabs"
+        squareTabs
+        :disabled="formState === 'sending'" />
 
-    <div class="flex row">
       <form
+        v-if="
+          currentTab !== 'session' &&
+          currentTab !== 'live' &&
+          currentTab !== 'visio'
+        "
         class="flex col flex1"
         @submit="createConversation"
         :disabled="formState === 'sending'">
-        <section>
-          <h2>{{ $t("conversation.media_title") }}</h2>
+        <div class="flex col gap-small">
           <ConversationCreateAudio
+            class="flex1"
             :disabled="formState === 'sending'"
             v-model="audioFiles" />
-
-          <div class="flex col form-field">
-            <div class="flex row align-center form-label">
-              <input
-                type="checkbox"
-                v-model="organizationMemberAccess"
-                id="organizationMemberAccess"
-                :disabled="formState === 'sending'" />
-              <label
-                for="organizationMemberAccess"
-                class="no-padding no-margin">
-                {{ $t("conversation.members_right_label") }}
-              </label>
-            </div>
-            <select
-              v-model="membersRight.value"
-              v-if="organizationMemberAccess"
-              :disabled="formState === 'sending'">
+        </div>
+        <!-- rights -->
+        <section>
+          <h2>{{ $t("conversation.conversation_creation_right_title") }}</h2>
+          <div class="form-field flex col">
+            <label class="form-label">
+              {{ $t("conversation.conversation_creation_right_label") }}
+            </label>
+            <select v-model="membersRight.value">
               <option
-                v-for="right in membersRight.list"
-                :key="right.value"
-                :value="right.value">
-                {{ right.txt }}
+                v-for="uright in membersRight.list"
+                :key="uright.value"
+                :value="uright.value">
+                {{ uright.txt }}
               </option>
             </select>
           </div>
         </section>
 
+        <!-- services -->
         <section>
           <h2>{{ $t("conversation.transcription_service_title") }}</h2>
           <div class="error-field" v-if="transcriptionService.error">
             {{ transcriptionService.error }}
-          </div>
-          <div class="form-field flex row">
-            <div class="flex col">
-              <label class="form-label" for="conversationName">
-                {{ $t("conversation.language_label") }}
-              </label>
-              <select
-                :disabled="formState === 'sending'"
-                v-model="conversationLanguage.value">
-                <option
-                  v-for="lang of languages"
-                  :key="lang.value"
-                  :value="lang.value">
-                  {{ lang.label }}
-                </option>
-              </select>
-            </div>
           </div>
           <ConversationCreateServices
             :serviceList="transcriptionService.list"
@@ -80,44 +55,71 @@
             v-model="transcriptionService.value" />
         </section>
 
-        <!-- Submit -->
-        <div class="flex col gap-small align-top" style="margin-top: 1rem">
-          <div class="error-field" v-if="formError">{{ formError }}</div>
+        <div
+          class="flex gap-small align-center conversation-create-footer"
+          style="margin-top: 1rem">
+          <div class="error-field flex1" v-if="formError">{{ formError }}</div>
+          <div v-else class="flex1"></div>
           <button
             type="submit"
-            class="btn green"
+            class="btn green upload-media-button"
+            id="upload-media-button"
             :disabled="formState === 'sending'">
             <span class="icon apply"></span>
             <span class="label">{{ formSubmitLabel }}</span>
           </button>
         </div>
       </form>
+
+      <QuickSessionCreateContent
+        v-if="currentTab === 'live' && !loadingSessionData"
+        :transcriberProfiles="transcriberProfilesQuickMeeting"
+        :currentOrganizationScope="currentOrganizationScope" />
+
+      <VisioCreateContent
+        v-if="currentTab === 'visio' && !loadingSessionData"
+        :transcriberProfiles="transcriberProfilesQuickMeeting"
+        :currentOrganizationScope="currentOrganizationScope" />
+
+      <SessionCreateContent
+        v-if="currentTab === 'session' && !loadingSessionData"
+        :sessionTemplates="sessionTemplates"
+        :transcriberProfiles="transcriberProfiles"
+        :currentOrganizationScope="currentOrganizationScope" />
     </div>
   </MainContent>
 </template>
 <script>
-import debounce from "debounce"
+import { getEnv } from "@/tools/getEnv.js"
 
-import { bus } from "@/main.js"
-import { apiGetTranscriptionService } from "@/api/service"
-import { apiCreateConversation } from "@/api/conversation"
-import { getUserRoleInOrganization } from "@/tools/getUserRoleInOrganization"
-import { testFieldEmpty } from "@/tools/fields/testEmpty.js"
-import { testService } from "@/tools/fields/testService.js"
+import ConversationCreateMixin from "@/mixins/conversationCreate.js"
+import { orgaRoleMixin } from "@/mixins/orgaRole.js"
+import { organizationPermissionsMixin } from "@/mixins/organizationPermissions.js"
 
-import { formsMixin } from "@/mixins/forms.js"
-import { debounceMixin } from "@/mixins/debounce"
+import {
+  apiGetTranscriberProfiles,
+  apiGetSessionTemplates,
+  apiGetQuickSessionByOrganization,
+} from "@/api/session.js"
 
-import ConversationHelper from "@/components/ConversationHelper.vue"
 import ConversationCreateAudio from "@/components/ConversationCreateAudio.vue"
 import ConversationCreateServices from "@/components/ConversationCreateServices.vue"
 import MainContent from "@/components/MainContent.vue"
-
-import RIGHTS_LIST from "@/const/rigthsList"
-import EMPTY_FIELD from "@/const/emptyField"
+import Checkbox from "@/components/Checkbox.vue"
+import Tabs from "@/components/Tabs.vue"
+import SessionCreateContent from "@/components/SessionCreateContent.vue"
+import ConversationCreateLink from "@/components/ConversationCreateLink.vue"
+import QuickSessionCreateContent from "@/components/QuickSessionCreateContent.vue"
+import VisioCreateContent from "@/components/VisioCreateContent.vue"
+import TabsVertical from "@/components/TabsVertical.vue"
+import ConversationCreateFileLine from "@/components/ConversationCreateFileLine.vue"
 
 export default {
-  mixins: [formsMixin, debounceMixin],
+  mixins: [
+    ConversationCreateMixin,
+    orgaRoleMixin,
+    organizationPermissionsMixin,
+  ],
   props: {
     userInfo: {
       type: Object,
@@ -127,208 +129,150 @@ export default {
       type: String,
       required: true,
     },
-    userOrganizations: {
-      type: Array,
-      required: true,
-    },
+    // userOrganizations: {
+    //   type: Array,
+    //   required: true,
+    // },
   },
   data() {
     return {
-      //conversationName: { ...EMPTY_FIELD },
-      //conversationDescription: { ...EMPTY_FIELD },
-      fields: [
-        "audioFiles",
-        "conversationOrganization",
-        "membersRight",
-        "transcriptionService",
-        "conversationLanguage",
-      ],
-      audioFiles: [], // array of fields { value (name), file, error }
-      conversationOrganization: {
-        ...EMPTY_FIELD,
-        value: this.currentOrganizationScope,
-        testField: testFieldEmpty,
-      },
-      membersRight: {
-        ...EMPTY_FIELD,
-        value: 1,
-        list: RIGHTS_LIST((key) => this.$i18n.t(key)),
-      },
-      transcriptionService: {
-        ...EMPTY_FIELD,
-        loading: true,
-        list: [],
-        testField: testService,
-      },
-      conversationLanguage: {
-        ...EMPTY_FIELD,
-        value: "fr",
-        valid: true,
-      },
-      organizationMemberAccess: true,
-      formSubmitLabel: this.$i18n.t(
-        "conversation.conversation_creation_button.create"
-      ),
-      formState: "available",
-      helperVisible: false,
-      languages: [
-        { value: "fr", label: this.$i18n.t("lang.fr") },
-        { value: "en", label: this.$i18n.t("lang.en") },
-      ],
-      formError: null,
-      debounceGetTranscriptionService: debounce(this.initTranscriptionList, 30),
+      currentTab: null,
+      transcriberProfiles: [],
+      sessionTemplates: [],
+      loadingTranscriberProfiles: true,
+      loadingQuickSession: true,
+      loadingSessionTemplates: true,
     }
   },
-  async created() {
-    this.conversationOrganization.value = this.currentOrganizationScope
-    this.initTranscriptionList()
+  mounted() {
+    this.fetchProfiles()
+    this.fetchSessionTemplates()
   },
-  watch: {
-    "conversationLanguage.value"(value) {
-      this.initTranscriptionList()
-    },
-    "$i18n.locale": {
-      handler(value) {
-        this.conversationLanguage.value = value.split("-")[0]
-      },
-      immediate: true,
-    },
+  async created() {
+    if (this.mainTabs.length > 0) {
+      this.currentTab = this.mainTabs[0].name
+    } else {
+      this.$router.push({ name: "not_found" })
+    }
   },
   computed: {
-    organizationList() {
-      return this.userOrganizations.filter((org) => {
-        let role = getUserRoleInOrganization(org, this.userInfo._id)
-        return role > 1
-      })
+    transcriberProfilesQuickMeeting() {
+      return this.transcriberProfiles.filter((t) => t.quickMeeting)
+    },
+    canUploadFiles() {
+      return this.canUploadInCurrentOrganization
+    },
+    canCreateSession() {
+      const enableSession = getEnv("VUE_APP_ENABLE_SESSION") === "true"
+
+      return enableSession && this.canSessionInCurrentOrganization
+    },
+    loadingSessionData() {
+      return this.loadingTranscriberProfiles || this.loadingSessionTemplates
+    },
+    mainTabs() {
+      let res = []
+      if (this.canUploadFiles) {
+        res.push(
+          {
+            name: "file",
+            label: "Media",
+            icon: "file-audio",
+            img: "/img/We10X-icon-theme/audio-x-generic.svg",
+          },
+          // {
+          //   name: "microphone",
+          //   label: this.$i18n.t("conversation_creation.tabs.microphone"),
+          //   icon: "record",
+          //   img: "/img/We10X-icon-theme/vocal.svg",
+          // },
+          // {
+          //   name: "url",
+          //   label: this.$i18n.t("conversation_creation.tabs.url"),
+          //   icon: "link",
+          // },
+        )
+      }
+
+      if (this.canCreateSession) {
+        const loading = this.loadingSessionData
+        if (this.isAtLeastQuickMeeting) {
+          res.push({
+            name: "live",
+            label: this.$t("conversation_creation.tabs.quick_meeting"),
+            icon: loading ? "loading" : "record-live",
+            disabled: this.transcriberProfilesQuickMeeting.length === 0,
+          })
+          res.push({
+            name: "visio",
+            label: this.$t("conversation_creation.tabs.visio"),
+            icon: loading ? "loading" : "visio",
+            disabled: this.transcriberProfilesQuickMeeting.length === 0,
+          })
+        }
+        if (this.isAtLeastMeetingManager) {
+          res.push({
+            name: "session",
+            label: this.$i18n.t("conversation_creation.tabs.session"),
+            icon: loading ? "loading" : "session",
+            disabled: this.transcriberProfiles.length === 0,
+          })
+        }
+      }
+
+      return res
     },
   },
   methods: {
-    showHelper() {
-      this.helperVisible = true
-    },
-    closeHelper() {
-      this.helperVisible = false
-    },
-    getTranscriptionList(lang, signal) {
-      return apiGetTranscriptionService(lang, signal)
-    },
-    async initTranscriptionList() {
-      this.transcriptionService.loading = true
-      this.transcriptionService.value = null
-
-      const transcriptionService = await this.debouncedSearch(
-        this.getTranscriptionList.bind(this),
-        this.conversationLanguage.value
-      )
-
-      if (transcriptionService) {
-        this.transcriptionService.list = [...transcriptionService]
-        this.transcriptionService.loading = false
-        this.transcriptionService.value = null
-      }
-    },
-    async createConversation(event) {
+    createConversation(event) {
       event?.preventDefault()
-
-      if (this.audioFiles.length === 0) {
-        this.formError = this.$i18n.t("conversation.error.no_audio_file")
-        return
-      }
-
-      if (this.formState === "available") {
-        if (this.testFields()) {
-          this.formError = null
-          this.formState = "sending"
-          this.formSubmitLabel = this.$i18n.t(
-            "conversation.conversation_creation_button.sending"
-          )
-          let audioFileIndex = 0
-          let total = this.audioFiles.length
-          while (this.audioFiles.length > 0) {
-            audioFileIndex++
-
-            const { value: convName, file } = this.audioFiles[0]
-
-            bus.$emit("app_notif", {
-              status: "loading",
-              message: this.$i18n.t(
-                "conversation.conversation_creation_loading_multiple",
-                { count: audioFileIndex, total: total }
-              ),
-              timeout: -1,
-            })
-
-            let conversationHasBeenCreated = await apiCreateConversation(
-              this.currentOrganizationScope,
-              {
-                name: convName,
-                description: "",
-                membersRight: this.organizationMemberAccess
-                  ? parseInt(this.membersRight.value)
-                  : 0,
-                serviceName: this.transcriptionService.value.serviceName,
-                transcriptionConfig: JSON.stringify(
-                  this.transcriptionService.value.config
-                ),
-                segmentCharSize: process.env.VUE_APP_TURN_SIZE,
-                lang: this.transcriptionService.value.lang,
-                endpoint: this.transcriptionService.value.endpoint,
-                tracks: [file],
-              }
-            )
-
-            if (!conversationHasBeenCreated) {
-              this.emitError(
-                this.$i18n.t(
-                  "conversation.conversation_creation_error_multiple_unknown",
-                  {
-                    count: audioFileIndex - 1,
-                    total: total,
-                  }
-                )
-              )
-              this.formSubmitLabel = this.$i18n.t(
-                "conversation.conversation_creation_button.retry"
-              )
-              this.formState = "available"
-              return
-            }
-            this.audioFiles.shift()
-          }
-
-          if (this.audioFiles.length === 0) {
-            this.formState = "success"
-            bus.$emit("set_organization_scope", {
-              organizationId: this.conversationOrganization.value,
-            })
-            bus.$emit("app_notif", {
-              status: "success",
-              message: this.$i18n.t("conversation.creation_success_message"),
-              redirect: false,
-            })
-          }
-        } else {
-          this.formError = this.$i18n.t("conversation.error.form_invalid")
-        }
+      switch (this.currentTab) {
+        case "url":
+        //this.createConversationByUrl()
+        //break
+        case "file":
+        case "microphone":
+          this.createConversationByFile()
+          break
+        default:
+          console.error("Unknown tab", this.currentTab)
+          break
       }
       return false
     },
-    emitError(errorMessage) {
-      bus.$emit("app_notif", {
-        status: "error",
-        message: errorMessage,
-        timeout: null,
-      })
+    async fetchProfiles() {
+      const res = await apiGetTranscriberProfiles()
+      this.transcriberProfiles = res
+      this.loadingTranscriberProfiles = false
     },
-    getOrganizationById(id) {
-      return this.userOrganizations.find((orga) => orga._id === id)
+    async fetchSessionTemplates() {
+      const res = await apiGetSessionTemplates(this.currentOrganizationScope)
+      this.sessionTemplates = res
+      this.loadingSessionTemplates = false
+    },
+    async fetchQuickSession() {
+      const alreadyCreatedPersonalSession =
+        await apiGetQuickSessionByOrganization(this.currentOrganizationScope)
+
+      if (alreadyCreatedPersonalSession) {
+        this.currentQuickSession = alreadyCreatedPersonalSession
+      }
+
+      this.loadingQuickSession = false
     },
   },
   components: {
-    ConversationHelper,
     ConversationCreateAudio,
     ConversationCreateServices,
+    ConversationCreateLink,
     MainContent,
+    Checkbox,
+    Tabs,
+    SessionCreateContent,
+    QuickSessionCreateContent,
+    VisioCreateContent,
+    TabsVertical,
+    ConversationCreateFileLine,
   },
 }
 </script>

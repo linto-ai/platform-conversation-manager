@@ -1,18 +1,18 @@
 {
   "/api/organizations/{organizationId}/": {
     "patch": {
-      "tags": [
-        "organizations admin"
-      ],
+      "tags": ["organizations admin"],
       "summary": "Update the organization information",
-      "parameters": [{
-        "in": "path",
-        "name": "organizationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an organization"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "organizationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an organization"
+        }
+      ],
       "requestBody": {
         "content": {
           "multipart/form-data": {
@@ -60,18 +60,18 @@
       }
     },
     "delete": {
-      "tags": [
-        "organizations admin"
-      ],
+      "tags": ["organizations admin"],
       "summary": "Delete an organization",
-      "parameters": [{
-        "in": "path",
-        "name": "organizationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an organization"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "organizationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an organization"
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",

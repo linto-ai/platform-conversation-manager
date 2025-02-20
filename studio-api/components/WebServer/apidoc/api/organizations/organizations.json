@@ -1,9 +1,7 @@
 {
   "/api/organizations/": {
     "post": {
-      "tags": [
-        "organizations"
-      ],
+      "tags": ["organizations"],
       "summary": "Create an organization",
       "requestBody": {
         "content": {
@@ -15,9 +13,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "name"
-              ]
+              "required": ["name"]
             }
           }
         }
@@ -57,9 +53,7 @@
       }
     },
     "get": {
-      "tags": [
-        "organizations"
-      ],
+      "tags": ["organizations"],
       "summary": "List organizations where the user is a member",
       "responses": {
         "200": {

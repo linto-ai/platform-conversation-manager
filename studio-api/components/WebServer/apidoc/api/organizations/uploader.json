@@ -1,18 +1,18 @@
 {
   "/api/organizations/{organizationId}/conversations/create/": {
     "post": {
-      "tags": [
-        "organizations uploader"
-      ],
+      "tags": ["organizations uploader"],
       "summary": "Create a new conversation",
-      "parameters": [{
-        "in": "path",
-        "name": "organizationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an organization"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "organizationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an organization"
+        }
+      ],
       "requestBody": {
         "content": {
           "multipart/form-data": {
@@ -23,6 +23,10 @@
                   "type": "file",
                   "format": "binary",
                   "description": "Audio file to convert into a conversation"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "Url to the audio to transcribe, alternative to file"
                 },
                 "name": {
                   "type": "string",
@@ -53,12 +57,7 @@
                 }
               }
             },
-            "required": [
-              "file",
-              "name",
-              "endpoint",
-              "lang"
-            ]
+            "required": ["file", "name", "endpoint", "lang"]
           }
         }
       },
@@ -97,17 +96,17 @@
   },
   "/api/organizations/{organizationId}/conversations/import?type=transcription": {
     "post": {
-      "tags": [
-        "organizations uploader"
+      "tags": ["organizations uploader"],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "organizationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an organization"
+        }
       ],
-      "parameters": [{
-        "in": "path",
-        "name": "organizationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an organization"
-      }],
       "summary": "Import a conversation from an external source",
       "requestBody": {
         "content": {
@@ -148,11 +147,7 @@
                 }
               }
             },
-            "required": [
-              "name",
-              "lang",
-              "transcription"
-            ]
+            "required": ["name", "lang", "transcription"]
           }
         }
       },
@@ -188,17 +183,17 @@
   },
   "/api/organizations/{organizationId}/conversations/import?type=conversation": {
     "post": {
-      "tags": [
-        "organizations uploader"
+      "tags": ["organizations uploader"],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "organizationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an organization"
+        }
       ],
-      "parameters": [{
-        "in": "path",
-        "name": "organizationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an organization"
-      }],
       "summary": "Import a conversation from an external source",
       "requestBody": {
         "content": {
@@ -216,12 +211,7 @@
                 }
               }
             },
-            "required": [
-              "file",
-              "name",
-              "endpoint",
-              "lang"
-            ]
+            "required": ["file", "name", "endpoint", "lang"]
           }
         }
       },

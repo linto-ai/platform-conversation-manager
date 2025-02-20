@@ -2,11 +2,7 @@
   "ConversationSearchType": {
     "type": "string",
     "nullable": false,
-    "enum": [
-      "title",
-      "description",
-      "text"
-    ]
+    "enum": ["title", "description", "text"]
   },
   "example": {
     "title": "title",

@@ -1,18 +1,18 @@
 {
   "/api/organizations/{organizationId}/": {
     "get": {
-      "tags": [
-        "organizations members"
-      ],
+      "tags": ["organizations members"],
       "summary": "Retrieve organization information",
-      "parameters": [{
-        "in": "path",
-        "name": "organizationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an user"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "organizationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an user"
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",
@@ -36,18 +36,18 @@
   },
   "/api/organizations/{organizationId}/self": {
     "delete": {
-      "tags": [
-        "organizations members"
-      ],
+      "tags": ["organizations members"],
       "summary": "Leave the requested organization",
-      "parameters": [{
-        "in": "path",
-        "name": "organizationId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an organization"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "organizationId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an organization"
+        }
+      ],
       "responses": {
         "200": {
           "content": {
@@ -79,11 +79,10 @@
   },
   "/api/organizations/{organizationId}/conversations": {
     "get": {
-      "tags": [
-        "organizations members"
-      ],
+      "tags": ["organizations members"],
       "summary": "Lists all conversations from an organization where the user have an access",
-      "parameters": [{
+      "parameters": [
+        {
           "in": "path",
           "name": "organizationId",
           "type": "string",
@@ -104,7 +103,8 @@
           "required": false,
           "description": "List of tags id to search for",
           "example": "5e9b1b9b0f9b2c0017b5f1b5,5e9b1b9b0f9b2c0017b5f1b6,..."
-        }, {
+        },
+        {
           "in": "query",
           "name": "name",
           "required": false,

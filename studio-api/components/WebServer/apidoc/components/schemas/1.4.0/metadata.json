@@ -37,17 +37,17 @@
         "example": "2024-01-30T15:26:52+01:00"
       }
     },
-  "example": {
-    "_id": "65b9072c05737d327fea2879",
-    "schema": "custom",
-    "value": {
-      "my": "json"
-    },
-    "conversationId": "65b8cec1cfaada211e2d9f39",
-    "tagId": "6570976d91aec9344f295506",
-    "createdBy": "65673f7d9b1fa24f87aed9c9",
-    "created": "2024-01-30T15:26:52+01:00",
-    "last_update": "2024-01-30T15:26:52+01:00"
-  }
+    "example": {
+      "_id": "65b9072c05737d327fea2879",
+      "schema": "custom",
+      "value": {
+        "my": "json"
+      },
+      "conversationId": "65b8cec1cfaada211e2d9f39",
+      "tagId": "6570976d91aec9344f295506",
+      "createdBy": "65673f7d9b1fa24f87aed9c9",
+      "created": "2024-01-30T15:26:52+01:00",
+      "last_update": "2024-01-30T15:26:52+01:00"
+    }
   }
 }

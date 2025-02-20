@@ -5,7 +5,7 @@
       <h1>{{ $t("usersettings.title") }}</h1>
     </div>
      LEFT COLUMN -->
-    <div class="flex row" v-if="userInfo.accountNotifications.inviteAccount">
+    <div class="flex row" v-if="isInviteAccount">
       <div class="user-settings-notification">
         <span class="content">
           {{ $t("usersettings.invite_account_notif") }}
@@ -72,16 +72,16 @@
 <script>
 import { apiUpdateUserInfo, apiSendVerificationLink } from "@/api/user.js"
 import { bus } from "@/main.js"
+import { getEnv } from "@/tools/getEnv"
 
 import Loading from "@/components/Loading.vue"
 import Breadcrumb from "@/components/Breadcrumb.vue"
 import MainContent from "@/components/MainContent.vue"
-import UserSettingsPersonal from "../components/UserSettingsPersonal.vue"
-
+import UserSettingsPersonal from "@/components/UserSettingsPersonal.vue"
+import UserSettingsPassword from "@/components/UserSettingsPassword.vue"
+import UserSettingsNotifications from "@/components/UserSettingsNotifications.vue"
+import FormCheckbox from "@/components/FormCheckbox.vue"
 import ErrorView from "@/views/Error.vue"
-import UserSettingsPassword from "../components/UserSettingsPassword.vue"
-import UserSettingsNotifications from "../components/UserSettingsNotifications.vue"
-import FormCheckbox from "../components/FormCheckbox.vue"
 
 export default {
   props: {
@@ -103,7 +103,7 @@ export default {
         error: null,
         label: this.$t("usersettings.profil_visibility.label_private"),
       },
-      pictureUploadLabel: "Choose a file",
+      pictureUploadLabel: this.$t("usersettings.profile_image_button"),
     }
   },
   computed: {
@@ -113,6 +113,9 @@ export default {
 
     imgUrl() {
       return `${process.env.VUE_APP_PUBLIC_MEDIA}/${this.userInfo.img}`
+    },
+    isInviteAccount() {
+      return this.userInfo?.accountNotifications?.inviteAccount ?? false
     },
   },
   methods: {
@@ -172,10 +175,10 @@ export default {
           formData.append("file", file)
           // TODO: put this function in api/user.js
           let req = await this.$options.filters.sendMultipartFormData(
-            `${process.env.VUE_APP_CONVO_API}/users/self/picture`,
+            `${getEnv("VUE_APP_CONVO_API")}/users/self/picture`,
             "put",
             formData,
-            { timeout: 3000, redirect: false }
+            { timeout: 3000, redirect: false },
           )
           if (req.status === "success") {
             this.picture = {

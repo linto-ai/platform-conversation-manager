@@ -121,217 +121,222 @@
         "membersRight": 2,
         "customRights": []
       },
-      "speakers": [{
-        "speaker_id": "60ac8c45-751e-4cf9-8617-833313dd2d12",
-        "speaker_name": "speaker",
-        "stime": 0,
-        "etime": 16.23
-      }],
-      "text": [{
-        "speaker_id": "60ac8c45-751e-4cf9-8617-833313dd2d12",
-        "turn_id": "06e34723-25ee-4dad-853a-d9ee39377e75",
-        "raw_segment": "bonjour je vais donner quelques chiffres hum deux cinq et je vais en donner encore d' autres huit douze un petit dernier dix mille",
-        "segment": "bonjour je vais donner quelques chiffres hum 2 5 et je vais en donner encore d'autres 8 12 un petit dernier 10000",
-        "words": [{
-            "wid": "0d7ea137-ea70-467e-b3a0-8646a38a7bcb",
-            "stime": 0,
-            "etime": 1.41,
-            "word": "bonjour",
-            "confidence": 1,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "ea7f448d-a89b-4272-b8bb-f5d4d99e0504",
-            "stime": 1.41,
-            "etime": 1.44,
-            "word": "je",
-            "confidence": 1,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "c32bbcca-a7b4-4208-8e58-b9974dba7849",
-            "stime": 1.44,
-            "etime": 2.16,
-            "word": "vais",
-            "confidence": 1,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "6ba1151b-80b4-48a0-bcc9-7d1626b5d0a6",
-            "stime": 2.16,
-            "etime": 2.31,
-            "word": "donner",
-            "confidence": 1,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "61a7c17a-70c8-4dfe-9247-1da087bd8f37",
-            "stime": 2.31,
-            "etime": 2.67,
-            "word": "quelques",
-            "confidence": 1,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "01bade0d-afaa-4ee3-8fec-654c0eed49a3",
-            "stime": 2.67,
-            "etime": 3.6,
-            "word": "chiffres",
-            "confidence": 1,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "5d749cdc-93fc-498d-8c69-bc80053e60f4",
-            "stime": 3.6,
-            "etime": 3.610847,
-            "word": "hum",
-            "confidence": 0.581982,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "d337c99c-3939-464e-9855-1a93006baa06",
-            "stime": 4.77,
-            "etime": 5.414999999999999,
-            "word": "2",
-            "confidence": 0.5115379999999999,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "3f919f9e-09eb-430d-a91a-23d497c9944d",
-            "stime": 5.414999999999999,
-            "etime": 6.059999999999999,
-            "word": "5",
-            "confidence": 0.5115379999999999,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "4187a1a3-1455-499d-83e1-ea5a27022d07",
-            "stime": 7.68,
-            "etime": 8.186945999999999,
-            "word": "et",
-            "confidence": 0.992547,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "322939a0-89c9-4f2d-9b53-23b6d17b2f4c",
-            "stime": 8.186945999999999,
-            "etime": 8.310872,
-            "word": "je",
-            "confidence": 1,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "2f4a5a97-c10f-4ef4-80bf-27c02086af90",
-            "stime": 8.310872,
-            "etime": 8.486535,
-            "word": "vais",
-            "confidence": 0.731809,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "ede3dbf8-a99a-4d28-ab71-1f5dc3daa36c",
-            "stime": 8.486535,
-            "etime": 8.671011,
-            "word": "en",
-            "confidence": 0.991341,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "9c2ded62-e84c-49bc-bc51-f346a8cde5d4",
-            "stime": 8.671024,
-            "etime": 8.85,
-            "word": "donner",
-            "confidence": 0.978322,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "26e0f461-065d-4605-92f0-a3c5b7bd08e2",
-            "stime": 8.854904,
-            "etime": 9.12333,
-            "word": "encore",
-            "confidence": 0.605999,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "25d7dab5-8da0-4d95-9773-aa664795aed0",
-            "stime": 9.145658,
-            "etime": 9.511771,
-            "word": "d'autres",
-            "confidence": 0.959281,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "c239d4e8-8122-45e8-81b9-6c5d08686ddb",
-            "stime": 9.557817,
-            "etime": 11.1989085,
-            "word": "8",
-            "confidence": 0.6666666666666666,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "04c55cd8-2b53-4a41-aed2-d0e25251311e",
-            "stime": 11.1989085,
-            "etime": 12.84,
-            "word": "12",
-            "confidence": 0.6666666666666666,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "27180ccd-5bec-424f-aab4-9945904d6723",
-            "stime": 12.84,
-            "etime": 13.647614,
-            "word": "un",
-            "confidence": 1,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "f4cc6c88-1291-4d9d-ba1f-7db3c5a89d85",
-            "stime": 13.647614,
-            "etime": 13.92,
-            "word": "petit",
-            "confidence": 1,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "399a7dd5-a4d0-48b0-b116-1237631ec231",
-            "stime": 13.92,
-            "etime": 14.85,
-            "word": "dernier",
-            "confidence": 1,
-            "highlights": [],
-            "keywords": []
-          },
-          {
-            "wid": "df134fce-3085-4a96-8d5d-8a7e6b3f8ec7",
-            "stime": 14.86957,
-            "etime": 15.900652,
-            "word": "10000",
-            "confidence": 1,
-            "highlights": [],
-            "keywords": []
-          }
-        ]
-      }],
+      "speakers": [
+        {
+          "speaker_id": "60ac8c45-751e-4cf9-8617-833313dd2d12",
+          "speaker_name": "speaker",
+          "stime": 0,
+          "etime": 16.23
+        }
+      ],
+      "text": [
+        {
+          "speaker_id": "60ac8c45-751e-4cf9-8617-833313dd2d12",
+          "turn_id": "06e34723-25ee-4dad-853a-d9ee39377e75",
+          "raw_segment": "bonjour je vais donner quelques chiffres hum deux cinq et je vais en donner encore d' autres huit douze un petit dernier dix mille",
+          "segment": "bonjour je vais donner quelques chiffres hum 2 5 et je vais en donner encore d'autres 8 12 un petit dernier 10000",
+          "words": [
+            {
+              "wid": "0d7ea137-ea70-467e-b3a0-8646a38a7bcb",
+              "stime": 0,
+              "etime": 1.41,
+              "word": "bonjour",
+              "confidence": 1,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "ea7f448d-a89b-4272-b8bb-f5d4d99e0504",
+              "stime": 1.41,
+              "etime": 1.44,
+              "word": "je",
+              "confidence": 1,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "c32bbcca-a7b4-4208-8e58-b9974dba7849",
+              "stime": 1.44,
+              "etime": 2.16,
+              "word": "vais",
+              "confidence": 1,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "6ba1151b-80b4-48a0-bcc9-7d1626b5d0a6",
+              "stime": 2.16,
+              "etime": 2.31,
+              "word": "donner",
+              "confidence": 1,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "61a7c17a-70c8-4dfe-9247-1da087bd8f37",
+              "stime": 2.31,
+              "etime": 2.67,
+              "word": "quelques",
+              "confidence": 1,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "01bade0d-afaa-4ee3-8fec-654c0eed49a3",
+              "stime": 2.67,
+              "etime": 3.6,
+              "word": "chiffres",
+              "confidence": 1,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "5d749cdc-93fc-498d-8c69-bc80053e60f4",
+              "stime": 3.6,
+              "etime": 3.610847,
+              "word": "hum",
+              "confidence": 0.581982,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "d337c99c-3939-464e-9855-1a93006baa06",
+              "stime": 4.77,
+              "etime": 5.414999999999999,
+              "word": "2",
+              "confidence": 0.5115379999999999,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "3f919f9e-09eb-430d-a91a-23d497c9944d",
+              "stime": 5.414999999999999,
+              "etime": 6.059999999999999,
+              "word": "5",
+              "confidence": 0.5115379999999999,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "4187a1a3-1455-499d-83e1-ea5a27022d07",
+              "stime": 7.68,
+              "etime": 8.186945999999999,
+              "word": "et",
+              "confidence": 0.992547,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "322939a0-89c9-4f2d-9b53-23b6d17b2f4c",
+              "stime": 8.186945999999999,
+              "etime": 8.310872,
+              "word": "je",
+              "confidence": 1,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "2f4a5a97-c10f-4ef4-80bf-27c02086af90",
+              "stime": 8.310872,
+              "etime": 8.486535,
+              "word": "vais",
+              "confidence": 0.731809,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "ede3dbf8-a99a-4d28-ab71-1f5dc3daa36c",
+              "stime": 8.486535,
+              "etime": 8.671011,
+              "word": "en",
+              "confidence": 0.991341,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "9c2ded62-e84c-49bc-bc51-f346a8cde5d4",
+              "stime": 8.671024,
+              "etime": 8.85,
+              "word": "donner",
+              "confidence": 0.978322,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "26e0f461-065d-4605-92f0-a3c5b7bd08e2",
+              "stime": 8.854904,
+              "etime": 9.12333,
+              "word": "encore",
+              "confidence": 0.605999,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "25d7dab5-8da0-4d95-9773-aa664795aed0",
+              "stime": 9.145658,
+              "etime": 9.511771,
+              "word": "d'autres",
+              "confidence": 0.959281,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "c239d4e8-8122-45e8-81b9-6c5d08686ddb",
+              "stime": 9.557817,
+              "etime": 11.1989085,
+              "word": "8",
+              "confidence": 0.6666666666666666,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "04c55cd8-2b53-4a41-aed2-d0e25251311e",
+              "stime": 11.1989085,
+              "etime": 12.84,
+              "word": "12",
+              "confidence": 0.6666666666666666,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "27180ccd-5bec-424f-aab4-9945904d6723",
+              "stime": 12.84,
+              "etime": 13.647614,
+              "word": "un",
+              "confidence": 1,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "f4cc6c88-1291-4d9d-ba1f-7db3c5a89d85",
+              "stime": 13.647614,
+              "etime": 13.92,
+              "word": "petit",
+              "confidence": 1,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "399a7dd5-a4d0-48b0-b116-1237631ec231",
+              "stime": 13.92,
+              "etime": 14.85,
+              "word": "dernier",
+              "confidence": 1,
+              "highlights": [],
+              "keywords": []
+            },
+            {
+              "wid": "df134fce-3085-4a96-8d5d-8a7e6b3f8ec7",
+              "stime": 14.86957,
+              "etime": 15.900652,
+              "word": "10000",
+              "confidence": 1,
+              "highlights": [],
+              "keywords": []
+            }
+          ]
+        }
+      ],
       "metadata": {
         "transcription": {
           "lang": "fr-FR",

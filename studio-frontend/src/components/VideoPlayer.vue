@@ -1,17 +1,19 @@
 <template>
   <div id="video-player" class="flex1">
-    <div class="video-container flex col justify-center">
-      <div class="video-content flex col justify-center">
-        <video
-          v-if="videoLoaded"
-          ref="videoPreview"
-          id="videoPreview"
-          controls
-          :src="videoUrl"></video>
-        <img v-else src="/img/subtitle_default.svg" alt="" />
-        <div
-          class="screen-container flex col justify-center"
-          ref="screen-container"></div>
+    <div class="video-container">
+      <div class="video-content flex justify-center">
+        <div id="video" class="flex justify-center">
+          <video
+            v-if="videoLoaded"
+            ref="video-preview"
+            id="video-preview"
+            controls
+            :src="videoUrl"></video>
+          <img v-else src="/img/subtitle_default.svg" alt="" />
+          <div
+            class="screen-container flex col justify-center"
+            ref="screen-container"></div>
+        </div>
       </div>
     </div>
     <div class="flex col overlay" v-if="!videoLoaded">
@@ -36,7 +38,7 @@ export default {
       required: true,
     },
     screens: {
-      type: Map,
+      type: Object,
       required: true,
     },
   },
@@ -52,7 +54,7 @@ export default {
     videoLoaded(val) {
       if (val) {
         this.$nextTick(() => {
-          this.videoElem = this.$refs["videoPreview"]
+          this.videoElem = this.$refs["video-preview"]
           this.$emit("videoLoaded", this.videoElem)
         })
       }
@@ -73,7 +75,7 @@ export default {
   },
   methods: {
     handleScreenEnter(screen_id) {
-      const screen = this.screens.get(screen_id).screen
+      const screen = this.screens[screen_id].screen
       let elem = this.$refs["screen-container"]
       elem.innerHTML = ""
       for (let line of screen.text) {
@@ -120,7 +122,8 @@ export default {
       if (file.type.includes("video/")) {
         let duration = Math.floor(await this.getFileDuration(file))
         let requested = Math.floor(this.audioDuration)
-        return duration === requested
+        // Allow 10% difference
+        return Math.abs(duration - requested) < requested * 0.1
       }
       return false
     },

@@ -19,6 +19,7 @@
         :disabled="disabled"
         :id="id"
         :autocomplete="autocomplete"
+        :placeholder="placeholder"
         ref="input"
         v-model="value"
         @change="($event) => $emit('change', $event)"
@@ -44,8 +45,9 @@
           <span class="icon medium apply"></span>
         </button>
       </div>
+      <slot name="content-after-input"></slot>
     </div>
-
+    <slot name="content-bottom-input"></slot>
     <span class="error-field" v-if="field.error !== null">{{
       field.error
     }}</span>
@@ -55,7 +57,7 @@
 <script>
 import { Fragment } from "vue-fragment"
 import { bus } from "../main.js"
-import LabeledValue from "./LabeledValue.vue"
+import LabeledValue from "@/components/LabeledValue.vue"
 export default {
   props: {
     /*
@@ -111,6 +113,9 @@ export default {
     autocomplete() {
       return this.field.autocomplete || null
     },
+    placeholder() {
+      return this.field?.placeholder || null
+    },
   },
   watch: {
     value() {
@@ -128,13 +133,15 @@ export default {
     }
   },
   methods: {
-    apply() {
+    apply(e) {
+      e && e.stopPropagation()
       this.$emit("input", this.value)
-      this.$emit("on-confirm")
+      this.$emit("on-confirm", e)
     },
-    cancel() {
+    cancel(e) {
+      e && e.stopPropagation()
       this.value = this.field.value
-      this.$emit("on-cancel")
+      this.$emit("on-cancel", e)
     },
     keydown(e) {
       if (e.key == "Enter") {
@@ -142,6 +149,7 @@ export default {
       } else if (e.key == "Escape") {
         this.cancel()
       }
+      e.stopPropagation()
     },
   },
   components: { Fragment, LabeledValue },

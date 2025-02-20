@@ -1,0 +1,31 @@
+table {
+  //border-collapse: inherit !important;
+  border: 1px solid var(--neutral-60);
+}
+
+thead {
+  background-color: var(--neutral-100);
+}
+
+th,
+td {
+  padding: 0.5rem 1rem !important;
+  border: 1px solid var(--neutral-60);
+}
+
+.table-header-button {
+  color: var(--dark-100) !important;
+  text-transform: initial !important;
+  font-size: 1rem !important;
+}
+
+table.table-grid {
+  gap: 1px;
+
+  th,
+  td {
+    border: none;
+
+    outline: 1px solid var(--neutral-60);
+  }
+}

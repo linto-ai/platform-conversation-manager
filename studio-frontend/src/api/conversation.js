@@ -2,7 +2,10 @@ import conversationsPerPage from "../const/conversationsPerPage"
 import { sendMultipartFormData } from "../tools/sendMultipartFormData"
 import { sendRequest } from "../tools/sendRequest"
 
-const BASE_API = process.env.VUE_APP_CONVO_API
+import { getEnv } from "@/tools/getEnv"
+
+const BASE_API = getEnv("VUE_APP_CONVO_API")
+
 const DEFAULT_PAGE_SIZE = conversationsPerPage
 
 //  -- -- -- conversations listing -- -- -- --
@@ -20,7 +23,7 @@ export async function apiGetConversationsSharedWith(
     sortOrder = -1,
   } = {},
 
-  notif
+  notif,
 ) {
   tag = tag || []
   const getConversations = await sendRequest(
@@ -35,7 +38,7 @@ export async function apiGetConversationsSharedWith(
       sortField,
       sortCriteria: sortOrder,
     },
-    notif
+    notif,
   )
 
   if (getConversations.status == "error") {
@@ -53,13 +56,13 @@ export async function apiGetConversationsByOrganization(
     sortField = "last_update",
     sortOrder = -1,
   } = {},
-  notif
+  notif,
 ) {
   const getConversations = await sendRequest(
     `${BASE_API}/organizations/${organizationScope}/conversations`,
     { method: "get" },
     { page, size: pageSize, sortField, sortCriteria: sortOrder },
-    notif
+    notif,
   )
 
   if (getConversations.status == "error") {
@@ -75,13 +78,13 @@ export async function apiGetConversationsWithoutTagsByOrganization(
   pageSize = DEFAULT_PAGE_SIZE,
   sortField = "created",
   sortOrder = -1,
-  notif
+  notif,
 ) {
   const getConversations = await sendRequest(
     `${BASE_API}/organizations/${organizationScope}/conversations?filter=notags`,
     { method: "get" },
     { page, size: pageSize, sortField, sortCriteria: sortOrder },
-    notif
+    notif,
   )
 
   if (getConversations.status == "error") {
@@ -97,7 +100,7 @@ export async function apiGetConversationsByTags(
   title,
   page,
   { pageSize = DEFAULT_PAGE_SIZE, sortField = "created", sortOrder = -1 } = {},
-  notif
+  notif,
 ) {
   const getConversations = await sendRequest(
     `${BASE_API}/organizations/${organizationScope}/conversations`,
@@ -111,7 +114,7 @@ export async function apiGetConversationsByTags(
       sortField,
       sortCriteria: sortOrder,
     },
-    notif
+    notif,
   )
   if (getConversations.status == "error") {
     console.error(getConversations.error)
@@ -130,12 +133,12 @@ export async function apiGetFavoritesConversations(
     sortField = "last_update",
     sortOrder = -1,
   } = {},
-  notif
+  notif,
 ) {
   tag = tag || []
 
   const res = await sendRequest(
-    `${process.env.VUE_APP_CONVO_API}/users/self/favorites`,
+    `${BASE_API}/users/self/favorites`,
     { method: "get" },
     {
       tags: tag.toString(),
@@ -146,7 +149,7 @@ export async function apiGetFavoritesConversations(
       sortField,
       sortCriteria: sortOrder,
     },
-    notif
+    notif,
   )
 
   if (res.status == "error") {
@@ -163,15 +166,17 @@ export async function apiCreateConversation(
   {
     name,
     description,
-    membersRights,
+    membersRight,
     serviceName,
     transcriptionConfig,
     segmentCharSize,
     lang,
     endpoint,
     tracks,
+    url, // tracks or url is required
   },
-  notif
+  notif,
+  onUploadProgress = null,
 ) {
   try {
     let formData = new FormData()
@@ -179,21 +184,27 @@ export async function apiCreateConversation(
     formData.append("organizationId", organizationId)
     formData.append("name", name)
     formData.append("description", description)
-    formData.append("membersRights", membersRights)
+    formData.append("membersRight", membersRight)
     formData.append("serviceName", serviceName)
     formData.append("transcriptionConfig", transcriptionConfig)
     formData.append("segmentCharSize", segmentCharSize)
     formData.append("lang", lang)
     formData.append("endpoint", endpoint)
-    for (let i = 0; i < tracks.length; i++) {
-      formData.append("file", tracks[i])
+
+    if (tracks) {
+      for (let i = 0; i < tracks.length; i++) {
+        formData.append("file", tracks[i])
+      }
+    } else {
+      formData.append("url", url)
     }
 
     let req = await sendMultipartFormData(
-      `${process.env.VUE_APP_CONVO_API}/organizations/${organizationId}/conversations/create`,
+      `${BASE_API}/organizations/${organizationId}/conversations/create`,
       "post",
       formData,
-      notif
+      notif,
+      onUploadProgress,
     )
 
     return req.status == "success"
@@ -203,24 +214,28 @@ export async function apiCreateConversation(
   }
 }
 
-export async function apiCountConversation(organizationScope, tag, notif) {
+export async function apiCountConversation(organizationScope, tag = [], notif) {
   const getConversations = await apiGetConversationsByTags(
     organizationScope,
     tag,
     null,
     null,
     1,
-    { pageSize: 1 }
+    { pageSize: 1 },
   )
   return getConversations?.count || 0
 }
 
-export async function apiGetConversationById(conversationId, notif) {
+export async function apiGetConversationById(
+  conversationId,
+  projection = {},
+  notif,
+) {
   const getConversation = await sendRequest(
     `${BASE_API}/conversations/${conversationId}`,
     { method: "get" },
-    null,
-    notif
+    { projection },
+    notif,
   )
   return getConversation?.data
 }
@@ -230,7 +245,7 @@ export async function apiGetConversationLastUpdate(conversationId, notif) {
     `${BASE_API}/conversations/${conversationId}`,
     { method: "get" },
     { key: ["last_update"].toString() },
-    notif
+    notif,
   )
   return getConversation?.data
 }
@@ -240,14 +255,14 @@ export async function apiDeleteConversation(conversationId, notif) {
     `${BASE_API}/conversations/${conversationId}`,
     { method: "delete" },
     {},
-    notif
+    notif,
   )
 }
 
 export async function apiDeleteMultipleConversation(
   organizationId,
   conversationsIds,
-  notif
+  notif,
 ) {
   const conversationsIdsString = conversationsIds.join(",")
 
@@ -255,7 +270,7 @@ export async function apiDeleteMultipleConversation(
     `${BASE_API}/organizations/${organizationId}/conversations`,
     { method: "delete" },
     { conversationsId: conversationsIdsString },
-    notif
+    notif,
   )
 
   return requestRes
@@ -270,13 +285,13 @@ export async function apiGetAudioFileFromConversation(conversationId, notif) {
     },
     {},
     notif,
-    {}
+    {},
   )
 }
 
 export async function apiGetAudioWaveFormFromConversation(
   conversationId,
-  notif
+  notif,
 ) {
   return await sendRequest(
     `${BASE_API}/conversations/${conversationId}/media?mediatype=json`,
@@ -286,7 +301,7 @@ export async function apiGetAudioWaveFormFromConversation(
     },
     {},
     notif,
-    {}
+    {},
   )
 }
 
@@ -295,7 +310,7 @@ export async function apiUpdateConversation(conversationId, payload, notif) {
     `${BASE_API}/conversations/${conversationId}`,
     { method: "patch" },
     payload,
-    notif
+    notif,
   )
 }
 
@@ -303,7 +318,7 @@ export async function apiGetJsonFileFromConversation(
   conversationId,
   speakers,
   keywords,
-  notif
+  notif,
 ) {
   return await sendRequest(
     `${BASE_API}/conversations/${conversationId}/download?format=json`,
@@ -318,7 +333,7 @@ export async function apiGetJsonFileFromConversation(
         speakers: true,
       },
     },
-    notif
+    notif,
   )
 }
 
@@ -326,7 +341,7 @@ export async function apiGetTextFileFromConversation(
   conversationId,
   speakers,
   keywords,
-  notif
+  notif,
 ) {
   return await sendRequest(
     `${BASE_API}/conversations/${conversationId}/download?format=text`,
@@ -341,14 +356,14 @@ export async function apiGetTextFileFromConversation(
         speakers: true,
       },
     },
-    notif
+    notif,
   )
 }
 
 export async function apiGetDocxFileFromConversation(
   conversationId,
   { speakers = [], keywords = [], preview = false } = {},
-  notif
+  notif,
 ) {
   return await sendRequest(
     `${BASE_API}/conversations/${conversationId}/download?format=docx&preview=${preview}`,
@@ -363,7 +378,7 @@ export async function apiGetDocxFileFromConversation(
         speakers: true,
       },
     },
-    notif
+    notif,
   )
 }
 
@@ -371,11 +386,17 @@ export async function apiGetGenericFileFromConversation(
   conversationId,
   format,
   service,
-  { speakers = [], keywords = [], preview = false, regenerate = false } = {},
-  notif
+  {
+    speakers = [],
+    keywords = [],
+    preview = false,
+    regenerate = false,
+    title = "",
+  } = {},
+  notif,
 ) {
   return await sendRequest(
-    `${BASE_API}/conversations/${conversationId}/download?format=${format}&preview=${preview}&flavor=${service}&regenerate=${regenerate}`,
+    `${BASE_API}/conversations/${conversationId}/download?format=${format}&preview=${preview}&flavor=${service}&regenerate=${regenerate}&title=${title}`,
     { method: "post", responseType: "blob" },
     {
       filter: { speaker: speakers.join(","), keyword: keywords.join(",") },
@@ -387,7 +408,7 @@ export async function apiGetGenericFileFromConversation(
         speakers: true,
       },
     },
-    notif
+    notif,
   )
 }
 
@@ -396,31 +417,31 @@ export async function apiGetStatusExport(conversationId, notif) {
     `${BASE_API}/conversations/${conversationId}/export/list`,
     { method: "get" },
     {},
-    notif
+    notif,
   )
 }
 
 export async function apiGetFileFromConversationSubtitle(
   conversationId,
   subtitleId,
-  type
+  type,
 ) {
   return await sendRequest(
     `${BASE_API}/conversations/${conversationId}/subtitle/${subtitleId}?type=${type}`,
-    { method: "get" }
+    { method: "get" },
   )
 }
 
 export async function apiSearchConversationByText(payload, notif) {
   const res = await sendRequest(
-    `${process.env.VUE_APP_CONVO_API}/conversations/search`,
+    `${BASE_API}/conversations/search`,
     { method: "post" },
     {
       text: payload.text,
       organizationId: payload.organizationId,
       searchType: ["title", "description", "text"],
     },
-    null
+    null,
   )
   return { conversations: res?.data?.conversations }
 }
@@ -430,7 +451,7 @@ export async function apiStartKeywordExtrator(conversationId, method, notif) {
     `${BASE_API}/nlp/${conversationId}/keyword`,
     { method: "post" },
     { method: method },
-    notif
+    notif,
   )
   return res
 }
@@ -440,76 +461,92 @@ export async function apiGetUserRightFromConversation(conversationId, notif) {
     `${BASE_API}/conversations/${conversationId}/rights`,
     { method: "get" },
     {},
-    notif
+    notif,
   )
   return res.data
 }
 
 export async function apiGetUsersFromMultipleConversation(
   conversationsId,
-  notif
+  notif,
 ) {
   const res = await sendRequest(
     `${BASE_API}/conversations/users`,
     { method: "post" },
     { conversations: conversationsId.join(",") },
-    notif
+    notif,
   )
   return res.data
 }
 
 export async function apiInviteInConversation(conversationId, email, notif) {
   return await sendRequest(
-    `${process.env.VUE_APP_CONVO_API}/conversations/${conversationId}/invite`,
+    `${BASE_API}/conversations/${conversationId}/invite`,
     { method: "post" },
     { email, right: 1 },
-    notif
+    notif,
   )
 }
 
 export async function apiAddConversationToFavorites(conversationId, notif) {
   return await sendRequest(
-    `${process.env.VUE_APP_CONVO_API}/users/self/favorites/${conversationId}`,
+    `${BASE_API}/users/self/favorites/${conversationId}`,
     { method: "put" },
     {},
-    notif
+    notif,
   )
 }
 
 export async function apiRemoveConversationFromFavorites(
   conversationId,
-  notif
+  notif,
 ) {
   return await sendRequest(
-    `${process.env.VUE_APP_CONVO_API}/users/self/favorites/${conversationId}`,
+    `${BASE_API}/users/self/favorites/${conversationId}`,
     { method: "delete" },
     {},
-    notif
+    notif,
   )
 }
 
 export async function apiAddTagToConversation(
   conversationId,
   tagId,
-  notif = null
+  notif = null,
 ) {
   return await sendRequest(
     `${BASE_API}/conversations/${conversationId}/tags/${tagId}`,
     { method: "post" },
     {},
-    notif
+    notif,
   )
 }
 
 export async function apiDeleteTagFromConversation(
   conversationId,
   tagId,
-  notif = null
+  notif = null,
 ) {
   return await sendRequest(
     `${BASE_API}/conversations/${conversationId}/tags/${tagId}`,
     { method: "delete" },
     {},
-    notif
+    notif,
   )
+}
+
+export async function apiGetConversationChild(conversationId, fields, notif) {
+  let res = await sendRequest(
+    `${BASE_API}/conversations/${conversationId}/child`,
+    { method: "get" },
+    { projection: fields ? fields.toString() : "" },
+    notif,
+  )
+
+  if (res.status == "error") {
+    console.error(res.error)
+    return []
+  }
+
+  return res?.data ?? []
 }

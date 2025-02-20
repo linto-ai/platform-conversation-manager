@@ -4,8 +4,10 @@
       :title="$t('navigation.home')"
       to="/interface"
       class="flex row gap-small header-logo">
-      <img src="/img/linto-studio-logo.svg" style="height: 2rem" />
-      <h1 id="main-title" style="">Linto Studio</h1>
+      <img :src="logo" style="height: 3rem" />
+      <h1 id="main-title" style="">
+        {{ title }}
+      </h1>
     </router-link>
     <!-- <router-link
       :title="$t('navigation.conversation.create')"
@@ -21,28 +23,47 @@
         :currentRoute="currentRoute"
         :currentOrganization="currentOrganization" />-->
     </div>
-    <ThemeSwitcher></ThemeSwitcher>
+    <ThemeSwitcher v-if="darkThemeFeatureEnabled"></ThemeSwitcher>
     <LocalSwitcher></LocalSwitcher>
     <UserSettingsMenu :userInfo="userInfo" />
   </nav>
 </template>
 <script>
 import { bus } from "../main.js"
+import { getEnv } from "@/tools/getEnv"
+
 import Breadcrumb from "@/components/Breadcrumb.vue"
 import LocalSwitcher from "@/components/LocalSwitcher.vue"
 import UserSettingsMenu from "./UserSettingsMenu.vue"
 import OrganizationSelector from "./OrganizationSelector.vue"
 import ThemeSwitcher from "./ThemeSwitcher.vue"
+
 export default {
   props: {
     userInfo: { type: Object, required: true },
-    currentOrganization: { type: Object, required: true },
     userOrganizations: { type: Array, required: true },
-    currentOrganizationScope: { type: String, required: true },
   },
   computed: {
     currentRoute() {
       return this.$route
+    },
+    logo() {
+      return `/img/${getEnv("VUE_APP_LOGO")}`
+    },
+    title() {
+      if (this.isBackofficePage) {
+        return getEnv("VUE_APP_NAME") + " – Backoffice"
+      }
+      return getEnv("VUE_APP_NAME")
+    },
+    darkThemeFeatureEnabled() {
+      return process.env?.VUE_APP_EXPERIMENTAL_DARK_THEME === "true"
+    },
+    darkThemeFeatureEnabled() {
+      return process.env?.VUE_APP_EXPERIMENTAL_DARK_THEME === "true"
+    },
+    isBackofficePage() {
+      return this.currentRoute.meta.backoffice
     },
   },
   components: {

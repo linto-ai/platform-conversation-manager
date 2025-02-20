@@ -13,9 +13,10 @@
 import { bus } from "../main.js"
 import CustomSelect from "./CustomSelect.vue"
 import { orgaRoleMixin } from "@/mixins/orgaRole.js"
+import { platformRoleMixin } from "@/mixins/platformRole.js"
 
 export default {
-  mixins: [orgaRoleMixin],
+  mixins: [orgaRoleMixin, platformRoleMixin],
   props: {
     currentOrganizationScope: { type: String, required: true },
     // userOrganizations: { type: Array, required: true },
@@ -44,7 +45,7 @@ export default {
       } else if (this.$route.name === "favorites") {
         return this.$t("navigation.tabs.favorites")
       } else if (this.$route.meta.userPage) {
-        return "User page"
+        return this.$t("navigation.tabs.user_page")
       }
       return `${this.currentOrganization.name} (${this.roleToString})`
     },
@@ -63,18 +64,21 @@ export default {
           link: `/interface/organizations/${this.currentOrganizationScope}`,
         },
         {
-          value: "create",
-          icon: "new",
-          text: this.$t("navigation.organisation.create"),
-          link: "/interface/organizations/create",
-        },
-        {
           value: "tags",
           icon: "tag",
           text: this.$t("navigation.tabs.manage_tags"),
           link: "/interface/tags/settings",
         },
       ]
+
+      if (this.isAtLeastOrganizationInitiator) {
+        settingsItems.push({
+          value: "create",
+          icon: "new",
+          text: this.$t("navigation.organisation.create"),
+          link: "/interface/organizations/create",
+        })
+      }
       return {
         organisationItems,
         settingsItems,
@@ -88,7 +92,7 @@ export default {
     onClickMenu(value) {
       if (value === "settings") {
         this.$router.push(
-          `/interface/organizations/${this.currentOrganizationScope}`
+          `/interface/organizations/${this.currentOrganizationScope}`,
         )
       } else if (value === "create") {
         this.$router.push(`/interface/organizations/create`)

@@ -6,7 +6,7 @@ export default async function jobTranscriptionController(
   conversation,
   conversationId,
   userToken,
-  io
+  io,
 ) {
   const room = `conversation/${conversationId}`
   const job = conversation.jobs["transcription"]
@@ -17,7 +17,7 @@ export default async function jobTranscriptionController(
     setTimeout(
       () =>
         jobTranscriptionController(conversation, conversationId, userToken, io),
-      3000
+      3000,
     )
     io.to(room).emit("job_transcription_update", {
       ...conversation.jobs["transcription"].toJSON(),

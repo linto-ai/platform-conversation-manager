@@ -1,64 +1,43 @@
 <template>
-  <div class="form-field flex col gap-medium">
+  <div class="form-field flex col gap-medium no-margin">
     <!-- <h3>Uploaded media</h3> -->
     <!-- File list -->
-    <ul class="audio-upload-list" v-if="value && value.length > 0">
-      <li
+    <!-- TODO: find a real unique key (hash + date upload ?) -->
+    <ul class="audio-upload-list flex1" v-if="value && value.length > 0">
+      <ConversationCreateFileLine
         v-for="(field, index) of value"
-        :key="field.file.lastModified + field.file.name">
-        <!-- TODO: find a real unique key (this one is quite good), cannot be index because of possible deletion -->
-        <FormInput :field="field" v-model="field.value" :disabled="disabled">
-          <button class="btn black" @click="deleteFile(index, $event)">
-            <span class="icon delete"></span>
-          </button>
-          <button
-            class="btn black"
-            @click="
-              index == indexPlaying ? stopFile($event) : playFile(index, $event)
-            ">
-            <span
-              :class="`icon ${
-                index == indexPlaying ? 'pause' : 'play'
-              }`"></span>
-          </button>
-        </FormInput>
-      </li>
+        :key="field.id"
+        :field="field"
+        :isPlaying="index === indexPlaying"
+        :disabled="disabled"
+        @deleteFile="deleteFile(index, $event)"
+        @playFile="playFile(index, $event)"
+        @stopFile="stopFile($event)" />
     </ul>
 
-    <!-- form to add file -->
-    <div class="audio-upload-form">
-      <div>
-        <input
-          type="radio"
-          id="media-type-file"
-          value="file"
-          v-model="mediaType"
-          :disabled="disabled" />
-        <label for="media-type-file">
-          {{ $t("conversation.media.file_label") }}
-        </label>
-        <input
-          type="radio"
-          id="media-type-mic"
-          value="mic"
-          v-model="mediaType"
-          :disabled="disabled" />
-        <label for="media-type-mic">
-          {{ $t("conversation.media.microphone_label") }}
-        </label>
-      </div>
-
-      <div style="margin-top: 0.5rem">
+    <div class="flex">
+      <div class="flex audio-upload-form subSection flex1">
         <ConversationCreateUpload
-          v-if="mediaType === 'file'"
+          v-if="uploadType === 'file'"
+          class="flex1"
           :disabled="disabled"
           @input="uploadFile"
           :multipleFiles="multipleFiles" />
         <ConversationCreateRecord
-          v-if="mediaType === 'mic'"
+          v-else-if="uploadType === 'microphone'"
+          class="flex1"
           :disabled="disabled"
           @input="recordFile" />
+        <ConversationCreateLink
+          v-else-if="uploadType === 'url'"
+          class="flex1"
+          :disabled="disabled"
+          @input="addUrl" />
       </div>
+      <TabsVertical
+        :tabs="uploadTabs"
+        v-model="uploadType"
+        class="upload-tabs" />
     </div>
   </div>
 </template>
@@ -68,7 +47,10 @@ import { generateFileField } from "@/tools/generateFileField.js"
 
 import ConversationCreateUpload from "@/components/ConversationCreateUpload.vue"
 import ConversationCreateRecord from "@/components/ConversationCreateRecord.vue"
+import ConversationCreateLink from "@/components/ConversationCreateLink.vue"
 import FormInput from "@/components/FormInput.vue"
+import ConversationCreateFileLine from "@/components/ConversationCreateFileLine.vue"
+import TabsVertical from "@/components/TabsVertical.vue"
 
 export default {
   props: {
@@ -80,12 +62,37 @@ export default {
     value: {
       required: true,
     },
+    // mode: {
+    //   type: String,
+    //   required: false,
+    //   default: "file",
+    // },
   },
   data() {
     return {
       mediaType: "file",
       indexPlaying: -1,
       multipleFiles: true, //process.env.VUE_APP_MULTIFILE == "true",
+      uploadTabs: [
+        {
+          icon: "upload",
+          label: this.$t("conversation_creation.offline.tabs_upload.file"),
+          name: "file",
+        },
+        {
+          icon: "record",
+          label: this.$t(
+            "conversation_creation.offline.tabs_upload.microphone",
+          ),
+          name: "microphone",
+        },
+        {
+          icon: "link",
+          label: this.$t("conversation_creation.offline.tabs_upload.url"),
+          name: "url",
+        },
+      ],
+      uploadType: "file",
     }
   },
   beforeDestroy() {
@@ -93,51 +100,76 @@ export default {
   },
   methods: {
     uploadFile(file) {
+      if (this.disabled) return
       if (this.multipleFiles) {
-        this.AddMultipleFiles(file)
+        this.AddMultipleFiles(file, "file")
       } else {
-        this.AddSingleFile(file)
+        this.AddSingleFile(file, "file")
       }
     },
     recordFile(file) {
+      if (this.disabled) return
       if (this.multipleFiles) {
-        this.AddMultipleFiles(file)
+        this.AddMultipleFiles(file, "microphone")
       } else {
-        this.AddSingleFile(file)
+        this.AddSingleFile(file, "microphone")
       }
     },
-    AddMultipleFiles(file) {
+    addUrl(url) {
+      this.$emit("input", [
+        ...this.value,
+        {
+          value: url,
+          file: url,
+          uploadType: "url",
+          id: Math.random().toString(36).substring(2),
+          progress: 0,
+        },
+      ])
+    },
+    AddMultipleFiles(file, uploadType = "file") {
       if (typeof file === "object" && file.length !== undefined) {
         const filesArray = Array.from(file)
         this.$emit("input", [
           ...this.value,
           ...filesArray.map((f) =>
-            generateFileField(this.removeFileExtension(f.name), f)
+            generateFileField(this.removeFileExtension(f.name), f, uploadType),
           ),
         ])
       } else {
         this.$emit("input", [
           ...this.value,
-          generateFileField(this.removeFileExtension(file.name), file),
+          generateFileField(
+            this.removeFileExtension(file.name),
+            file,
+            uploadType,
+          ),
         ])
       }
     },
-    AddSingleFile(file) {
+    AddSingleFile(file, uploadType = "file") {
       this.stopFile()
       if (typeof file === "object" && file.length !== undefined) {
         this.$emit("input", [
-          generateFileField(this.removeFileExtension(file[0].name), file[0]),
+          generateFileField(
+            this.removeFileExtension(file[0].name),
+            file[0],
+            uploadType,
+          ),
         ])
       } else {
         this.$emit("input", [
-          generateFileField(this.removeFileExtension(file.name), file),
+          generateFileField(
+            this.removeFileExtension(file.name),
+            file,
+            uploadType,
+          ),
         ])
       }
     },
     deleteFile(index, event) {
       if (this.disabled) return
 
-      event?.preventDefault()
       if (this.indexPlaying === index) {
         this.stopFile()
       }
@@ -145,18 +177,23 @@ export default {
       this.$emit("input", this.value)
     },
     playFile(index, event) {
-      event?.preventDefault()
       const file = this.value[index].file
+      const uploadType = this.value[index]?.uploadType ?? "file"
+
       this.stopFile()
-      this.audio = new Audio(URL.createObjectURL(file))
-      this.audio.onended = () => {
-        this.stopFile()
+
+      if (uploadType === "url") {
+        this.openExternal(file)
+      } else {
+        this.audio = new Audio(URL.createObjectURL(file))
+        this.audio.onended = () => {
+          this.stopFile()
+        }
+        this.indexPlaying = index
+        this.audio.play()
       }
-      this.indexPlaying = index
-      this.audio.play()
     },
     stopFile(event) {
-      event?.preventDefault()
       if (this.audio) {
         this.audio.pause()
         URL.revokeObjectURL(this.value[this.indexPlaying].file)
@@ -167,11 +204,17 @@ export default {
     removeFileExtension(filename) {
       return filename.replace(/\.[^/.]+$/, "")
     },
+    openExternal(url) {
+      window.open(url, "_blank")
+    },
   },
   components: {
     ConversationCreateUpload,
     ConversationCreateRecord,
     FormInput,
+    ConversationCreateFileLine,
+    ConversationCreateLink,
+    TabsVertical,
   },
 }
 </script>

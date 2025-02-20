@@ -1,6 +1,10 @@
-const debug = require('debug')('linto:conversation-manager:components:WebServer:routecontrollers:services:services')
+const debug = require("debug")(
+  "linto:conversation-manager:components:WebServer:routecontrollers:services:services",
+)
 
-const serviceUtility = require(`${process.cwd()}/components/WebServer/controllers/services/utility`)
+const serviceUtility = require(
+  `${process.cwd()}/components/WebServer/controllers/services/utility`,
+)
 
 async function getSaasServices(req, res, next) {
   try {
@@ -13,13 +17,15 @@ async function getSaasServices(req, res, next) {
 
 async function getLlmServices(req, res, next) {
   try {
-    if (process.env.LLM_GATEWAY_SERVICES === '' || process.env.LLM_GATEWAY_SERVICES === undefined) {
+    if (
+      process.env.LLM_GATEWAY_SERVICES === "" ||
+      process.env.LLM_GATEWAY_SERVICES === undefined
+    ) {
       res.status(200).send([])
     } else {
       const services = await serviceUtility.listLlmServices()
       res.status(200).send(services)
     }
-
   } catch (err) {
     next(err)
   }
@@ -27,5 +33,5 @@ async function getLlmServices(req, res, next) {
 
 module.exports = {
   getSaasServices,
-  getLlmServices
+  getLlmServices,
 }

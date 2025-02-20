@@ -1,0 +1,14 @@
+.btn.sso.linagora {
+  //background: #c42d43;
+  background: var(--background-primary);
+  background-image: none;
+  .label {
+    //color: var(--background-primary);
+    color: #c42d43;
+    text-align: center;
+  }
+  .icon {
+    background-color: #c42d43;
+  }
+  border: 1px solid #c42d43;
+}

@@ -8,18 +8,20 @@ export function workerConnect(
   conversationId,
   userToken,
   userId,
-  conversationFormat
+  conversationFormat,
 ) {
   EditorWorker.workerSingleton.connect(
     conversationId,
     userToken,
     userId,
-    conversationFormat
+    conversationFormat,
   )
 }
 
 export function workerDisconnect() {
-  EditorWorker.workerSingleton.terminate()
+  workerSendMessage("disconnect")
+
+  //setTimeout(EditorWorker.workerSingleton.terminate(), 2000)
 }
 
 export function workerListener() {

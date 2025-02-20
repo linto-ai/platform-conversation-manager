@@ -50,6 +50,7 @@ export default {
   },
   methods: {
     select(index, value) {
+      if (this.disabled) return
       this.indexSelected = index
       this.$emit("input", value)
     },

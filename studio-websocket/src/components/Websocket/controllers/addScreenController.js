@@ -15,7 +15,7 @@ export default async function addScreenController(data, io) {
       screenData.screen_id,
       placement,
       screenData.newScreen,
-      userToken
+      userToken,
     )
 
     if (newScreen.status === "success") {

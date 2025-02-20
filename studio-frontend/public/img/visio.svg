@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   fill="none"
+   version="1.1"
+   id="svg50689"
+   sodipodi:docname="visio.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview50691"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="true"
+     showguides="true"
+     inkscape:zoom="18.145833"
+     inkscape:cx="18.737084"
+     inkscape:cy="5.6211251"
+     inkscape:window-width="1920"
+     inkscape:window-height="1007"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g50682">
+    <inkscape:grid
+       type="xygrid"
+       id="grid50814" />
+  </sodipodi:namedview>
+  <g
+     clip-path="url(#clip0)"
+     id="g50682">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:56.7;stroke-dashoffset:2;paint-order:fill markers stroke"
+       id="rect50816"
+       width="20"
+       height="14"
+       x="2"
+       y="2"
+       ry="1" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:56.7;stroke-dashoffset:2;paint-order:fill markers stroke"
+       d="M 12,2 V 15"
+       id="path51237"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:56.7;stroke-dashoffset:2;paint-order:fill markers stroke"
+       id="path51243"
+       sodipodi:type="arc"
+       sodipodi:cx="7"
+       sodipodi:cy="12"
+       sodipodi:rx="2"
+       sodipodi:ry="2"
+       sodipodi:start="3.1415927"
+       sodipodi:end="0"
+       sodipodi:arc-type="slice"
+       d="m 5,12 a 2,2 0 0 1 2,-2 2,2 0 0 1 2,2 H 7 Z" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:56.7;stroke-dashoffset:2;paint-order:fill markers stroke"
+       id="path51248"
+       sodipodi:type="arc"
+       sodipodi:cx="6.9999933"
+       sodipodi:cy="6.9999866"
+       sodipodi:rx="1"
+       sodipodi:ry="1"
+       sodipodi:start="0"
+       sodipodi:end="6.2188275"
+       sodipodi:arc-type="slice"
+       d="M 7.9999933,6.9999866 A 1,1 0 0 1 7.0160821,7.9998572 1,1 0 0 1 6.000511,7.03216 1,1 0 0 1 6.9517437,6.0011513 1,1 0 0 1 7.9979231,6.9356733 l -0.9979298,0.064313 z" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:56.7;stroke-dashoffset:2;paint-order:fill markers stroke"
+       d="m 8,20 c 1.9824942,-1.325594 2.676296,-2.658767 2,-4 h 4 c -0.647638,1.318387 -0.03406,2.651117 2,4 H 8"
+       id="path56413"
+       sodipodi:nodetypes="ccccc" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.41422;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:56.7;stroke-dashoffset:2;paint-order:fill markers stroke"
+       id="rect60800"
+       width="16"
+       height="2"
+       x="4"
+       y="19"
+       ry="0" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:56.7;stroke-dashoffset:2;paint-order:fill markers stroke;stroke-opacity:1"
+       d="M 12,9 H 22"
+       id="path62284" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.749999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:56.7;stroke-dashoffset:2;paint-order:fill markers stroke"
+       id="path64651"
+       sodipodi:type="arc"
+       sodipodi:cx="17.501038"
+       sodipodi:cy="7.5321579"
+       sodipodi:rx="0.99999803"
+       sodipodi:ry="0.99999803"
+       sodipodi:start="3.1415927"
+       sodipodi:end="0"
+       sodipodi:arc-type="slice"
+       d="m 16.50104,7.5321579 a 0.99999803,0.99999803 0 0 1 0.999998,-0.999998 0.99999803,0.99999803 0 0 1 0.999998,0.999998 h -0.999998 z" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.749999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:56.7;stroke-dashoffset:2;paint-order:fill markers stroke"
+       id="path64653"
+       sodipodi:type="arc"
+       sodipodi:cx="17.501036"
+       sodipodi:cy="5.0321565"
+       sodipodi:rx="0.49999902"
+       sodipodi:ry="0.49999902"
+       sodipodi:start="0"
+       sodipodi:end="6.2188275"
+       sodipodi:arc-type="slice"
+       d="M 18.001035,5.0321565 A 0.49999902,0.49999902 0 0 1 17.50908,5.5320908 0.49999902,0.49999902 0 0 1 17.001296,5.0482431 0.49999902,0.49999902 0 0 1 17.476911,4.5327398 0.49999902,0.49999902 0 0 1 18,4.9999998 l -0.498964,0.032157 z" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.749999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:56.7;stroke-dashoffset:2;paint-order:fill markers stroke"
+       id="path64655"
+       sodipodi:type="arc"
+       sodipodi:cx="16.000002"
+       sodipodi:cy="14.000003"
+       sodipodi:rx="0.99999803"
+       sodipodi:ry="0.99999803"
+       sodipodi:start="3.1415927"
+       sodipodi:end="0"
+       sodipodi:arc-type="slice"
+       d="M 15.000004,14.000003 A 0.99999803,0.99999803 0 0 1 16.000002,13.000005 0.99999803,0.99999803 0 0 1 17,14.000003 h -0.999998 z" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.749999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:56.7;stroke-dashoffset:2;paint-order:fill markers stroke"
+       id="path64657"
+       sodipodi:type="arc"
+       sodipodi:cx="16"
+       sodipodi:cy="11.500001"
+       sodipodi:rx="0.49999902"
+       sodipodi:ry="0.49999902"
+       sodipodi:start="0"
+       sodipodi:end="6.2188275"
+       sodipodi:arc-type="slice"
+       d="m 16.499999,11.500001 a 0.49999902,0.49999902 0 0 1 -0.491955,0.499934 0.49999902,0.49999902 0 0 1 -0.507784,-0.483847 0.49999902,0.49999902 0 0 1 0.475615,-0.515504 0.49999902,0.49999902 0 0 1 0.523089,0.46726 L 16,11.500001 Z" />
+  </g>
+  <defs
+     id="defs50687">
+    <clipPath
+       id="clip0">
+      <rect
+         width="24"
+         height="24"
+         fill="white"
+         transform="translate(0.00012207)"
+         id="rect50684" />
+    </clipPath>
+  </defs>
+</svg>

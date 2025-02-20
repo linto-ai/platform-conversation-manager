@@ -1,0 +1,88 @@
+.select {
+  width: 12rem;
+  max-width: 100%;
+}
+
+.select.fullwidth {
+  width: 100%;
+}
+
+.select__head {
+  width: 100%;
+  text-align: left;
+  overflow-x: hidden;
+}
+
+.select[inline] .select__head {
+  background-color: var(--input-background);
+  background-image: none;
+  padding: 0.3rem 0.6rem;
+}
+
+.select[inline] {
+  width: auto;
+}
+
+.select__head__label {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.select__list {
+  position: relative;
+}
+
+.select__list__inner {
+  z-index: 10;
+  box-sizing: border-box;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  height: auto;
+  width: auto;
+  min-width: 100%;
+
+  @include blockShadow;
+  &.left {
+    left: auto;
+    right: 0;
+  }
+
+  &.right {
+    left: 0;
+    right: auto;
+  }
+}
+
+.select__list__item {
+  text-align: left;
+  border-radius: 0px;
+  border: none;
+
+  &[hovered] {
+    background-color: var(--primary-color);
+    color: var(--primary-contrast);
+
+    .icon {
+      background: var(--primary-contrast);
+    }
+
+    .custom-checkbox input[type="checkbox"] + label {
+      border-color: var(--primary-contrast);
+    }
+  }
+}
+
+.select__list__item__checkbox {
+  margin-right: 0.5rem;
+}
+
+.select__list__section {
+  border-bottom: var(--border-block);
+}
+
+.select__list__section:last-child {
+  border-bottom: none;
+}

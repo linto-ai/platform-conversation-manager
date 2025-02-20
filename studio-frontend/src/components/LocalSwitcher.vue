@@ -21,6 +21,8 @@ export default {
   watch: {
     "$i18n.locale": function (newVal) {
       localStorage.setItem("lang", newVal)
+      //reload page
+      location.reload()
     },
   },
   computed: {

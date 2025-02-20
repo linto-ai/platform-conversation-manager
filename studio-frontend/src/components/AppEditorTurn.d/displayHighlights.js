@@ -1,6 +1,6 @@
 import { nextTick } from "vue"
 import findExpressionInWordsList from "@/tools/findExpressionInWordsList.js"
-import getWordsRangeFromTagMetadata from "../../tools/getWordsRangeFromTagMetadata"
+import getWordsRangeFromTagMetadata from "@/tools/getWordsRangeFromTagMetadata"
 
 export default async function displayHighlights() {
   // first unhighlight all
@@ -16,7 +16,7 @@ export default async function displayHighlights() {
 
     let rangesFromText = findExpressionInWordsList(
       tagsWithoutRangeMetadata,
-      this.words,
+      this.words.filter((w) => w.word !== ""),
       (k) => k.name,
       (w) => w.word
     )
@@ -55,8 +55,16 @@ function divideTags(tags) {
 function metadataRangeToDomRange(range) {
   try {
     let domRange = new Range()
-    domRange.setStartBefore(document.getElementById(range.startId))
-    domRange.setEndBefore(document.getElementById(range.endId))
+
+    const startDomElement = document.getElementById(range.startId)
+    const endDomElement = document.getElementById(range.endId)
+
+    if (!startDomElement || !endDomElement) {
+      return null
+    }
+
+    domRange.setStartBefore(startDomElement)
+    domRange.setEndBefore(endDomElement)
     domRange._tag = range.tag
     return domRange
   } catch (e) {

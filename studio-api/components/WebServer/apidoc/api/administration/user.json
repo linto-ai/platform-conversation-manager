@@ -1,0 +1,218 @@
+{
+  "/api/administration/user": {
+    "post": {
+      "tags": ["administration"],
+      "summary": "Create an user",
+      "requestBody": {
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "integer",
+                  "default": "15"
+                }
+              },
+              "required": ["email", "password", "role"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Ok",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "User account created"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Invalid email format or domain.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "409": {
+          "$ref": "#/components/responses/Conflict"
+        }
+      }
+    },
+    "get": {
+      "tags": ["administration"],
+      "summary": "List all users of the platform",
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        }
+      }
+    },
+    "delete": {
+      "tags": ["administration"],
+      "summary": "Delete users by userIds",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userIds": {
+                  "type": "array",
+                  "description": "List of user IDs to delete.",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "634e6a0783f5db343dfc40cd",
+                "717d6b0895b5ae123dfc25ae"
+              ]
+            }
+          }
+        }
+      },
+      "304": {
+        "$ref": "#/components/responses/NotModified"
+      },
+      "401": {
+        "$ref": "#/components/responses/Unauthorized"
+      },
+      "415": {
+        "$ref": "#/components/responses/UnsupportedMediaType"
+      }
+    }
+  },
+  "/api/administration/users/{userId}": {
+    "patch": {
+      "tags": ["administration"],
+      "summary": "Update the desired userId",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "userId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an user"
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "firstname": {
+                  "type": "string"
+                },
+                "lastname": {
+                  "type": "string"
+                },
+                "accountNotifications": {
+                  "type": "object",
+                  "properties": {
+                    "updatePassword": {
+                      "type": "boolean"
+                    },
+                    "inviteAccount": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "emailNotifications": {
+                  "type": "object",
+                  "schema": {
+                    "$ref": "#/components/schemas/EmailNotifications"
+                  },
+                  "example": {
+                    "conversations": {
+                      "share": {
+                        "add": true,
+                        "update": true,
+                        "delete": true
+                      }
+                    },
+                    "organizations": {
+                      "add": true,
+                      "delete": true,
+                      "update": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "User updated"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "304": {
+          "$ref": "#/components/responses/NotModified"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "415": {
+          "$ref": "#/components/responses/UnsupportedMediaType"
+        }
+      }
+    }
+  }
+}

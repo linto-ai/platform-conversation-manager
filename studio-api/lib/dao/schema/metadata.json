@@ -25,11 +25,5 @@
       "format": "date-time"
     }
   },
-  "required": [
-    "tagId",
-    "conversationId",
-    "schema",
-    "value",
-    "createdBy"
-  ]
+  "required": ["tagId", "conversationId", "schema", "value", "createdBy"]
 }

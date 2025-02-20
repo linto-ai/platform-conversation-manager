@@ -7,20 +7,20 @@ export async function handleTextChange(
   yEvent,
   transaction,
   conversationId,
-  userToken
+  userToken,
 ) {
   if (transaction.origin == "websocket") {
     return true
   }
 
-  if (yEvent.length == 1 && yEvent[0].path.length == 0) {
+  if ((yEvent.length == 1 && yEvent[0].path.length == 0) || yEvent.length > 1) {
     return await updateAllTurns(yEvent, transaction, conversationId, userToken)
   } else {
     return await updateSpeficTurns(
       yEvent,
       transaction,
       conversationId,
-      userToken
+      userToken,
     )
   }
 }
@@ -29,7 +29,7 @@ async function updateAllTurns(yEvent, transaction, conversationId, userToken) {
   let update = await apiUpdateConversation(
     conversationId,
     { text: yEvent[0].currentTarget.toJSON() },
-    userToken
+    userToken,
   )
 
   return update.status === "success"
@@ -39,7 +39,7 @@ async function updateSpeficTurns(
   yEvent,
   transaction,
   conversationId,
-  userToken
+  userToken,
 ) {
   let turnToUpdate = {}
 
@@ -66,7 +66,7 @@ async function updateSpeficTurns(
       conversationId,
       turnId,
       turnToUpdate[turnId],
-      userToken
+      userToken,
     )
 
     return res.status === "success"

@@ -1,5 +1,5 @@
 <template>
-  <div class="form-field">
+  <div class="form-field" :select-like="selectLike">
     <div class="form-label">{{ label }}</div>
     <div class="form-value" v-if="hasSlot">
       <slot></slot>
@@ -12,6 +12,7 @@ export default {
   props: {
     value: { required: false },
     label: { required: false },
+    selectLike: { type: Boolean, default: false },
   },
   computed: {
     hasSlot() {

@@ -45,6 +45,9 @@ export const conversationListMixin = {
     userRights() {
       return this.$store.state.userRights
     },
+    noConversations() {
+      return this.totalElementsNumber === 0
+    },
   },
   watch: {
     selectedTags(value) {

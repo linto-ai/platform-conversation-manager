@@ -1,0 +1,131 @@
+.login-page {
+  height: 100%;
+  overflow: auto;
+}
+
+.login-page__decoration {
+  padding: 2rem;
+}
+
+.login-page__content {
+  min-width: 33.33%;
+  border-left: var(--border-block);
+  background-color: var(--primary-contrast);
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.login-page__form,
+.btn.sso {
+  width: 320px;
+  box-sizing: border-box;
+}
+
+.login-page__logo {
+  max-width: 40rem;
+  max-height: 12rem;
+}
+
+.login-page__main-title {
+  font-size: 3rem;
+  color: var(--primary-color);
+}
+
+.login-page__decoration__slogan {
+  width: 800px;
+  max-width: 100%;
+}
+
+.login-page__decoration__slogan > p {
+  margin-top: 0.5rem;
+}
+
+.login-separator {
+  width: 100%;
+  border-top: var(--border-block);
+  margin: 1rem 0;
+}
+/* old code to delete */
+
+.login-form-wrapper {
+  overflow: auto;
+  padding: 40px;
+}
+
+.login-form-container {
+  align-items: center;
+  height: 100vh;
+  overflow: auto;
+
+  .login-logo {
+    display: inline-block;
+    height: 200px;
+    width: auto;
+    margin: 1rem 0 1rem 0;
+  }
+
+  main {
+    align-items: center;
+    overflow: auto !important;
+  }
+
+  footer {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    align-items: center;
+    padding: 1rem;
+    font-weight: 800;
+    background-color: var(--primary-contrast);
+    border-top: 1px solid var(--neutral-60);
+
+    .login-footer-text {
+      margin-bottom: 1rem;
+    }
+
+    .login-logo-bottom {
+      height: 50px;
+      img {
+        object-fit: contain;
+      }
+    }
+  }
+
+  .toggle-login-link {
+    text-decoration: underline;
+    margin-bottom: 5px;
+    flex-shrink: 0;
+  }
+}
+
+#app-login {
+  width: 100%;
+  max-width: 300px;
+  padding: 30px 40px;
+  background-color: var(--primary-contrast);
+  margin: 20px 0;
+  @include borderRadius(3px);
+  border: var(--border-block);
+}
+
+#app-login h2 {
+  margin-bottom: 10px;
+}
+
+#app-login p {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+#app-login button {
+  width: 100%;
+  margin: 20px 0 0 0;
+}
+
+.login-centered {
+  align-items: center;
+  justify-content: center;
+}
+
+.single-message-error {
+}

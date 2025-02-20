@@ -1,0 +1,317 @@
+body {
+  font-family: $mainFont;
+  //font-family: "Architects Daughter", cursive;
+  color: var(--text-primary);
+  accent-color: var(--primary-color);
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+}
+
+.illustration {
+  color: var(--primary-color);
+}
+
+.flex {
+  display: flex;
+  &.col {
+    flex-direction: column;
+
+    & > .fullwidth {
+      align-self: stretch;
+    }
+  }
+  &.row {
+    flex-direction: row;
+  }
+  &.align-top {
+    align-items: flex-start;
+  }
+
+  &.align-bottom,
+  &.align-end {
+    align-items: flex-end;
+  }
+
+  &.align-center {
+    align-items: center;
+  }
+  &.justify-center {
+    justify-content: center;
+  }
+  &.justify-start {
+    justify-content: flex-start;
+  }
+  &.justify-end {
+    justify-content: flex-end;
+  }
+  &.justify-evenly {
+    justify-content: space-evenly;
+  }
+
+  &.wrap {
+    flex-wrap: wrap;
+  }
+
+  &.wrap-start {
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
+
+  &.gap-tiny {
+    gap: var(--tiny-gap);
+  }
+
+  &.gap-small {
+    gap: var(--small-gap);
+  }
+
+  &.gap-medium {
+    gap: var(--medium-gap);
+  }
+  &.gap-large {
+    gap: var(--large-gap);
+  }
+}
+
+.flex1 {
+  flex: 1;
+  min-height: 0; // it force the flex to not grow bigger than the parent
+  min-width: 0; // same as above
+  //overflow: auto;
+}
+
+.flex2 {
+  flex: 2;
+  overflow: auto;
+}
+
+.flex3 {
+  flex: 3;
+  overflow: auto;
+}
+
+.flex4 {
+  flex: 4;
+  overflow: auto;
+}
+
+.no-shrink {
+  flex-shrink: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.relative {
+  position: relative;
+}
+
+.selectable {
+  cursor: pointer;
+}
+
+table {
+  th,
+  td {
+    text-align: left;
+  }
+}
+
+section {
+  padding: 10px 0;
+}
+
+ul {
+  margin: 0;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+li:last-child {
+  margin-bottom: 0;
+}
+
+.small-text {
+  font-size: 13px;
+}
+
+.small-margin {
+  margin: var(--small-gap);
+}
+
+.small-margin-top {
+  margin-top: var(--small-gap);
+}
+
+.small-margin-bottom {
+  margin-bottom: var(--small-gap);
+}
+
+.medium-margin-top {
+  margin-top: var(--medium-gap);
+}
+
+.medium-margin-bottom {
+  margin-bottom: var(--medium-gap);
+}
+
+.medium-margin {
+  margin: var(--medium-gap);
+}
+
+.small-padding {
+  padding: var(--small-gap);
+}
+
+.small-padding-top {
+  padding-top: var(--small-gap);
+}
+
+.small-padding-bottom {
+  padding-bottom: var(--small-gap);
+}
+
+.small-padding-right {
+  padding-right: var(--small-gap);
+}
+
+.small-padding-left {
+  padding-left: var(--small-gap);
+}
+
+.medium-padding {
+  padding: var(--medium-gap);
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.left-text {
+  text-align: left !important;
+}
+
+.fullwidth {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.relative {
+  position: relative;
+}
+
+.border-divider-bottom {
+  border-bottom: var(--divider);
+}
+
+.dropDown {
+  position: absolute;
+  background-color: var(--background-primary);
+  z-index: 10;
+  border: var(--border-block);
+  overflow: auto;
+  @include blockShadow;
+
+  .dropDown-section {
+    padding: var(--small-gap);
+    border-bottom: var(--divider);
+    //white-space: nowrap;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &.dropDown--fixed {
+    position: fixed;
+  }
+}
+
+.text-cut {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.centered-inline {
+  margin-inline: auto;
+}
+
+.reset-overflows {
+  overflow: visible;
+  white-space: normal;
+  min-height: auto;
+}
+
+.overflow-vertical-auto {
+  overflow-y: auto;
+}
+
+.overflow-horizontal-auto {
+  overflow-x: auto;
+}
+
+.reset-color {
+  color: var(--text-primary);
+}
+
+*[data-info] {
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+  &:first-child {
+    left: 0;
+  }
+  &:hover {
+    //cursor: pointer;
+    z-index: 10;
+    &:after {
+      content: attr(data-info);
+      display: inline-block;
+      position: absolute;
+      top: calc(100%);
+      left: 50%;
+      transform: translate(-50%, 0%);
+      min-width: 2rem;
+      width: auto;
+      height: auto;
+      background: var(--text-secondary);
+      font-weight: 500;
+      color: #fff;
+      padding: 0.25rem 0.5rem;
+      white-space: nowrap;
+      @include borderRadius(5px);
+    }
+  }
+}
+
+.subSection {
+  border: var(--border-block);
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: var(--box-shadow-inset);
+  background-color: var(--background-inset-section);
+}

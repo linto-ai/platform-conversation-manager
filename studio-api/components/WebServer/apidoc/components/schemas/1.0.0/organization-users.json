@@ -13,10 +13,7 @@
       "type": {
         "type": "string",
         "description": "The organization type",
-        "enum": [
-          "private",
-          "public"
-        ]
+        "enum": ["private", "public"]
       },
       "description": {
         "type": "string",
@@ -69,14 +66,16 @@
       "name": "orga-name",
       "type": "public",
       "description": "",
-      "users": [{
-        "_id": "634e6ab183f5db343dfc40d2",
-        "email": "email@linagora.com",
-        "firstname": "firstname",
-        "lastname": "lastname",
-        "role": 3,
-        "visibility": "public"
-      }],
+      "users": [
+        {
+          "_id": "634e6ab183f5db343dfc40d2",
+          "email": "email@linagora.com",
+          "firstname": "firstname",
+          "lastname": "lastname",
+          "role": 3,
+          "visibility": "public"
+        }
+      ],
       "owner": "634e6ab183f5db343dfc40d2",
       "personal": false
     }

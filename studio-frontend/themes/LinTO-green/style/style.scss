@@ -1,0 +1,67 @@
+@layer base, theme;
+
+@layer theme {
+  @import "buttons.scss";
+  @import "forms.scss";
+  @import "tabs.scss";
+  @import "select.scss";
+  @import "text.scss";
+  @import "login.scss";
+
+  body {
+    --yellow-chart: #feb11d;
+    --green-chart: #11977c;
+    --green-ligth: #39d5b6;
+    --red-chart: #fe346e;
+    --blue-chart: #1c83d6;
+
+    --primary-color: var(--green-chart);
+    --primary-contrast: #fff;
+
+    --secondary-color: var(--blue-chart);
+
+    --dark-100: #333;
+    --dark-80: #666;
+    --dark-60: #ccc;
+
+    --neutral-60: #c2c2c2;
+
+    --background-app: rgb(250, 250, 250);
+
+    --background-primary: #fff;
+    --background-primary-with-small-opacity: rgba(255, 255, 255, 0.85);
+
+    --button-background: #fafafa;
+    --button-image-background: linear-gradient(#fcfcfc, #f3f3f3);
+    --button-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.08);
+    //--border-button-flat: 1px solid #bdbdbd;
+
+    --button-background-hover: #f0f0f0;
+    --border-button-glass: 1px solid rgba(255, 255, 255, 0.4);
+
+    --input-background: #f7faff;
+    //--border-input: 1px solid var(--neutral-60) !important;
+
+    --selected-background: rgba(40, 153, 131, 0.0784313725);
+  }
+
+  html[data-theme="dark"] body {
+    --blue-chart: #479ae4;
+    --green-chart: #139177;
+    --red-chart: #c42653;
+
+    --dark-100: #ccc;
+    --dark-80: #aaa;
+    --dark-60: #666;
+
+    --background-app: rgb(48, 48, 48);
+    --background-primary: #252525;
+    --background-primary-with-small-opacity: rgba(37, 37, 37, 0.85);
+
+    --button-background: #1a1a1a;
+    --button-image-background: linear-gradient(#1a1a1a, #1a1a1a);
+    --button-background-hover: #333;
+
+    --input-background: #1a1a1a;
+  }
+}

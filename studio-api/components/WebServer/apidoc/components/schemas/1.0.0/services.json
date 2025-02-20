@@ -99,40 +99,37 @@
         }
       }
     },
-    "example": [{
-      "name": "linto-stack_stt-french-generic",
-      "serviceName": "stt-french-generic",
-      "desc": {
-        "en": "An french generic model",
-        "fr": "Un service français générique"
-      },
-      "scope": [
-        "cm",
-        "api"
-      ],
-      "endpoints": [{
-          "endpoint": "/stt-french-generic",
-          "middlewares": [
-            "logs",
-            "billing"
-          ],
-          "billing": {
-            "json": {
-              "accoustic": 2,
-              "model_quality": 4,
-              "plan": "free",
-              "service": "stt-french-generic"
+    "example": [
+      {
+        "name": "linto-stack_stt-french-generic",
+        "serviceName": "stt-french-generic",
+        "desc": {
+          "en": "An french generic model",
+          "fr": "Un service français générique"
+        },
+        "scope": ["cm", "api"],
+        "endpoints": [
+          {
+            "endpoint": "/stt-french-generic",
+            "middlewares": ["logs", "billing"],
+            "billing": {
+              "json": {
+                "accoustic": 2,
+                "model_quality": 4,
+                "plan": "free",
+                "service": "stt-french-generic"
+              }
             }
           }
+        ],
+        "lang": "fr-FR",
+        "model_quality": "4",
+        "accoustic": "2",
+        "sub_services": {
+          "diarization": [],
+          "punctuation": []
         }
-      ],
-      "lang": "fr-FR",
-      "model_quality": "4",
-      "accoustic": "2",
-      "sub_services": {
-        "diarization": [],
-        "punctuation": []
       }
-    }]
+    ]
   }
 }

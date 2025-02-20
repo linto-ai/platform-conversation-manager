@@ -1,0 +1,54 @@
+.chip {
+  border-radius: 4px;
+  background-color: var(--material-grey-300);
+  padding: 0.25rem;
+  &[primary] {
+    border-radius: 100px;
+    padding: 0 0.5rem;
+    border: 2px solid;
+    background-color: var(--primary-color);
+    color: var(--primary-contrast);
+  }
+}
+
+.badge {
+  background-color: var(--primary-color);
+  color: var(--primary-contrast);
+  padding: 0.25rem 0.25rem;
+
+  border-radius: 50%;
+  line-height: 1em;
+  display: inline-flex;
+
+  align-self: center;
+
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1rem;
+  flex-shrink: 0;
+
+  &[inverted] {
+    background-color: var(--primary-contrast);
+    color: var(--primary-color);
+  }
+  min-width: 1rem;
+}
+
+.badge.badge--small {
+  padding: 0;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.badge__content {
+  vertical-align: middle;
+  position: relative;
+  top: var(--text-vertical-center-offset);
+}
+
+.badge {
+  // background-color: red;
+  // color: white;
+}

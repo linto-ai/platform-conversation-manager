@@ -27,7 +27,7 @@ export default class SubtitleHelper {
     debug("Request subtitles list", conversationId)
     let getSubtitleList = await getSubtitleListByConversationId(
       conversationId,
-      userToken
+      userToken,
     )
     if (getSubtitleList.status === "success") {
       return getSubtitleList.data
@@ -44,7 +44,7 @@ export default class SubtitleHelper {
     let getSubtitle = await getSubtitleById(
       conversationId,
       subtitleId,
-      userToken
+      userToken,
     )
     if (getSubtitle.status === "success") {
       return this.add(getSubtitle.data, subtitleId)
@@ -67,7 +67,7 @@ export default class SubtitleHelper {
     let generated = await generateSubtitlesByConversationId(
       conversationId,
       data,
-      userToken
+      userToken,
     )
     if (generated.status === "success") {
       let newVersion = {
@@ -92,13 +92,13 @@ export default class SubtitleHelper {
       conversationId,
       subtitleId,
       data,
-      userToken
+      userToken,
     )
     if (generated.status === "success") {
       let subtitle = await this.requestSubtitle(
         conversationId,
         generated.data._id,
-        userToken
+        userToken,
       )
       let newVersion = {
         _id: generated.data._id,
@@ -117,7 +117,7 @@ export default class SubtitleHelper {
     let deleted = await deleteSubtitlesByIds(
       conversationId,
       subtitleIds,
-      userToken
+      userToken,
     )
 
     if (deleted.status === "success") {
@@ -195,7 +195,7 @@ export class Subtitle {
               transaction,
               this.getObj().conv_id,
               this.getObj()._id,
-              transactInfo.userToken
+              transactInfo.userToken,
             )
           : true
 
@@ -250,7 +250,7 @@ export class Subtitle {
     transactionName,
     undo = false,
     callback,
-    userToken
+    userToken,
   ) {
     if (undo) {
       this.createUndoManager(transactionName)
@@ -273,7 +273,7 @@ export class Subtitle {
         transactionName,
         new Y.UndoManager(this.watchProperties, {
           trackedOrigins: new Set([transactionName]),
-        })
+        }),
       )
     }
 

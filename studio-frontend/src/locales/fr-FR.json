@@ -2,273 +2,307 @@
   "accoustic": {
     "standard": "Standard"
   },
+  "appointment_selector": {
+    "date_label": "Date",
+    "start_time_label": "Heure de début",
+    "end_time_label": "Heure de fin",
+    "duration_label": "Durée:",
+    "error_end_time_before_start_time": "L'heure de fin doit être après l'heure de début",
+    "error_past_date": "La date doit être dans le futur"
+  },
+  "app_editor_channels_selector": {
+    "label": "Choisir un canal"
+  },
+  "app_editor_translations_selector": {
+    "label": "Choisir la langue de traduction",
+    "original_language": "Langue originale"
+  },
   "app_editor_highlights_modal": {
-    "description": "Sélectionnez les outils linguistiques de votre choix. Vous pouvez en choisir plusieurs.",
-    "generate_button": "Démarrer la génération",
-    "loading_services": "Chargement des services en cours...",
-    "erase_msg": "Les données précedentes seront écrasées",
-    "ia_title": "Outils linguistiques",
-    "no_highlights_first_line": "Pas d'annotations.",
-    "no_highlights_second_line": "Améliorez votre contenu grâce aux outils linguistiques propulsés à l'IA.",
     "delete_tag_modal": {
       "content": "Êtes vous sur de vouloir supprimer ce tag?"
-    }
+    },
+    "description": "Sélectionnez les outils linguistiques de votre choix. Vous pouvez en choisir plusieurs.",
+    "erase_msg": "Les données précedentes seront écrasées",
+    "generate_button": "Démarrer la génération",
+    "ia_title": "Outils linguistiques",
+    "loading_services": "Chargement des services en cours...",
+    "no_highlights_first_line": "Pas d'annotations.",
+    "no_highlights_second_line": "Améliorez votre contenu grâce aux outils linguistiques propulsés à l'IA."
   },
-  "highlights_name": {
-    "keyword": "Mots clés"
+  "app_editor_search": {
+    "label": "Rechercher dans le texte"
+  },
+  "backoffice": {
+    "title": "Backoffice",
+    "navigation": {
+      "home": "Accueil",
+      "users": "Utilisateurs",
+      "organisations": "Organisations"
+    },
+    "user_list": {
+      "title": "Utilisateurs",
+      "add_user_button": "Ajouter un utilisateur",
+      "remove_user_button": "Supprimer l'utilisateur | Supprimer les {count} utilisateurs"
+    },
+    "organisation_list": {
+      "title": "Organisations",
+      "add_organisation_button": "Ajouter une organisation"
+    }
   },
   "breadcrumb": {
     "conversations": "Conversations",
     "create": "Importer un media",
     "createOrganization": "Créer une organisation",
     "favorite": "Favoris de {name} ",
-    "shared": "{name} guest medias",
-    "overview": "Synthèse",
-    "transcription": "Transcription",
-    "settings": "Paramètres de {organization}",
-    "userSettings": "Paramètres utilisateur",
     "media": "Médias de {organization}",
-    "tagsSettings": "Tags de {organization}"
+    "overview": "Synthèse",
+    "settings": "Paramètres de {organization}",
+    "shared": "{name} guest medias",
+    "tagsSettings": "Tags de {organization}",
+    "transcription": "Transcription",
+    "userSettings": "Paramètres utilisateur"
   },
   "conversation": {
-    "acoustic_label": "Acoustique :",
     "acoustic": {
       "generic": "Tout appareils et microphones",
       "phone": "Téléphone"
     },
-    "add_tag": "Ajouter un tag",
+    "acoustic_label": "Acoustique :",
     "add_search_criterion": "Ajouter un critère de recherche",
-    "remove_all_filters": "Supprimer tous les filtres",
+    "add_tag": "Ajouter un tag",
+    "add_to_favorites": "Ajouter aux favoris",
     "apply_filters": "Appliquer les filtres",
     "audio_file_too_big": "Le fichier audio est trop volumineux. La taille maximale autorisée est de 1Go.",
-    "add_to_favorites": "Ajouter aux favoris",
-    "remove_from_favorites": "Retirer des favoris",
-    "organization_members": "Membres de l'organisation",
-    "grant_organization_members": "Donner accès aux membres de l'organisation",
     "audio_file_upload_label": "Choisir un fichier...",
     "audio_file_upload_label_multiple": "Choisir un ou plusieurs fichiers...",
     "back_conversation_button": "Synthèse du média",
     "close_editor": "Fermer l'éditeur",
     "close_publish": "Fermer",
-    "close_overview": "Fermer la synthèse",
-    "return_to_editor": "Retour à l'éditeur",
-    "publish_document": "Publier le document",
     "conversation_creation_button": {
       "create": "Lancer la transcription",
-      "sending": "En cours...",
-      "retry": "Réessayer l'envoi"
+      "retry": "Réessayer l'envoi",
+      "sending": "En cours..."
     },
+    "conversation_creation_error_multiple_unknown": "Une erreur s'est produite lors de l'envoi de {total} fichiers audio. {count} ont déjà été transférés. Réessayez plus tard.",
     "conversation_creation_loading": "Envoi en cours. Cette opération peut prendre plusieurs minutes.",
     "conversation_creation_loading_multiple": "Envoi du fichier {count} sur {total}. Cette opération peut prendre plusieurs minutes.",
-    "conversation_creation_error_multiple_unknown": "Une erreur s'est produite lors de l'envoi de {total} fichiers audio. {count} ont déjà été transférés. Réessayez plus tard.",
+    "conversation_creation_right_title": "Gestion des droits",
+    "conversation_creation_right_label": "Droits par défaut pour les membres de l'organisation",
     "conversation_is_locked_by": "Le média est verouillée par",
     "conversation_need_reload": " Le média a été modifiée par un autre utilisateur, rechargez la page pour l'éditer",
     "conversation_overview_title": "Synthèse du média",
     "conversation_transcription_title": "Transcription",
     "conversations_list_title": "Conversations",
     "create": "Importer un media",
-    "created_label": "Créé le",
     "created": "Créée le : {date}",
+    "created_label": "Créé le",
     "creation_success_message": "Le média a été importé avec succès",
     "default_value_speakers_list": "Tous les locuteurs",
     "delete": "Supprimer",
-    "delete_mutltiple": "Supprimer un média | Supprimer {count} médias",
+    "delete_error_message": "Le média n'a pas pu être supprimé | {count} médias n'ont pas pu être supprimés",
     "delete_modal": {
-      "title": "Supprimer le média",
+      "button": "Supprimer le média",
       "content": "Êtes vous sur de supprimer le média \"{name}\" ?",
-      "button": "Supprimer le média"
+      "title": "Supprimer le média"
     },
     "delete_modal_multiple": {
-      "title": "Supprimer un média | Supprimer {count} médias",
+      "button": "Supprimer le média | Supprimer les {count} médias",
       "content": "Êtes vous sur de supprimer le média ? | Êtes vous sur de supprimer les {count} médias sélectionnées ?",
-      "button": "Supprimer le média | Supprimer les {count} médias"
+      "title": "Supprimer un média | Supprimer {count} médias"
+    },
+    "delete_modal_multiple_empty": {
+      "button": "ok",
+      "content": "Veuillez sélectionner au moins un média à supprimer",
+      "title": "Aucun média selectionné"
     },
     "delete_modal_multiple_error": {
-      "title": "Certain médias ne peuvent pas être supprimées",
+      "button": "ok",
       "content": "Un média ne peut pas être supprimé | {count} médias ne peuvent pas être supprimées. Aucun média ne sera supprimé.",
-      "button": "ok"
+      "title": "Certain médias ne peuvent pas être supprimées"
     },
-    "delete_error_message": "Le média n'a pas pu être supprimé | {count} médias n'ont pas pu être supprimés",
+    "delete_mutltiple": "Supprimer un média | Supprimer {count} médias",
     "delete_success_message": "Le média a été supprimée avec succès | {count} médias ont été supprimées avec succès",
-    "delete_modal_multiple_empty": {
-      "title": "Aucun média selectionné",
-      "content": "Veuillez sélectionner au moins un média à supprimer",
-      "button": "ok"
-    },
-    "description_description": "Un court texte décrivant le contexte du média",
-    "description_label": "Description",
-    "description_title": "Paramètre de partage",
-    "duration_label": "Durée",
+    "description_empty": "Aucune description",
     "duration": "Durée: {duration}",
+    "duration_label": "Durée",
     "error": {
       "creation_unknown": "Erreur: veuillez réessayer plus tard",
       "form_invalid": "Erreur: veuillez vérifier les champs du formulaire",
+      "loading_upload_message": "Téléchargement de l'audio. Cette opération peut prendre plusieurs minutes",
       "no_audio_file": "Erreur: vous devez ajouter un fichier audio"
     },
     "export": {
-      "title": "Télécharger",
-      "json": "Télécharger en JSON",
-      "txt": "Télécharger en TXT",
-      "pdf": "Télécharger en PDF",
       "docx": "Télécharger en DOCX",
-      "vtt": "Télécharger en VTT",
-      "srt": "Télécharger en SRT"
+      "json": "Télécharger en JSON",
+      "pdf": "Télécharger en PDF",
+      "srt": "Télécharger en SRT",
+      "title": "Télécharger",
+      "txt": "Télécharger en TXT",
+      "vtt": "Télécharger en VTT"
     },
     "export_json_button": "Exporter en JSON",
-    "filter_speakers_label": "Filtrer les locuteurs",
-    "highlights_label": "Highlights",
     "highlight_toolbox": {
-      "no-metadata": "Aucune métadonnée",
-      "title": "Ajouter une annotation sur le texte",
-      "button-add-metadata": "Ajouter une métadonnée",
       "add_metadata_modal": {
-        "title": "Ajouter une métadonnée",
-        "description": "Sélectionnez le type de métadonnée que vous souhaitez ajouter",
         "button_first": "Continuer",
-        "placeholder": "Selectionnez un type de métadonnée"
+        "description": "Sélectionnez le type de métadonnée que vous souhaitez ajouter",
+        "placeholder": "Selectionnez un type de métadonnée",
+        "title": "Ajouter une métadonnée"
       },
-      "comment": "Commentaire"
+      "button-add-metadata": "Ajouter une métadonnée",
+      "comment": "Commentaire",
+      "no-metadata": "Aucune métadonnée",
+      "title": "Ajouter une annotation sur le texte"
     },
-    "information_label": "Informations générales",
     "keyword_list": {
-      "title": "Mots clés",
       "error": {
-        "description": "Une erreur est survenue.",
-        "button": "Réessayer"
+        "button": "Réessayer",
+        "description": "Une erreur est survenue."
+      },
+      "loading": {
+        "description": "Génération des mots clés en cours..."
       },
       "none": {
         "button": "Générer les mots clés"
       },
-      "loading": {
-        "description": "Génération des mots clés en cours..."
-      }
+      "title": "Mots clés"
     },
     "language_description": "Sélectionnez la langue dans laquelle sera transcrit le fichier",
     "language_label": "Langage :",
-    "loading_detail_title": "Chargement du detail du média.",
-    "loading_transcription_title": "Chargement de la transcription.",
-    "loading_list_title": "Chargement des médias",
     "loading_audio_file": "Chargement du fichier audio",
-    "media": {
-      "duration_label_inline": "Durée : ",
-      "file_description": "Vous permet de télécharger un fichier multimédia à transcrire (audio ou vidéo)",
-      "file_label": "Fichier",
-      "file_label_inline": "Fichier: ",
-      "microphone_description": "Vous permet d'enregistrer l'audio directement avec votre microphone",
-      "microphone_label": "Microphone",
-      "microphone_label_inline": "Microphone : ",
-      "replay_label": "Rejouer",
-      "type_label": "Source",
-      "no_file": "Aucun fichier"
+    "loading_list_title": "Chargement des médias",
+    "loading": {
+      "conversation_data": "Chargement des données de la conversation",
+      "llm_services": "Chargement des services de résumé"
     },
-    "media_error": "Veuillez ajouter un audio",
-    "media_label": "Media",
-    "media_title": "Téléversez des fichiers ou enregistrez vous",
-    "members_right_description": "Par défaut, les autres membres de l'organisation n'ont pas accès au média. Cochez cette case pour leur accorder l'accès et gérer les droits sur le média (lecture, écriture).",
-    "members_right_label": "Accorder l'accès aux membres de l'organisation",
     "members_right_txt": {
-      "read": "Lecture",
-      "write": "Écriture",
-      "none": "Aucun",
-      "share": "Partager",
-      "delete": "Supprimer",
       "comment": "Commenter",
+      "delete": "Supprimer",
       "full_rights": "Tous les droits",
-      "mutiple_values": "Plusieurs valeurs"
+      "mutiple_values": "Plusieurs valeurs",
+      "none": "Aucun",
+      "read": "Lecture",
+      "share": "Partager",
+      "write": "Écriture"
     },
-    "model_quality_label": "Qualité du modèle :",
     "model_quality": {
       "high": "Haute",
-      "medium": "Moyenne",
-      "low": "Basse"
+      "low": "Basse",
+      "medium": "Moyenne"
     },
-    "my_rights_label": "Mes droits",
-    "name_description": "Le titre du média",
-    "name_label": "Titre",
-    "number_of_conversations_selected": "0 médias sélectionnés | 1 média sélectionné | {count} médias sélectionnés",
+    "model_quality_label": "Qualité du modèle :",
+    "no_conversation_found": "Aucun média trouvé",
     "no_search_criterion": "Aucun critère de recherche",
-    "open_overview": "Synthèse du média",
+    "number_of_conversations_selected": "0 médias sélectionnés | 1 média sélectionné | {count} médias sélectionnés",
     "open_editor": "Éditer la transcription",
-    "open_subtitles": "Éditer les sous-titres",
+    "open_overview": "Synthèse du média",
     "open_publish": "Publier",
-    "organization_description": "Choisissez une organisation pour votre média",
-    "organization_label": "Organisation",
-    "owner_label": "Propriétaire",
+    "open_subtitles": "Éditer les sous-titres",
+    "publish_document": "Publier le document",
     "record": "S'enregistrer",
     "recording": "Enregistrement...",
+    "remove_all_filters": "Supprimer tous les filtres",
+    "remove_from_favorites": "Retirer des favoris",
+    "return_to_editor": "Retour à l'éditeur",
     "search_criterions": "Critères de recherche",
+    "search_in_transcription": {
+      "clear_search": "Effacer la recherche",
+      "exact_word_match": "Mot exact",
+      "n_found": "Aucune occurences | 1 occurences | {count} occurences"
+    },
     "search_placeholder": "Rechercher un média",
     "shared_by_label": "Partagée par",
     "shared_with_label": "Partagée avec",
+    "source": {
+      "from_session": "Source : Session en direct",
+      "from_upload": "Source : Téléchargement par l'utilisateur"
+    },
+    "speaker_toolbox": {
+      "change_speaker_button": "Affecter un autre locuteur à ce tour de parole",
+      "create_speaker_button": "Créer un nouveau locuteur",
+      "create_speaker_label": "Nom du locuteur",
+      "edit_speaker_button": "Modifier le locuteur",
+      "edit_speaker_label": "Nom du locuteur",
+      "merge_speaker_button": "Fusionner \"{name}\" avec un autre locuteur"
+    },
     "speakers_button": "Locuteurs",
     "status": {
-      "preprocessing": "Pre-traitement",
-      "transcription": "Transcription",
       "diarization": "Séparation des locuteurs",
-      "punctuation": "Ponctuation",
-      "postprocessing": "Post-traitement",
       "error": "Erreur : une erreur s'est déclenchée pendant le traitement de l'audio",
-      "unknown": "Inconnu",
-      "pending": "Le media est en attente, il sera traité prochainement"
+      "pending": "Le media est en attente, il sera traité prochainement",
+      "postprocessing": "Post-traitement",
+      "preprocessing": "Pre-traitement",
+      "punctuation": "Ponctuation",
+      "transcription": "Transcription",
+      "unknown": "Inconnu"
     },
     "status_label": "État",
     "status_label_inline": "État : ",
     "status_page": {
-      "generic_title": "Le média est en cours de transcription par LinTO",
+      "error_log_label": "Voici quelques informations:",
+      "error_title": "Une erreur s'est produite lors du traitement de l'audio",
       "generic_description_line_1": "Vous pouvez continuer à naviguer sur le site. La page se rafraîchira automatiquement lorsque le chargement sera terminé.",
       "generic_description_line_2": " Selon la taille du média, la transcription peut prendre plusieurs dizaines de minutes voire plusieurs heures.",
-      "return_to_medias_list_button": "Retourner à la liste des médias",
-      "error_title": "Une erreur s'est produite lors du traitement de l'audio",
-      "error_log_label": "Voici quelques informations:"
+      "generic_title": "Le média est en cours de transcription par LinTO",
+      "return_to_medias_list_button": "Retourner à la liste des médias"
+    },
+    "subtitles": {
+      "available": "Sous-titres disponibles",
+      "copy": "Copier",
+      "copy_label": "Copier la version des sous-titres",
+      "delete": "Supprimer",
+      "delete_description": "Êtes-vous sûr de vouloir supprimer {n} versions de sous-titres ?",
+      "delete_label": "Supprimer les versions de sous-titres",
+      "delete_no_selection": "Veuillez selectionner au moins une version à supprimer",
+      "delete_no_selection_label": "Pas de version selectionné",
+      "drop_video": "Glissez-déposez votre fichier vidéo ici",
+      "error": {
+        "cannot_merge_non_consecutive_screens": "Impossible de fusionner des écrans non consécutifs",
+        "no_enough_place_new_screen": "Pas assez de place pour ajouter un nouvel écran",
+        "too_much_lines_to_merge": "Le nombre de ligne est limité à {maxLines} pour fusionner les écrans"
+      },
+      "generate": "Générer",
+      "generate_subs": "Générer des sous titres",
+      "max_char_length": "Nombre de caractères maximum par écran",
+      "max_char_length_short": "Caractères par écran",
+      "max_duration": "Durée maximum d'un écran",
+      "max_lines": "Nombre de lignes par écran",
+      "max_lines_short": "Lignes par écran",
+      "not_available": "Aucun sous-titres disponibles",
+      "screen_is_empty": "L'écran est vide",
+      "screens": {
+        "current_screen": "Ecran actuel",
+        "next_screen": "Ecran suivant",
+        "previous_screen": "Ecran précédant",
+        "start": "Début :"
+      },
+      "split_selection": {
+        "no_split": "Aucun découpage",
+        "split_over_three_lines": "Découper sur trois lignes",
+        "split_over_two_lines": "Découper sur deux lignes"
+      },
+      "version_name": "Nom de version des sous-titres"
     },
     "transcription": {
+      "add_speaker": "Ajouter un locuteur",
       "diarization_description": "Permet de sélectionner le nombre de locuteurs. Découpe le flux audio par locuteur",
-      "diarization_label_inline": "Séparation des locuteurs : ",
+      "diarization_disabled": "Non",
       "diarization_label": "Séparation des locuteurs",
-      "number_of_speaker_label": "Nombre de locuteurs",
+      "diarization_label_inline": "Séparation des locuteurs : ",
+      "edit_speaker": "Modifier locuteur",
+      "language_label": "Langage",
       "normalization_description": "Active la normalisation et transcrit les nombres avec des chiffres",
       "normalization_label_inline": "Normalisation : ",
+      "number_of_speaker_label": "Nombre de locuteurs",
+      "player_error": "Une erreur s'est produite au chargement du player.",
       "punctuation_description": "Active la restitution de la ponctuation",
-      "punctuation_label_inline": "Ponctuation : ",
-      "punctuation_label": "Ponctuation",
-      "punctuation_value_whisper": "Automatique",
       "punctuation_disabled": "Non",
-      "diarization_disabled": "Non",
-      "speakers": "locuteurs",
-      "edit_speaker": "Modifier locuteur",
-      "add_speaker": "Ajouter un locuteur",
+      "punctuation_label": "Ponctuation",
+      "punctuation_label_inline": "Ponctuation : ",
+      "punctuation_value_whisper": "Automatique",
       "speaker_name": "Nom du locuteur",
-      "player_error": "Une erreur s'est produite au chargement du player."
+      "speakers": "locuteurs"
     },
-    "transcription_label": "Transcription",
-    "transcription_service_description": "Choissisez le service de transcription à utiliser",
-    "transcription_service_label": "Service de transcription",
-    "transcription_service_error": "Veuillez sélectionner un service de transcription",
-    "transcription_service_title": "Choissisez le service de transcription",
-    "transcription_settings_label": "Paramètres de transcription",
-    "transcription_service_list_empty": "Aucun service de transcription disponible",
-    "turn_cant_merge": "Le nombre de caractères est trop élevé pour fusionner les tours de parole",
-    "turn_sync_error_title": "Le tour de parole n'est pas synchronisé correctement",
-    "update_information_button": "Mettre à jour les informations",
-    "update_information_done_notif": "Les informations ont été mises à jour",
-    "update_information_error_notif": "Une erreur s'est produite lors de la mise à jour des informations",
-    "update_label": "Mise à jour",
-    "updated": "Dernière mise à jour: {date}",
-    "no_conversation_found": "Aucun média trouvé",
     "transcription_help": {
-      "help_button_label": "Aide",
-      "edit_speaker_title": "édition des locuteurs",
-      "edit_speaker_content": "Cliquez sur le nom du locuteur pour un tour de parole donné afin de le mettre à jour. Une fenêtre s’ouvrira vous permettant de choisir parmis différentes options :",
-      "edit_speaker_content_list": "Pour remplacer un locteur sur un tour de parole, sélectionnez un locuteur existant pour remplacer le locuteur courant ou cliquez sur \"Ajouter un locuteur\" pour créer un nouveau locuteur. | Cliquez sur \"Modifier le locuteur\" pour modifier le nom du locuteur sur toute la transcription.",
-      "edit_transcript_title": "édition de la transcription",
-      "edit_transcript_content": "Cliquez sur un mot pour placer le curseur d'édition sur ce dernier et réalisez vos modifications. | Le fait de cliquer sur un mot vous permet également de déplacer le curseur du player audio à l'endroit ou le mot est prononcé.",
-      "split_turn_title": "Séparer un tour de parole",
-      "split_turn_content": "Lorsque vous êtes en mode \"édition\" dans un tour de parole, appuyez sur la touche \"Entrée\" (<span class=\"txt-icon key-enter\"></span>) de votre clavier pour séparer le tour de parole. Le tour créé sera attribué au locuteur courant, il vous suffira de modifer le locuteur pour réattribuer ce tour de parole.",
-      "merge_turn_title": "Fusionner deux tours de parole",
-      "merge_turn_content": "Cliquez sur le bouton \"fusionner\" (<span class=\"txt-icon key-merge\"></span>) afin de fusionner deux tours de paroles.",
-      "filter_speaker_title": "Filtrer la transcription par locuteur",
-      "filter_speaker_content": "Vous pouvez filtrer la transcription  par locuteur en selectionnant le nom d'un loctueur dans la liste déroulante. Lorsqu'un locuteur est selectionné, seuls les tours de paroles du locuteur seront affichés, et le player ne jouera que les tours de parole filtrés.",
-      "audio_player_shortcut_title": "Lecteur audio / raccourcis clavier",
       "audio_player_shortcut_content": "Vous pouvez contrôler le player audio en utilisant les boutons du player en dessous de la transcription. | Vous pouvez également utiliser les raccourcis clavier suivant (hors mode \"Edition\") : ",
       "audio_player_shortcut_list1": "\"Espace\" (<span class=\"txt-icon key-space\"></span>) : <i>Play / Pause</i>",
       "audio_player_shortcut_list2": "\"CTRL + \"Flèche droite\" (<span class=\"txt-icon key-ctrl\"></span> + <span class=\"txt-icon key-right-arrow\"></span>) : <i>Avancer l’audio de 60 secondes</i>",
@@ -276,47 +310,108 @@
       "audio_player_shortcut_list4": "\"SHIFT\" + \"Flèche droite\" (<span class=\"txt-icon key-shift\"></span> + <span class=\"txt-icon key-right-arrow\"></span>) : <i>Avancer l’audio de 3 secondes</i>",
       "audio_player_shortcut_list5": "\"CTRL + \"Flèche gauche\" (<span class=\"txt-icon key-ctrl\"></span> + <span class=\"txt-icon key-left-arrow\"></span>) : <i>Reculer l’audio de 60 secondes</i>",
       "audio_player_shortcut_list6": "\"ALT\" + \"Flèche gauche\" (<span class=\"txt-icon key-alt\"></span> + <span class=\"txt-icon key-left-arrow\"></span>) : <i>Reculer l’audio de 10 secondes</i>",
-      "audio_player_shortcut_list7": "\"SHIFT\" + \"Flèche gauche\" (<span class=\"txt-icon key-shift\"></span> + <span class=\"txt-icon key-left-arrow\"></span>) : <i>Reculer l’audio de 3 secondes</i>"
+      "audio_player_shortcut_list7": "\"SHIFT\" + \"Flèche gauche\" (<span class=\"txt-icon key-shift\"></span> + <span class=\"txt-icon key-left-arrow\"></span>) : <i>Reculer l’audio de 3 secondes</i>",
+      "audio_player_shortcut_title": "Lecteur audio / raccourcis clavier",
+      "edit_speaker_content": "Cliquez sur le nom du locuteur pour un tour de parole donné afin de le mettre à jour. Une fenêtre s’ouvrira vous permettant de choisir parmis différentes options :",
+      "edit_speaker_content_list": "Pour remplacer un locteur sur un tour de parole, sélectionnez un locuteur existant pour remplacer le locuteur courant ou cliquez sur \"Ajouter un locuteur\" pour créer un nouveau locuteur. | Cliquez sur \"Modifier le locuteur\" pour modifier le nom du locuteur sur toute la transcription.",
+      "edit_speaker_title": "édition des locuteurs",
+      "edit_transcript_content": "Cliquez sur un mot pour placer le curseur d'édition sur ce dernier et réalisez vos modifications. | Le fait de cliquer sur un mot vous permet également de déplacer le curseur du player audio à l'endroit ou le mot est prononcé.",
+      "edit_transcript_title": "édition de la transcription",
+      "filter_speaker_content": "Vous pouvez filtrer la transcription  par locuteur en selectionnant le nom d'un loctueur dans la liste déroulante. Lorsqu'un locuteur est selectionné, seuls les tours de paroles du locuteur seront affichés, et le player ne jouera que les tours de parole filtrés.",
+      "filter_speaker_title": "Filtrer la transcription par locuteur",
+      "help_button_label": "Aide",
+      "merge_turn_content": "Cliquez sur le bouton \"fusionner\" (<span class=\"txt-icon key-merge\"></span>) afin de fusionner deux tours de paroles.",
+      "merge_turn_title": "Fusionner deux tours de parole",
+      "split_turn_content": "Lorsque vous êtes en mode \"édition\" dans un tour de parole, appuyez sur la touche \"Entrée\" (<span class=\"txt-icon key-enter\"></span>) de votre clavier pour séparer le tour de parole. Le tour créé sera attribué au locuteur courant, il vous suffira de modifer le locuteur pour réattribuer ce tour de parole.",
+      "split_turn_title": "Séparer un tour de parole"
     },
+    "transcription_label": "Transcription",
     "transcription_saving_notif": "Sauvegarde de la transcription...",
+    "transcription_service_description": "Choissisez le service de transcription à utiliser",
+    "transcription_service_error": "Veuillez sélectionner un service de transcription",
+    "transcription_service_label": "Service de transcription",
+    "transcription_service_list_empty": "Aucun service de transcription disponible",
+    "transcription_service_title": "Choisir le service de transcription",
+    "transcription_settings_label": "Paramètres de transcription",
+    "turn_cant_merge": "Le nombre de caractères est trop élevé pour fusionner les tours de parole",
+    "turn_sync_error_title": "Le tour de parole n'est pas synchronisé correctement",
+    "update_label": "Mise à jour",
+    "updated": "Dernière mise à jour: {date}",
     "websocket_error_content": "La mise à jour du document a echoué. Sauvegardez vos changement et actualisez la page.",
-    "websocket_error_title": "Erreur de synchronisation.",
-    "subtitles": {
-      "drop_video": "Glissez-déposez votre fichier vidéo ici",
-      "not_available": "Aucun sous-titres disponibles",
-      "available": "Sous-titres disponibles",
-      "generate_subs": "Générer des sous titres",
-      "generate": "Générer",
-      "version_name": "Nom de version des sous-titres",
-      "max_char_length": "Nombre de caractères maximum par écran",
-      "max_char_length_short": "Caractères par écran",
-      "max_lines": "Nombre de lignes par écran",
-      "max_lines_short": "Lignes par écran",
-      "max_duration": "Durée maximum d'un écran",
-      "copy_label": "Copier la version des sous-titres",
-      "delete_label": "Supprimer les versions de sous-titres",
-      "delete_no_selection": "Veuillez selectionner au moins une version à supprimer",
-      "delete_no_selection_label": "Pas de version selectionné",
-      "delete_description": "Êtes-vous sûr de vouloir supprimer {n} versions de sous-titres ?",
-      "copy": "Copier",
-      "delete": "Supprimer",
-      "screens": {
-        "start": "Début :",
-        "current_screen": "Ecran actuel",
-        "previous_screen": "Ecran précédant",
-        "next_screen": "Ecran suivant"
+    "websocket_error_title": "Erreur de synchronisation."
+  },
+  "conversation_creation": {
+    "tabs": {
+      "file": "Fichier",
+      "microphone": "Microphone",
+      "url": "Médias depuis internet",
+      "quick_meeting": "Enregistrement en direct",
+      "visio": "Visioconférence",
+      "session": "Session",
+      "coming_soon": "Bientôt disponible"
+    },
+    "file": {
+      "drop_audio": "Glissez-déposez votre fichier audio ici"
+    },
+    "url_tab": {
+      "main_info_title": "Informations principales",
+      "url_label": "URL de la source",
+      "live_label": "Transcription en direct",
+      "name_label": "Nom du média",
+      "get_button": "Ajouter le média depuis l'URL"
+    },
+    "offline": {
+      "label_icon_source": {
+        "microphone": "Microphone",
+        "file": "Fichier",
+        "url": "URL"
+      },
+      "tabs_upload": {
+        "microphone": "Microphone",
+        "file": "Fichier",
+        "url": "URL"
       }
     }
   },
-  "droparea": {
-    "openFileExplorer": "ou choisissez depuis l'exploratieur de fichier",
-    "error": {
-      "tooManyFiles": "Plusieurs fichiers donnés alors qu'un seul était attendu",
-      "wrongFormat": "Un ou plusieurs fichiers ne sont pas valides"
+  "conversation_overview": {
+    "title": "Synthèse du média",
+    "close_overview": "Retour à la liste des médias",
+    "main_information": {
+      "title": "Informations générales",
+      "update_information_button": "Mettre à jour les informations",
+      "name_label": "Nom du média",
+      "description_label": "Description",
+      "error_notif": "Un erreur est survenu, les informations du médias n'ont pas été mis à jour.",
+      "done_notif": "Les informations ont été mis à jour."
+    },
+    "tools_links": {
+      "title": "Outils",
+      "transcription": "Accéder à la transcription",
+      "subtitles": "Éditeur de sous titre",
+      "export": "Export et résumés"
+    },
+    "rights": {
+      "title": "Droits sur le média",
+      "owner_label": "Propiétaire du média",
+      "orga_right_label": "Droits des autres membres de l'organisation",
+      "share_right_label": "Gérer les droits personnalisés",
+      "orga_right_update_success": "Les droits pour les membres de l'organisation ont bien été mis à jour.",
+      "orga_right_update_error": "Une erreur est survenu, les droits pour les membres de l'organisation n'ont pas été modifiés"
+    },
+    "audio": {
+      "file_label_inline": "Fichier audio",
+      "duration_label_inline": "Durée"
+    },
+    "channel": {
+      "title": "Canaux",
+      "name_label": "Nom du canal",
+      "apply_name": "Mettre à jour le nom du canal",
+      "error_notif": "Un erreur est survenu, les informations du canal n'ont pas été mis à jour.",
+      "done_notif": "Les informations du canal ont été mis à jour.",
+      "only_one": "Le média a un seul canal de transcription"
     }
   },
   "createaccount": {
-    "personal_button": "Suivant",
     "create_account_button": "Créer mon compte",
     "email_label": "Courriel",
     "email_verification_text": "Vous venez de recevoir un e-mail pour valider votre compte. Cliquez sur le lien de vérification pour commencer à utiliser Linto Studio.",
@@ -324,193 +419,275 @@
     "first_name_label": "Prénom",
     "image_label": "Image (.png, .jpg) : ",
     "last_name_label": "Nom",
+    "organization_description": "Réalisez et partagez vos transcriptions, invitez vos collaborateurs en un seul et même endroit grâce aux organisations.",
+    "organization_name_label": "Nommez votre première organisation, vous pourrez en créer d'autres par la suite",
+    "organization_title": "Bienvenue sur Linto Studio",
     "password_confirmation_label": "Confirmation du mot de passe",
     "password_label": "Mot de passe",
-    "picture_upload_label": "Téleverser une image",
-    "picture_selected": "Une image selectionné",
-    "signin_button": "Se connecter",
+    "personal_button": "Suivant",
     "personal_title": "Créez votre compte",
-    "organization_title": "Bienvenue sur Linto Studio",
-    "organization_description": "Réalisez et partagez vos transcriptions, invitez vos collaborateurs en un seul et même endroit grâce aux organisations.",
-    "organization_name_label": "Nommez votre première organisation, vous pourrez en créer d'autres par la suite"
+    "picture_selected": "Une image selectionné",
+    "picture_upload_label": "Téleverser une image",
+    "signin_button": "Se connecter"
+  },
+  "droparea": {
+    "error": {
+      "tooManyFiles": "Plusieurs fichiers donnés alors qu'un seul était attendu",
+      "wrongFormat": "Un ou plusieurs fichiers ne sont pas valides"
+    },
+    "openFileExplorer": "ou choisissez depuis l'explorateur de fichier"
   },
   "error": {
-    "title": "Nous avons rencontré un problème",
     "bug_report": "Signaler un bug ou une erreur",
     "server_error": {
-      "title": "L’opération est indisponible pour le moment.",
-      "subtitle": "Nous sommes désolés pour la gêne occasionnée. Nous travaillons à résoudre le problème au plus vite."
-    }
+      "subtitle": "Nous sommes désolés pour la gêne occasionnée. Nous travaillons à résoudre le problème au plus vite.",
+      "title": "L’opération est indisponible pour le moment."
+    },
+    "title": "Nous avons rencontré un problème",
+    "required": "Ce champ est requis",
+    "invalidVisioUrl": "L'url de la visio n'est pas valide"
+  },
+  "explore": {
+    "delete_conversation_button": "Supprimer des médias",
+    "link_to_inbox": "Retourner à la mediathèque",
+    "no_categories_modal": "Il n'y a aucun tag. Commencez à étiqueter vos médias dans l'onglet médiathèque.",
+    "search_text_in_content": "Rechercher \"{text}\" dans la transcription",
+    "search_text_in_title": "Rechercher \"{text}\" dans le titre",
+    "search_text_label": "Rechercher du texte",
+    "sort_label": "Trier par",
+    "subtitle": "Recherchez et découvrez des informations sur les médias transcrits avec de la sémantique",
+    "title": "Parcourez les médias de l'organisation"
+  },
+  "favorites": {
+    "subtitle": "Vos médias favoris arrivent ici.",
+    "title": "Médias favoris",
+    "no_media_title": "Votre collection de médias favoris est vide",
+    "no_media_subtitle": "Ajoutez des favoris en cliquant sur l'étoile dans la liste des médias."
   },
   "global": {
     "disabled": "Inactif",
     "enabled": "Actif",
     "this_field_is_required": "Ce champ est requis"
   },
+  "globalError": {
+    "auth_magic_link": "Le lien d'authentification a expiré, veuillez refaire une | demande de lien d'authentification",
+    "back_to_home": "Retour à la page d'accueil",
+    "page_not_found": "La page à laquelle vous tentez d'accéder n'existe pas ou requiert des droits que vous n'avez pas."
+  },
+  "highlights_name": {
+    "keyword": "Mots clés"
+  },
   "inbox": {
-    "title": "Derniers médias",
-    "subtitle": "Vos médias récemment importés arrivent ici. Utilisez ”importer un media” ou {appLink} pour l'enrichir.",
     "sort": {
       "created": "Ajout récent",
       "last_update": "Dernière mise à jour",
       "notags": "Sans tags"
-    }
-  },
-  "explore": {
-    "title": "Explorer les médias de l'organisation",
-    "subtitle": "Recherchez et découvrez des informations sur les médias transcrits avec de la sémantique",
-    "search_text_label": "Rechercher du texte",
-    "search_text_in_title": "Rechercher \"{text}\" dans le titre",
-    "search_text_in_content": "Rechercher \"{text}\" dans la transcription",
-    "no_categories_modal": "Il n'y a aucun tags. Commencez à étiqueter vos médias dans l'onglet Médias récents.",
-    "link_to_inbox": "Retourner aux médias récents",
-    "delete_conversation_button": "Supprimer des médias"
-  },
-  "favorites": {
-    "title": "Médias favoris",
-    "subtitle": "Vos médias favoris arrivent ici."
+    },
+    "subtitle": "Vos médias récemment importés arrivent ici. Utilisez ”importer un media” ou {appLink} pour l'enrichir.",
+    "title": "Derniers médias"
   },
   "invite_user": {
-    "button": "Inviter un utilisateur",
-    "search_label": "Rechercher un utilisateur",
     "add_user": "Ajouter l'utilisateur",
-    "pending": "En cours",
+    "button": "Inviter un utilisateur",
+    "inscription_disabled": "Les inscription et les invitations sont désactivées sur la plateforme",
     "invite": "Inviter",
-    "inscription_disabled": "Les inscription et les invitations sont désactivées sur la plateforme"
-  },
-  "sharedWithTab": {
-    "title": "Médias partagés avec moi",
-    "subtitle": "Tout les médias partagés avec vous en dehors d'une organisation sont réunis ici."
-  },
-  "share_menu": {
-    "conversation_error_title": "Des conversations ne peuvent pas être partagées",
-    "no_conversation_selected_title": "Aucune conversation sélectionnée",
-    "no_conversation_selected_content": "Veuillez sélectionner au moins une conversation à partager",
-    "button": "Partager",
-    "search_label": "Invitez un utilisateur",
-    "user_not_found": "L'utilisateur n'existe pas",
-    "organization_members": "Membres de l'organisation",
-    "external_members": "Utilisateurs externes",
-    "user_has_been_invited": "L'utilisateur a été invité",
-    "user_right_updated": "Les droits de l'utilisateur ont été mis à jour",
-    "inscription_disabled": "Les inscription et les invitations sont désactivées sur la plateforme"
+    "pending": "En cours",
+    "search_label": "Rechercher un utilisateur"
   },
   "lang": {
     "en": "Anglais",
-    "fr": "Français"
+    "fr": "Français",
+    "all": "Toutes langues",
+    "automatic": "Automatique",
+    "optimized_fr": "Optimisé pour le français",
+    "optimized_en": "Optimisé pour l'anglais"
   },
   "login": {
     "create_account_button": "Créer un compte",
     "email_label": "Courriel : ",
     "login_button": "Se connecter",
     "password_label": "Mot de passe : ",
-    "title": "Identifiez-vous",
     "recover_password": "Mot de passe oublié ?",
     "recover_password_btn_label": "Envoyer un lien de connexion",
-    "recover_password_detail": "Saisissez votre adresse email sur laquelle sera envoyé un lien de récupération"
+    "recover_password_detail": "Saisissez votre adresse email sur laquelle sera envoyé un lien de récupération",
+    "title": "Identifiez-vous",
+    "footer": {
+      "description": "Innovations Open source propulsées par LINAGORA sur les infrastructures EXAION"
+    },
+    "sso": {
+      "linagora": "Se connecter avec Linagora"
+    },
+    "teaser": {
+      "transcribe": {
+        "title": "Transcrire",
+        "desc": "Tous vos médias, votre microphone, votre conférence"
+      },
+      "collaborate": {
+        "title": "Collaborer",
+        "desc": "Organisez, partagez et éditez vos contenus"
+      },
+      "ia": {
+        "title": "IA de confiance",
+        "desc": "Obtenez des résumés adaptés à votre métier dans vos formats (word, pdf, sous-titres)"
+      }
+    }
   },
   "manage_tags": {
-    "subtitle": "Déplacer les tags entre les catégories ou modifiez les.",
-    "create_category_button": "Créer une catégorie",
     "create_category": {
-      "title": "Créer une catégorie",
       "name": "Nom",
-      "save": "Enregistrer"
+      "save": "Enregistrer",
+      "title": "Créer une catégorie"
     },
-    "edit_category": {
-      "title": "Modifier la catégorie \"{name}\"",
-      "category_name": "Nom",
-      "category_color": "Couleur",
-      "save": "Enregistrer"
-    },
-    "edit_tag": {
-      "title": "Modifier le tag \"{name}\"",
-      "name": "Nom",
-      "save": "Enregistrer"
-    },
+    "create_category_button": "Créer une catégorie",
     "delete_category": {
-      "title": "Supprimer la catégorie \"{name}\"",
+      "action": "Supprimer",
       "description": "Êtes-vous sûr de vouloir supprimer cette catégorie ?",
-      "action": "Supprimer"
+      "title": "Supprimer la catégorie \"{name}\""
     },
     "delete_tag": {
-      "title": "Supprimer le tag \"{name}\"",
+      "action": "Supprimer",
       "description": "{number} medias vont être dissociés de ce tag.",
-      "action": "Supprimer"
-    }
+      "title": "Supprimer le tag \"{name}\""
+    },
+    "edit_category": {
+      "category_color": "Couleur",
+      "category_name": "Nom",
+      "save": "Enregistrer",
+      "title": "Modifier la catégorie \"{name}\""
+    },
+    "edit_tag": {
+      "name": "Nom",
+      "save": "Enregistrer",
+      "title": "Modifier le tag \"{name}\""
+    },
+    "subtitle": "Déplacer les tags entre les catégories ou modifiez les."
   },
   "modal": {
     "cancel": "Annuler",
     "close_title": "Fermer la modale"
   },
+  "modal_create_organization": {
+    "title": "Créer une organisation",
+    "label_name": "Nom de l'organisation",
+    "action_btn": "Créer"
+  },
+  "modal_delete_users": {
+    "title": "Supprimer un utilisateur | Supprimer {count} utilisateurs",
+    "content": "Êtes-vous sûr de vouloir supprimer cet utilisateur ? | Êtes-vous sûr de vouloir supprimer les {count} utilisateurs sélectionnés ?",
+    "action_btn": "Confirmer la suppression",
+    "error": "Une erreur s'est produite lors de la suppression de l'utilisateur | {count} utilisateurs n'ont pas pu être supprimés"
+  },
   "navigation": {
     "account": {
       "account_link": "Mon compte",
-      "title": "Menu utilisateur",
       "avatar_title": "Photo du profil",
-      "logout": "Se déconnecter"
+      "logout": "Se déconnecter",
+      "title": "Menu utilisateur"
+    },
+    "backoffice": {
+      "link_title": "Backoffice",
+      "return_link": "Interface utilisateur"
     },
     "conversation": {
+      "start": "Démarrer",
       "create": "Importer un media",
+      "create_no_rights_error": "Vous n'avez pas les droits pour créer un média dans cette organisation. Veuillez contacter un administrateur.",
       "list": "Conversations",
-      "title": "Conversations",
+      "my_conversations": "Médias de l'organisation",
       "not_found": "Aucun média",
       "shared_with_me": "Partagées avec moi",
-      "my_conversations": "Médias de l'organisation",
-      "create_no_rights_error": "Vous n'avez pas les droits pour créer un média dans cette organisation. Veuillez contacter un administrateur."
+      "title": "Conversations"
     },
+    "home": "Retour à l'accueil",
     "organisation": {
       "aria_organisations_selector": "Sélectionnez une organisation",
       "create": "Créer une organisation",
       "setting": "Paramètre de l'organisation",
       "title": "Organisation"
     },
-    "tabs": {
-      "inbox": "Accueil",
-      "explore": "Explorer",
-      "favorites": "Favoris",
-      "shared": "Partages reçus",
-      "manage_tags": "Administrer les tags de médias"
+    "session": {
+      "create": "Créer une session",
+      "create_no_rights_error": "Vous n'avez pas les droits pour créer une session dans cette organisation. Veuillez contacter un administrateur."
     },
-    "home": "Retour à l'accueil"
+    "tabs": {
+      "explore": "Médiathèque",
+      "favorites": "Favoris",
+      "inbox": "Accueil",
+      "manage_tags": "Administrer les tags de médias",
+      "sessions": "Transcription en direct",
+      "shared": "Partages reçus",
+      "user_page": "Mon compte"
+    }
   },
   "no_orga": {
-    "title": "Redécouvrez LinTO Studio",
-    "subtitle": "Créez une organisation pour réaliser et partager vos transcriptions.",
-    "label": "Nommez votre organisation, vous pourrez en créer d'autres par la suite",
-    "create": "Créer une organisation",
-    "creating": "Création de l'organisation en cours..."
+    "can_create": {
+      "create": "Créer une organisation",
+      "creating": "Création de l'organisation en cours...",
+      "label": "Nommez votre organisation, vous pourrez en créer d'autres par la suite",
+      "subtitle": "Créez une organisation pour réaliser et partager vos transcriptions.",
+      "title": "Redécouvrez LinTO Studio"
+    },
+    "cannot_create": {
+      "subtitle_line_one": "Votre utilisateur n'appartient à aucune organisation.",
+      "subtitle_line_two": "Veuillez contacter un administrateur.",
+      "title": "Votre compte n'est pas provisionné"
+    }
   },
   "organisation": {
     "add_member_description": "Utilisez le champ de recherche pour chercher des utilisateurs par leur prénom, nom ou adresse électronique",
     "add_member_label": "Ajouter un utilisateur",
-    "delete_organization": "Supprimer l'organisation",
-    "delete_modal": {
-      "title": "Supprimer l'organisation",
-      "content": "Êtes vous sur de vouloir supprimer l'organisation \"{name}\" ? Cette action ne peut être annulée et supprimera tout les médias.",
-      "action": "Supprimer"
-    },
-    "delete_error_message": "Une erreur s'est produite lors de la suppression de l'organisation",
-    "general_settings": "Réglages",
-    "organization_users": "Utilisateurs de l'organisation",
     "create": {
-      "title": "Créer une organisation",
+      "error_already_exists": "Une organisation avec ce nom existe déjà",
+      "error_message": "Une erreur s'est produite lors de la création de l'organisation",
       "submit_label": "Créer l'organisation",
       "success_message": "L'organisation a été créée avec succès",
-      "error_already_exists": "Une organisation avec ce nom existe déjà",
-      "error_message": "Une erreur s'est produite lors de la création de l'organisation"
+      "title": "Créer une organisation"
     },
+    "delete_error_message": "Une erreur s'est produite lors de la suppression de l'organisation",
+    "delete_modal": {
+      "action": "Supprimer",
+      "content": "Êtes vous sur de vouloir supprimer l'organisation \"{name}\" ? Cette action ne peut être annulée et supprimera tout les médias.",
+      "title": "Supprimer l'organisation"
+    },
+    "delete_organization": "Supprimer l'organisation",
+    "delete_success_message": "L'organisation a été supprimée avec succès",
     "description_description": "Description de l'organisation",
     "description_label": "Description",
-    "leave_modal": {
-      "title": "Quitter l'organisation",
-      "content": "Êtes vous sur de vouloir quitter l'organisation \"{name}\" ?",
-      "action": "Quitter"
-    },
+    "general_settings": "Réglages",
     "leave_error_message": "Une erreur s'est produite",
+    "leave_modal": {
+      "action": "Quitter",
+      "content": "Êtes vous sur de vouloir quitter l'organisation \"{name}\" ?",
+      "title": "Quitter l'organisation"
+    },
+    "remove_user_modal": {
+      "action": "Supprimer l'utilisateur de l'organisation",
+      "content": "Êtes vous sur de supprimer \"{name}\" de cette organisation ?",
+      "title": "Supprimer l'utilisateur de l'organisation"
+    },
     "my_workspace": "Mon espace de travail",
     "name_description": "Nom de l'organisation",
     "name_label": "Nom",
+    "organization_users": "Utilisateurs de l'organisation",
+    "organization_permissions": {
+      "title": "Permissions de l'organisation",
+      "upload_permission": "Publier des médias",
+      "summary_permission": "Générer des résumés",
+      "session_permission": "Créer des sessions",
+      "update_button": "Mettre à jour les permissions"
+    },
+    "matching_users": {
+      "title": "Ajout automatique d'utilisateurs",
+      "matching_mail": {
+        "label": "Email d'appartenance à l'organisation"
+      },
+      "update_button": "Mettre à jour les critères d'appartenance",
+      "apply_button": "Inviter les utilisateurs correspondant aux critères"
+    },
+    "organization_stats": {
+      "title": "Statistiques de l'organisation",
+      "medias": "Médias"
+    },
     "update": {
       "title": "Organisation : {name}"
     },
@@ -544,119 +721,415 @@
     "visibility_name": "Visibilité"
   },
   "publish": {
-    "filter_title": {
-      "verbatim": "Options pour le verbatim",
-      "cri": "Options pour le compte rendu intégral",
-      "cra": "Options pour le compte rendu analytique",
-      "cred": "Options pour le compte rendu des commissions et des délégations",
-      "automatic_summary": "Options pour le résumé automatique"
+    "error_first_line": {
+      "cra": "Erreur lors de la génération du compte rendu analytique",
+      "cred": "Erreur lors de la génération du compte rendu des commissions et des délégations",
+      "cri": "Erreur lors de la génération du compte rendu intégral",
+      "verbatim": "Erreur lors de la génération du verbatim",
+      "generic": "Nous n'avons pas pu terminer la tâche en raison d'un problème de connexion temporaire avec le service d'intelligence artificielle. Veuillez réessayer dans un moment."
     },
     "filter_speaker": {
       "title": "Filtrer les locuteurs"
     },
-    "tabs": {
-      "verbatim": "Verbatim",
-      "cri": "Compte rendu intégral",
-      "cra": "Compte rendu analytique",
-      "cred": "Compte rendu des commissions et des délégations",
-      "automatic_summary": "Résumé automatique"
+    "filter_title": {
+      "automatic_summary": "Options pour le résumé automatique",
+      "cra": "Options pour le compte rendu analytique",
+      "cred": "Options pour le compte rendu des commissions et des délégations",
+      "cri": "Options pour le compte rendu intégral",
+      "verbatim": "Options pour le verbatim"
     },
     "generation_first_line": {
-      "verbatim": "Génération du verbatim en cours...",
-      "cri": "Génération du compte rendu intégral en cours...",
       "cra": "Génération du compte rendu analytique en cours...",
-      "cred": "Génération du compte rendu des commissions et des délégations en cours..."
+      "cred": "Génération du compte rendu des commissions et des délégations en cours...",
+      "cri": "Génération du compte rendu intégral en cours...",
+      "verbatim": "Génération du verbatim en cours...",
+      "general": "Génération en cours..."
     },
-    "error_first_line": {
-      "verbatim": "Erreur lors de la génération du verbatim",
-      "cri": "Erreur lors de la génération du compte rendu intégral",
-      "cra": "Erreur lors de la génération du compte rendu analytique",
-      "cred": "Erreur lors de la génération du compte rendu des commissions et des délégations"
-    },
+    "loading_document": "Chargement du document final",
+    "is_not_updated": "La transcription a été mise à jour. Le compte rendu ne reflète plus les dernières modifications.",
+    "is_updated": "Le compte rendu est à jour avec la transcription",
     "queued": {
       "title": "Le compte rendu est en attente de traitement"
     },
     "reload_document": "Regénérer le document",
-    "is_updated": "Le compte rendu est à jour avec la transcription",
-    "is_not_updated": "La transcription a été mise à jour. Le compte rendu ne reflète plus les dernières modifications."
+    "tabs": {
+      "automatic_summary": "Résumé automatique",
+      "cra": "Compte rendu analytique",
+      "cred": "Compte rendu des commissions et des délégations",
+      "cri": "Compte rendu intégral",
+      "verbatim": "Verbatim"
+    }
+  },
+  "session": {
+    "sessions_status": {
+      "pending": "La session est en attente de recevoir un flux audio",
+      "active": "La session est active. Un ou des audio(s) sont transcrits",
+      "scheduled": "La session n'a pas démarrée",
+      "terminated": "La session est terminée"
+    },
+    "channels_list": {
+      "add": "Ajouter des canaux",
+      "empty": "Aucun canaux attachés à la session",
+      "labels": {
+        "endpoint": "Adresse des flux",
+        "language": "Langues",
+        "name": "Nom",
+        "profile_name": "Nom du profil",
+        "stream_status": "Statut du flux",
+        "transcriber_status": "Statut du transcriber",
+        "type": "Type",
+        "translations": "Traductions",
+        "diarization": "Séparation des locuteurs"
+      },
+      "modal_add": {
+        "loading_profiles": "Chargement des profils de transcription",
+        "main_button": "Ajouter 1 canal | Ajouter {count} canaux",
+        "title": "Ajouter des canaux"
+      },
+      "remove": "Retirer",
+      "title": "Canaux attachés à la session",
+      "multiple_endpoint": "1 flux | {count} flux",
+      "no_translations": "Aucune traduction"
+    },
+    "create_page": {
+      "error_message": "Une erreur s'est produite lors de la création de la session",
+      "name_field": {
+        "label": "Nom de la session"
+      },
+      "diarization_label": "Activer la séparation des locuteurs (si disponible dans le canal)",
+      "keep_audio_label": "Conserver l'audio à la fin de la session",
+      "start_timestamp_label": "Heure de début",
+      "end_timestamp_label": "Heure de fin",
+      "save_as_template_button": "Enregistrer en tant que modèle",
+      "save_as_template_success": "La session a été enregistrée en tant que modèle",
+      "save_as_template_error": "La session n'a pas pu être enregistrée en tant que modèle",
+      "delete_template_button": "Supprimer le modèle courant",
+      "delete_template_modal": {
+        "title": "Supprimer le modèle \"{name}\"",
+        "action": "Supprimer",
+        "description": "Êtes-vous sûr de vouloir supprimer ce modèle ?",
+        "error": "Le modèle n'a pas pu être supprimé",
+        "success": "Le modèle a été supprimé"
+      },
+      "submit_button": "Créer la session",
+      "submit_label": "Créer la session",
+      "success_message": "La session a été créée avec succès",
+      "title": "Créer une session",
+      "template_selection_title": "Selection d'un modèle",
+      "template_selection_placeholder": "Pas de modèle",
+      "template_apply_success": "Le modèle a été appliqué",
+      "template_apply_error": "Le modèle n'a pas pu être appliqué",
+      "channels_error": "Veuillez ajouter au moins un canal à la session",
+      "main_info_title": "Informations générales",
+      "appointment_label": "Selecteur d'horaire",
+      "auto_stop_label": "Arrêt automatique de la session à l'heure de fin"
+    },
+    "detail_page": {
+      "back_to_listing": "Liste des sessions",
+      "back_to_live": "Accéder au direct",
+      "delete_button": "Supprimer la session",
+      "delete_session_error_message": "La session n'a pas pu être supprimée",
+      "display_live_transcription_label": "Afficher la transcription",
+      "display_subtitles_label": "Afficher le sous-titre",
+      "end_time_not_defined": "Non défini",
+      "font_size_label": "Taille de la police",
+      "no_transcription": "Rien n'a encore été transcrit pour ce canal",
+      "n_turns_selected": "Aucun tour de parole sélectionné | 1 tour de parole sélectionné | {count} tours de parole sélectionnés",
+      "copy_turns_text": "Copier le texte",
+      "clear_turn_selection": "Déselectionner",
+      "session_ended_title": "La session est terminée",
+      "session_ended_subtitle": "La transcription a été sauvegardé dans votre bibliothèque de médias",
+      "session_ended_link_to_conversation_transcription": "Ouvrir la transcription dans l’éditeur",
+      "session_ended_link_to_inbox": "Accéder à la bibliothèque des médias",
+      "session_not_started_title": "La session n'a pas encore commencé",
+      "settings_button": "Paramètres",
+      "start_button": "Démarrer",
+      "start_time_not_defined": "Non défini",
+      "start_session_error_message": "La session n'a pas pu être arrêtée",
+      "stop_button": "Arrêter et enregistrer la transcription",
+      "stop_force_button": "Forcer l'arrêt de la session",
+      "stop_session_error_message": "La session n'a pas pu être arrêtée",
+      "stop_session_success": "La session a été arrétée et sauvegardée",
+      "title_interface_settings": "Paramètre d'interface",
+      "undefined_lang": "Langage inconnu",
+      "undefined_speaker": "Locuteur inconnu",
+      "translation_bot": "Traduction automatique",
+      "session_already_started": "La session a déjà démarrée",
+      "session_auto_start_helper": "La session démmarera automatiquement à l'heure de début",
+      "stop_button_title_session_running": "La session ne peut pas être arrêtée tant que des flux sont envoyés."
+    },
+    "end_undefined": "Non définie",
+    "room_undefined": "Lieu non défini",
+    "list_page": {
+      "no_sessions": "Aucune session trouvée",
+      "no_sessions_this_day": "Aucune session prévue pour ce jour",
+      "end_time": "Heure de fin",
+      "start_time": "Heure de début",
+      "tabs": {
+        "ongoing_sessions": "Sessions en cours",
+        "past_sessions": "Sessions passées",
+        "scheduled_sessions": "Sessions programmées",
+        "all_sessions": "Toutes les sessions"
+      }
+    },
+    "live_page": {
+      "channel_selector": {
+        "label": "Choisir un canal"
+      },
+      "translation_selector": {
+        "label": "Choisir la langue de traduction",
+        "original_language": "Langue originale"
+      }
+    },
+    "profile_selector": {
+      "labels": {
+        "description": "Description",
+        "languages": "Langues",
+        "name": "Nom",
+        "selected": "Selectionné",
+        "type": "Type",
+        "translations": "Traductions",
+        "diarization": "Séparation des locuteurs"
+      },
+      "title": "Choix des profils de transcription",
+      "translation_not_available": "Non disponible",
+      "diarization_not_available": "Non disponible"
+    },
+    "settings_page": {
+      "autoStart_label": "Démarrage automatique de la session",
+      "channels_list_title": "Canaux",
+      "copy_link_button": "Copier le lien",
+      "copy_link_button_done": "Lien copié",
+      "end_time_label": "Heure de fin",
+      "global_informations_title": "Informations générales",
+      "time_informations_title": "Démarrage et arrêt",
+      "isPublic_label": "Autoriser l'accès anonyme à la session",
+      "diarization_label": "Séparation des locuteurs",
+      "publicLink_label": "Lien de la session",
+      "start_time_label": "Heure de début",
+      "success_message": "Session successfully updated",
+      "error_update_message": "Session has not been updated",
+      "force_delete_modal": {
+        "action": "Supprimer",
+        "content": "Un flux audio est connecté. Êtes-vous sûr de vouloir supprimer la session ? Le contenu sera sauvegardé dans votre bibliothèque de médias.",
+        "title": "Confirmer la suppression de la session"
+      },
+      "visibility_private_label": "Privée",
+      "visibility_organization_label": "Interne",
+      "visibility_public_label": "Publique",
+      "visibility_title": "Visibilité"
+    },
+    "start_undefined": "Non définie"
+  },
+  "quick_session": {
+    "creation": {
+      "source_title": "Source",
+      "microphone_source_label": "Utiliser le microphone local",
+      "visio_source_label": "Rejoindre une visio-conférence",
+      "profile_selector_title": "Sélection du profil de transcription",
+      "no_profile_selected_error": "Aucun profil de transcription selectionné",
+      "quick_meeting_already_start_title": "Un enregistrement est déjà démarré.",
+      "quick_meeting_already_start_button": "Rejoindre le Quick meeting",
+      "submit_button": "Démarrer l'enregistrement",
+      "description": "Les données captées par le microphone seront transcrits en temps réel"
+    },
+    "setup_microphone": {
+      "waiting_permission_title": "En attente des permissions pour accéder au microphone",
+      "microphone_error_first_line": "Bonjour, votre ordinateur est muet.",
+      "microphone_error_second_line": "Vérifiez les permissions de votre microphone.",
+      "microphone_select_label": "Choix du microphone",
+      "microphone_reset_button": "Rétablir au microphone par défaut du système",
+      "microphone_select_button": "Séléctionner le microphone",
+      "microphone_default_value": "Microphone par défaut du système",
+      "sound_detector_headline": "Dites quelquechose pour tester votre microphone",
+      "sound_detector_label": "Détection de la voix",
+      "sound_detector_value_ok": "Votre microphone fonctionne",
+      "sound_detector_value_wait": "En attente de son du microphone...",
+      "start_meeting": "Démarrer la réunion",
+      "back": "Retour"
+    },
+    "restore": {
+      "title": "Un Quick meeting est déjà en cours",
+      "subtitle": "Vous pouvez l'enregistrer, le supprimer ou poursuivre l'enregistrement.",
+      "trash_button": "Quittez sans sauvegarder",
+      "save_button": "Sauvegarder et quitter",
+      "continue_button": "Continuer l'enregistrement"
+    },
+    "setup_visio": {
+      "title": "Rejoindre une visio-conférence",
+      "subtitle": "Veuillez entrer l'URL de la visio-conférence à laquelle vous souhaitez participer.",
+      "type_label": "Type de visio-conférence",
+      "link_label": "URL de la visio-conférence",
+      "display_transcription_in_visio_label": "Afficher les sous-titres dans la visioconférence",
+      "live_transcription_label": "Transcription en temps réél",
+      "live_options": "Options de la transcription",
+      "back": "Retour",
+      "join_meeting": "Rejoindre la visio-conférence",
+      "error_bot_setup": "An error occurred while joining the videoconference"
+    },
+    "live": {
+      "status_no_websocket": "Déconnecté du serveur audio",
+      "status_recording": "En cours d'enregistrement",
+      "status_muted": "Muet",
+      "save_button": "Sauvegarder et quitter"
+    },
+    "live_visio": {
+      "status_recording_visio": "Enregistrement de la visio-conférence en cours"
+    }
+  },
+  "share_menu": {
+    "button": "Partager",
+    "conversation_error_title": "Des conversations ne peuvent pas être partagées",
+    "external_members": "Utilisateurs externes",
+    "inscription_disabled": "Les inscription et les invitations sont désactivées sur la plateforme",
+    "invite_user_button": "Inviter un utilisateur",
+    "no_conversation_selected_content": "Veuillez sélectionner au moins un média à partager",
+    "no_conversation_selected_title": "Aucun média sélectionné",
+    "organization_members": "Membres de l'organisation",
+    "search_label": "Invitez un utilisateur",
+    "user_has_been_invited": "L'utilisateur a été invité",
+    "user_not_found": "L'utilisateur n'existe pas",
+    "user_right_updated": "Les droits de l'utilisateur ont été mis à jour"
+  },
+  "sharedWithTab": {
+    "subtitle": "Tout les médias partagés avec vous en dehors d'une organisation sont réunis ici.",
+    "title": "Médias partagés avec moi",
+    "no_media_title": " Aucun média n'a été partagé avec vous",
+    "no_media_subtitle": "D'autres utilisateurs peuvent partager des médias avec vous grâce au bouton 'partager' dans leur bibliothèque de médias. "
   },
   "tags": {
+    "add_tag_to_conversation": "Ajouter le tag",
+    "add_tags": "Ajouter des tags au média",
     "back_to_search": "Retour à la recherche",
     "browse_categories": "Parcourir les catégories",
-    "no_tags": "Aucun tags",
+    "cancel_create_tag": "Annuler",
+    "categories": "Categories de tags",
+    "create_a_tag": "Créer un tag",
+    "create_category": "Créer la catégorie {value}",
+    "create_tag": "Créer le tag",
+    "define_category_button": "Créer le tag",
+    "delete_category_title": "Supprimer la catégorie",
+    "delete_tag_title": "Supprimer le tag",
+    "done_create_tag": "Valider",
+    "edit_category_title": "Modifier la categorie",
+    "edit_tag_title": "Modifier le tag",
+    "empty_category": "catégorie à définir",
+    "error_creating_tag": "Erreur lors de la création du tag",
+    "manage_tags": "Gérer les tags",
+    "new_tag_name": "Nom du tag",
+    "no_categories_found": "Aucune catégories de tags trouvées",
+    "no_tags": "Aucun tag",
+    "no_tags_found": "Aucun tag trouvées",
+    "no_tags_in_category": "Aucun tag dans cette catégorie",
+    "remove_tag": "Supprimer le tag",
+    "search_categories": "Rechercher ou nommer la catégorie",
     "search_tags_or_categories": "Rechercher des tags ou des catégories",
     "search_tags_or_categories_or_create_new_one": "Rechercher des tags",
     "search_tags_with": "Rechercher des tags avec",
-    "search_categories": "Rechercher ou nommer la catégorie",
-    "create_tag": "Créer le tag",
-    "manage_tags": "Gérer les tags",
     "select_category_title": "Choisir une catégorie",
-    "create_category": "Créer la catégorie {value}",
-    "done_create_tag": "Valider",
-    "cancel_create_tag": "Annuler",
-    "tags": "Tags",
-    "categories": "Categories de tags",
-    "no_tags_found": "Aucun tags trouvées",
-    "no_categories_found": "Aucune catégories de tags trouvées",
-    "no_tags_in_category": "Aucun tags dans cette catégorie",
-    "remove_tag": "Supprimer le tag",
-    "add_tags": "Ajouter des tags au média",
-    "create_a_tag": "Créer un tag",
-    "empty_category": "catégorie à définir",
-    "define_category_button": "Créer le tag",
-    "edit_category_title": "Modifier la categorie",
-    "edit_tag_title": "Modifier le tag",
-    "delete_category_title": "Supprimer la catégorie",
-    "delete_tag_title": "Supprimer le tag",
     "select_tag_title": "Sélectionner le tag",
-    "new_tag_name": "Nom du tag",
-    "add_tag_to_conversation": "Ajouter le tag",
-    "error_creating_tag": "Erreur lors de la création du tag"
+    "tags": "Tags"
   },
   "usersettings": {
     "change_password_label": "Modifier le mot de passe",
+    "check_verify_email": "Veuillez vérifier votre boîte de réception et cliquer sur le lien de vérification que nous venons de vous envoyer.",
     "email_label": "Courriel",
     "firstname_label": "Prénom",
+    "invite_account_notif": "Veuillez remplir les champs suivants et créer un mot de passe afin de compléter la création de votre compte.",
     "lastname_label": "Nom",
     "new_password_confirmation_label": "Confirmation du nouveau mot de passe",
     "new_password_label": "Nouveau mot de passe",
-    "personal_information": "Informations personnelles",
-    "picture_label": "Image de profil",
-    "private_label": "Rendre le profil privée",
-    "profil_visibility": {
-      "title": "Visibilité du profil",
-      "label_private": "Profil privé"
-    },
-    "title": "Paramètres utilisateur",
-    "update_picture_button": "Mettre à jour",
-    "update_password_button": "Mettre à jour",
-    "invite_account_notif": "Veuillez remplir les champs suivants et créer un mot de passe afin de compléter la création de votre compte.",
-    "update_pswd_notif": "Vous avez récemment fait une demande suite à un mot de passe oublié, pensez à actualiser votre mot de passe.",
-    "update_pswd_notif_dismiss_btn": "Ne plus afficher",
-    "check_verify_email": "Veuillez vérifier votre boîte de réception et cliquer sur le lien de vérification que nous venons de vous envoyer.",
-    "verify_email_notif": "Veuillez vérifier votre adresse email",
-    "send_verification_link": "Envoyer un lien de validation",
-    "update_email_label": "Mettre à jour l'email",
-    "update_personal_information_button": "Mettre à jour les informations personnelles",
     "notifications": {
-      "title": "Notifications par email",
       "conversations": {
-        "title": "Médias",
         "add_label": "Pour un partage",
         "del_label": "Pour une révocation de droit",
+        "title": "Médias",
         "update_label": "Pour un changement de droits"
       },
       "organizations": {
-        "title": "Organisation",
         "add_label": "Pour un ajout",
         "del_label": "Pour une suppression",
+        "title": "Organisation",
         "update_label": "Pour un changement de rôle"
       },
-      "submit_button": "Mettre à jour les notifications"
-    }
+      "submit_button": "Mettre à jour les notifications",
+      "title": "Notifications par email"
+    },
+    "notif_success": "Les informations ont été mises à jour",
+    "notif_error": "Une erreur s'est produite lors de la mise à jour des informations",
+    "personal_information": "Informations personnelles",
+    "picture_label": "Image de profil",
+
+    "private_label": "Rendre le profil privée",
+
+    "profil_visibility": {
+      "label_private": "Profil privé",
+      "title": "Visibilité du profil"
+    },
+    "profile_image_button": "Choisir une image",
+    "role_section": {
+      "title": "Rôle d'administration",
+      "submit_button": "Sauvegarder les rôles",
+      "notif_success": "Les rôles ont été mis à jour",
+      "notif_error": "Une erreur s'est produite lors de la mise à jour des rôles"
+    },
+    "send_verification_link": "Envoyer un lien de validation",
+    "share_notification_label": "Recevez une notification par e-mail lorsqu'un média vous est partagé",
+    "title": "Paramètres utilisateur",
+    "update_email_label": "Mettre à jour l'email",
+    "update_password_button": "Mettre à jour",
+    "update_personal_information_button": "Mettre à jour les informations personnelles",
+    "update_picture_button": "Mettre à jour",
+    "update_pswd_notif": "Vous avez récemment fait une demande suite à un mot de passe oublié, pensez à actualiser votre mot de passe.",
+    "update_pswd_notif_dismiss_btn": "Ne plus afficher",
+    "verify_email_notif": "Veuillez vérifier votre adresse email"
   },
-  "globalError": {
-    "auth_magic_link": "Le lien d'authentification a expiré, veuillez refaire une | demande de lien d'authentification",
-    "page_not_found": "La page à laquelle vous tentez d'accéder n'existe pas ou requiert des droits que vous n'avez pas."
+  "userCreation": {
+    "title": "Nouvel utilisateur",
+    "confirm_button": "Créer l'utilisateur",
+    "email_already_exists": "Un utilisateur avec cet email existe déjà",
+    "passwords_do_not_match": "Les mots de passe ne correspondent pas",
+    "error_message": "Une erreur s'est produite lors de la création de l'utilisateur"
+  },
+  "userTable": {
+    "header": {
+      "id": "ID",
+      "email": "Email",
+      "firstname": "Prénom",
+      "lastname": "Nom",
+      "role": "Rôle",
+      "status": "Status",
+      "creation_date": "Date de création",
+      "platform_role": "Rôle de plateforme le plus élevé"
+    },
+    "edit_button_label": "Modifier",
+    "delete_button_label": "Supprimer"
+  },
+  "orgaTable": {
+    "header": {
+      "creation_date": "Date de création",
+      "id": "ID",
+      "name": "Nom",
+      "description": "Description",
+      "userNumber": "Nombre d'utilisateurs"
+    },
+    "edit_button_label": "Modifier"
+  },
+  "platform_role": {
+    "organization_initiator": "Initiateur d'organisation",
+    "session_operator": "Opérateur de session",
+    "system_administrator": "Administrateur système",
+    "super_administrator": "Super administrateur",
+    "user": "Utilisateur",
+    "suspend": "Utilisateur désactivé"
+  },
+  "week_selector": {
+    "previous_button_title": "Semaine précédente",
+    "next_button_title": "Semaine suivante",
+    "main_label": "Semaine {weekNumber} de {year} ({startDate} - {endDate})"
+  },
+  "websocket": {
+    "connected": "Contenu mis à jour en temps réel",
+    "disconnected": "Contenu non mis à jour, vérifiez votre connexion internet"
   }
 }

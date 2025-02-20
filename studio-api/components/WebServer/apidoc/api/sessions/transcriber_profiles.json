@@ -1,0 +1,135 @@
+{
+  "/api/transcriber_profiles": {
+    "get": {
+      "tags": ["transcriber_profiles"],
+      "summary": "Get all transcriber configs",
+      "responses": {
+        "200": {
+          "description": "The list of transcriber configs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TranscriberProfileAnswer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "post": {
+      "tags": ["transcriber_profiles"],
+      "summary": "Create a new transcriber config",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TranscriberProfileRequest"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created"
+        }
+      }
+    }
+  },
+  "/api/transcriber_profiles/{id}": {
+    "get": {
+      "tags": ["transcriber_profiles"],
+      "summary": "Get a transcriber config by ID",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Transcriber config ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "The transcriber config",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TranscriberProfileAnswer"
+              }
+            }
+          }
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      }
+    },
+    "put": {
+      "tags": ["transcriber_profiles"],
+      "summary": "Update a transcriber config by ID",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Transcriber config ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TranscriberProfileRequest"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "The transcriber config",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TranscriberProfileAnswer"
+              }
+            }
+          }
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      }
+    },
+    "delete": {
+      "tags": ["transcriber_profiles"],
+      "summary": "Delete a transcriber config by ID",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Transcriber config ID",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "No Content"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      }
+    }
+  }
+}

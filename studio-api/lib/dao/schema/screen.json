@@ -37,17 +37,9 @@
           },
           "confidence": {
             "type": "number"
-          },
-          "highlights": {
-            "type": "array",
-            "items": {}
-          },
-          "keywords": {
-            "type": "array",
-            "items": {}
           }
         },
-        "required": ["wid", "stime", "etime", "word", "confidence", "highlights", "keywords"]
+        "required": ["wid", "stime", "etime", "word", "confidence"]
       }
     }
   },

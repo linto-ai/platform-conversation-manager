@@ -4,25 +4,25 @@
     "schema": {
       "properties": {
         "version": {
-          "type": "integer" 
+          "type": "integer"
         },
         "channels": {
-          "type": "integer" 
+          "type": "integer"
         },
         "sample_rate": {
-          "type": "integer" 
+          "type": "integer"
         },
         "samples_per_pixel": {
-          "type": "integer" 
+          "type": "integer"
         },
         "bits": {
-          "type": "integer" 
+          "type": "integer"
         },
         "length": {
-          "type": "integer" 
+          "type": "integer"
         },
         "data": {
-          "type":"array",
+          "type": "array",
           "items": {
             "type": "number"
           }
@@ -36,17 +36,7 @@
       "samples_per_pixel": 256,
       "bits": 16,
       "length": 4528,
-      "data": [
-        -21,
-        21,
-        -28,
-        25,
-        -23,
-        24,
-        -30,
-        27,
-        -29
-      ]
+      "data": [-21, 21, -28, 25, -23, 24, -30, 27, -29]
     }
   }
 }

@@ -1,4 +1,7 @@
-export default function unhighlightRange({ range }) {
+export default function unhighlightRange(
+  { range },
+  { functionToUnhighlightWord = unhighlightWord } = {}
+) {
   let { startContainer, endContainer, startOffset, endOffset } = range
   let startWord = startContainer.children.item(startOffset)
 
@@ -7,19 +10,14 @@ export default function unhighlightRange({ range }) {
   let endWord = endContainer.children.item(endOffset)
 
   if (!endWord || startWord === endWord) {
-    startWord.removeAttribute("highlighted")
-    startWord.classList.remove(
-      ...Array.from(startWord.classList).filter((c) =>
-        c.startsWith("background-")
-      )
-    )
+    functionToUnhighlightWord(startWord)
     return
   } else {
     do {
-      unhighlightWord(startWord)
+      functionToUnhighlightWord(startWord)
       startWord = startWord.nextSibling
     } while (startWord !== endWord)
-    unhighlightWord(endWord)
+    functionToUnhighlightWord(endWord)
   }
 
   //unhighlightWord(startWord)
@@ -28,6 +26,7 @@ export default function unhighlightRange({ range }) {
 function unhighlightWord(word) {
   word.removeAttribute("highlighted")
   word.removeAttribute("highlighted--last-word")
+  word.removeAttribute("highlighted--first-word")
   word.classList.remove(
     ...Array.from(word.classList).filter((c) => c.startsWith("background-"))
   )

@@ -1,10 +1,12 @@
-const debug = require('debug')(`linto:components:MongoMigration:controllers:version:1.1.0:organization`)
+const debug = require("debug")(
+  `linto:components:MongoMigration:controllers:version:1.1.0:organization`,
+)
 
-const collections_name = 'organization'
+const collections_name = "organization"
 
 const removed_keys = {
   personal: false,
-  type: 'public'
+  type: "public",
 }
 
 module.exports = {
@@ -14,5 +16,5 @@ module.exports = {
 
   async down(db) {
     db.collection(collections_name).updateMany({}, { $set: removed_keys })
-  }
+  },
 }

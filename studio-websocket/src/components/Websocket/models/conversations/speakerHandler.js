@@ -4,7 +4,7 @@ export async function handleSpeakerChange(
   yEvent,
   transaction,
   conversationId,
-  userToken
+  userToken,
 ) {
   if (transaction.origin == "websocket") {
     return true
@@ -17,7 +17,7 @@ export async function handleSpeakerChange(
   let update = await apiUpdateConversation(
     conversationId,
     { speakers: yEvent[0].currentTarget.toJSON() },
-    userToken
+    userToken,
   )
 
   return update.status === "success"

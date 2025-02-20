@@ -33,12 +33,11 @@
       }
     },
     "example": {
-      "users": [{
+      "users": [
+        {
           "id": "64930e7dca6260263d8c9870",
           "right": 2,
-          "conversations": [
-            "64b6874ba670617a06aaea28"
-          ],
+          "conversations": ["64b6874ba670617a06aaea28"],
           "email": "hihejic334@aramask.com"
         },
         {
@@ -53,9 +52,7 @@
         {
           "email": "pifex61401@quipas.com",
           "right": 3,
-          "conversations": [
-            "64b6874ba670617a06aaea28"
-          ],
+          "conversations": ["64b6874ba670617a06aaea28"],
           "id": "64c28fa4485ef172c78724ad"
         }
       ]

@@ -15,5 +15,6 @@ export default function handleBlur(e) {
       index: this.index,
     })
     this.displayHighlights()
+    this.refreshSearchResults()
   }
 }

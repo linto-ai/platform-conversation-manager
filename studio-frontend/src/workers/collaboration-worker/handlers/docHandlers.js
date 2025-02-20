@@ -5,7 +5,9 @@ import { customDebug } from "../../../tools/customDebug"
 
 const debugSendDocUpdate = customDebug("Worker:debug:send:docUpdate")
 const debugReceiveTurnUpdate = customDebug("Worker:debug:receive:turnUpdate")
-const debugReceiveSpeakerUpdate = customDebug("Worker:debug:receive:speakerUpdate")
+const debugReceiveSpeakerUpdate = customDebug(
+  "Worker:debug:receive:speakerUpdate"
+)
 
 let tmpBinaryDelta = []
 
@@ -356,17 +358,26 @@ function sendScreenUpdateToView(sendMessage, subtitle, events, transaction) {
   // console.log("update: " + updateScreen)
 
   if (mergeScreen) sendScreenMergeToView(sendMessage, subtitle, events)
-  else if (deleteScreen) console.log("deleted")
-  else if (splitScreen) console.log("split")
+  else if (deleteScreen) {
+    sendScreenDeleteToView(sendMessage, subtitle, events, transaction.origin)
+  } else if (splitScreen) console.log("split")
   else if (addScreen)
     sendScreenAddToView(sendMessage, subtitle, events[0], transaction.origin)
   else if (updateScreen)
-    sendScreenUpdateTimeStampToView(
+    sendScreenContentUpdateToView(
       sendMessage,
       subtitle,
       events[0],
       transaction.origin
     )
+}
+
+function sendScreenDeleteToView(sendMessage, subtitle, events, origin) {
+  if (origin !== "websocket") return
+  const delta = events[0].changes.delta
+  sendMessage("screen_delete", {
+    delta,
+  })
 }
 
 function sendScreenMergeToView(sendMessage, subtitle, events) {
@@ -393,19 +404,35 @@ function sendScreenMergeToView(sendMessage, subtitle, events) {
   })
 }
 
-function sendScreenUpdateTimeStampToView(sendMessage, subtitle, event, origin) {
+function sendScreenContentUpdateToView(sendMessage, subtitle, event, origin) {
   if (origin !== "websocket") return
 
-  let screen = subtitle.getScreen(event.path[0])
-  let screenId = screen.screen_id
-  let changes = {}
-  for (const [key, _] of event.changes.keys) {
-    changes[key] = screen[key]
+  if (event.path.length === 0) return
+
+  if (event.path.length === 1) {
+    let screen = subtitle.getScreen(event.path[0])
+    let screenId = screen.screen_id
+    let changes = {}
+    for (const [key, _] of event.changes.keys) {
+      changes[key] = screen[key]
+    }
+
+    sendMessage("screen_update", {
+      screenId: screenId,
+      changes: changes,
+    })
   }
-  sendMessage("screen_update", {
-    screenId: screenId,
-    changes: changes,
-  })
+
+  if (event.path.length === 2 && event.path[1] === "text") {
+    let screen = subtitle.getScreen(event.path[0])
+    let screenId = screen.screen_id
+    let changes = {}
+
+    sendMessage("screen_update", {
+      screenId: screenId,
+      changes: { text: screen.text },
+    })
+  }
 }
 
 function sendScreenAddToView(sendMessage, subtitle, event, origin) {

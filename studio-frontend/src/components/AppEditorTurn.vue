@@ -13,22 +13,20 @@
           'conversation-speaker-name',
           canEdit ? '' : 'disabled',
           'flex1',
+          'popover-parent',
         ]"
         @click="handleSpeakerClick($event)"
         :style="`color: ${speakerColor};`">
-        {{
-          speakerName.length > 12
-            ? speakerName.substr(0, 12) + "..."
-            : speakerName
-        }}
+        {{ speakerName }}
+        <AppEditorSpkToolbox
+          v-if="displaySpeakerToolbox"
+          :speakers="speakers"
+          :speakerId="speakerId"
+          :turnId="turnId"
+          :turnIndex="index"
+          v-click-outside="closeSpkToolbox"></AppEditorSpkToolbox>
       </span>
-      <AppEditorSpkToolbox
-        v-if="displaySpeakerToolbox"
-        :speakers="speakers"
-        :speakerId="speakerId"
-        :turnId="turnId"
-        :turnIndex="index"
-        v-click-outside="closeSpkToolbox"></AppEditorSpkToolbox>
+
       <span
         class="icon warning sync-error-icon"
         :title="$t('conversation.turn_sync_error_title')"
@@ -99,10 +97,10 @@
       <div class="turn-actions flex row">
         <button
           v-if="!lastTurn && canEdit"
-          class="turn-action-btn"
+          class="centered-inline icon-only small black"
           @click="mergeTurn"
           data-info="Fusionner les tours">
-          <span class="icon icon-merge"></span>
+          <span class="icon merge"></span>
         </button>
       </div>
     </div>
@@ -132,6 +130,8 @@ import _handleContentUpdate from "@/components/AppEditorTurn.d/handleContentUpda
 import _handleSpeakerClick from "@/components/AppEditorTurn.d/handleSpeakerClick.js"
 import _setSpeakerName from "@/components/AppEditorTurn.d/setSpeakerName.js"
 import _handleEnter from "@/components/AppEditorTurn.d/handleEnter.js"
+import _highlightSearchWord from "@/components/AppEditorTurn.d/highlightSearchWord.js"
+import _unHighlightSearchWord from "@/components/AppEditorTurn.d/unHighlightSearchWord.js"
 import AppEditorMetadataModal from "./AppEditorMetadataModal.vue"
 import { getCookie } from "../tools/getCookie.js"
 
@@ -189,10 +189,18 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    searchResult: {
+      type: Array,
+      default: () => [],
+    },
+    focusResultId: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
-      localTurnData: this.turnData,
+      localTurnData: structuredClone(this.turnData),
       contentEditable: false,
       clickTimer: null,
       clickNb: 0,
@@ -213,6 +221,7 @@ export default {
       cursorPosition: {
         wordIndex: null,
         wordCharIndex: null,
+        lineIndex: 0,
       },
       highlightsRanges: {}, // {cat_name: {ranges:[range1, ranges2], color: 'color'}, ...},
       selectedRange: null,
@@ -287,7 +296,7 @@ export default {
       const isFocus = this.focusFields?.[this.flag]
       if (isFocus) {
         const user = this.conversationUsers.find(
-          (usr) => usr._id === isFocus.userId
+          (usr) => usr._id === isFocus.userId,
         )
         return user.firstname + " " + user.lastname
       }
@@ -323,6 +332,19 @@ export default {
     },
   },
   watch: {
+    searchResult(data, oldData) {
+      if (data.length > 0) {
+        this.displaySearchResults()
+      }
+      if (oldData.length > 0) {
+        this.hideSearchResults(oldData)
+      }
+    },
+    focusResultId(data, oldData) {
+      if (data) {
+        this.refreshSearchResults()
+      }
+    },
     contentEditable(data) {
       if (data) {
         this.plainText = this.segment
@@ -388,6 +410,7 @@ export default {
       }
     })
     this.displayHighlights()
+    this.displaySearchResults()
     this.localText = this.segment
   },
   methods: {
@@ -406,6 +429,42 @@ export default {
     handleSpeakerClick: _handleSpeakerClick,
     setSpeakerName: _setSpeakerName,
     handleEnter: _handleEnter,
+    highlightSearchWord: _highlightSearchWord,
+    unHighlightSearchWord: _unHighlightSearchWord,
+    displaySearchResults() {
+      this.searchResult.forEach((expression) => {
+        const domRange = this.plainRangeToDomRange(expression)
+        let iscurrent = expression.id === this.focusResultId
+        this.highlightRange(
+          { range: domRange, category: { color: "red" } },
+          {
+            functionToHighlightWord: this.highlightSearchWord,
+            functionArgs: [iscurrent],
+          },
+        )
+      })
+    },
+    hideSearchResults(searchResult) {
+      searchResult.forEach((expression) => {
+        const domRange = this.plainRangeToDomRange(expression)
+
+        if (domRange === null) {
+          return
+        }
+
+        this.unhighlightRange(
+          { range: domRange },
+          { functionToUnhighlightWord: this.unHighlightSearchWord },
+        )
+      })
+    },
+    refreshSearchResults() {
+      //nexttick to wait for the dom to be updated
+      this.$nextTick(() => {
+        this.hideSearchResults(this.searchResult)
+        this.displaySearchResults()
+      })
+    },
     handleNewHighlight(tag) {
       this.$emit("newHighlight", {
         tag,
@@ -449,13 +508,13 @@ export default {
       } else {
         domRange.setEnd(
           endRange.parentNode,
-          endRange.parentNode.childNodes.length - 1
+          endRange.parentNode.childNodes.length - 1,
         )
       }
       this.selectedRange = domRange
       await this.highlightRange(
         { range: this.selectedRange, category: { color: "blue" } },
-        false
+        { functionArgs: [false] },
       )
       // if (
       //   target.classList.contains("turn") ||

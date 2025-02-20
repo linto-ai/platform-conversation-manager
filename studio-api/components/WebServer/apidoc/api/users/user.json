@@ -1,9 +1,7 @@
 {
   "/api/users/": {
     "post": {
-      "tags": [
-        "users"
-      ],
+      "tags": ["users"],
       "summary": "Create an user",
       "requestBody": {
         "content": {
@@ -27,12 +25,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "email",
-                "password",
-                "firstname",
-                "lastname"
-              ]
+              "required": ["email", "password", "firstname", "lastname"]
             }
           }
         }
@@ -75,9 +68,7 @@
       }
     },
     "get": {
-      "tags": [
-        "users"
-      ],
+      "tags": ["users"],
       "summary": "List all users",
       "responses": {
         "200": {
@@ -99,13 +90,10 @@
         }
       }
     }
-
   },
   "/api/users/self/": {
     "get": {
-      "tags": [
-        "users self"
-      ],
+      "tags": ["users self"],
       "summary": "Get connected user information",
       "responses": {
         "200": {
@@ -128,9 +116,7 @@
       }
     },
     "put": {
-      "tags": [
-        "users self"
-      ],
+      "tags": ["users self"],
       "summary": "Update the current connected user",
       "requestBody": {
         "content": {
@@ -212,9 +198,7 @@
       }
     },
     "delete": {
-      "tags": [
-        "users self"
-      ],
+      "tags": ["users self"],
       "summary": "Delete the current connected user",
       "responses": {
         "200": {
@@ -244,9 +228,7 @@
   },
   "/api/users/self/picture": {
     "put": {
-      "tags": [
-        "users self"
-      ],
+      "tags": ["users self"],
       "summary": "Update connected user picture",
       "requestBody": {
         "content": {
@@ -258,9 +240,7 @@
                   "type": "file"
                 }
               },
-              "required": [
-                "file"
-              ]
+              "required": ["file"]
             }
           }
         }
@@ -290,9 +270,7 @@
   },
   "/api/users/self/verify-email": {
     "patch": {
-      "tags": [
-        "users self"
-      ],
+      "tags": ["users self"],
       "summary": "Send a validation link to the user to verify email address ownership and set a magicId for 30 minutes.",
       "responses": {
         "200": {
@@ -324,17 +302,17 @@
   },
   "/api/users/search/": {
     "get": {
-      "tags": [
-        "users"
-      ],
+      "tags": ["users"],
       "summary": "Search users information based on their firstname, lastname or email",
-      "parameters": [{
-        "name": "search",
-        "in": "path",
-        "description": "Search string",
-        "required": true,
-        "type": "string"
-      }],
+      "parameters": [
+        {
+          "name": "search",
+          "in": "path",
+          "description": "Search string",
+          "required": true,
+          "type": "string"
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",
@@ -367,18 +345,18 @@
   },
   "/api/users/{userId}/": {
     "get": {
-      "tags": [
-        "users"
-      ],
+      "tags": ["users"],
       "summary": "Get user information based on their uuid",
-      "parameters": [{
-        "in": "path",
-        "name": "userId",
-        "type": "string",
-        "format": "uuid",
-        "required": true,
-        "description": "uuid string identifier for an user"
-      }],
+      "parameters": [
+        {
+          "in": "path",
+          "name": "userId",
+          "type": "string",
+          "format": "uuid",
+          "required": true,
+          "description": "uuid string identifier for an user"
+        }
+      ],
       "responses": {
         "200": {
           "description": "OK",
@@ -402,9 +380,7 @@
   },
   "/api/users/self/reset-password": {
     "post": {
-      "tags": [
-        "users"
-      ],
+      "tags": ["users"],
       "summary": "Send an authentication link to the user and set a magicId for 30 minutes.",
       "responses": {
         "200": {

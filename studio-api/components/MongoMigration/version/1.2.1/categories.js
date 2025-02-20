@@ -1,17 +1,25 @@
-const debug = require('debug')(`linto:components:MongoMigration:controllers:version:1.2.1:categories`)
+const debug = require("debug")(
+  `linto:components:MongoMigration:controllers:version:1.2.1:categories`,
+)
 
-const collections_name = 'categories'
+const collections_name = "categories"
 
 const migration_update = {
-  scope: 'nlp-keyword',
+  scope: "nlp-keyword",
 }
 
 module.exports = {
   async up(db) {
-    db.collection(collections_name).updateMany({ name: 'keyword' }, { $set: migration_update })
+    db.collection(collections_name).updateMany(
+      { name: "keyword" },
+      { $set: migration_update },
+    )
   },
 
   async down(db) {
-    db.collection(collections_name).updateMany({ name: 'keyword' }, { $unset: migration_update })
-  }
+    db.collection(collections_name).updateMany(
+      { name: "keyword" },
+      { $unset: migration_update },
+    )
+  },
 }

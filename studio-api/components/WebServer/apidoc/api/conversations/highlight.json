@@ -1,17 +1,17 @@
 {
   "/api/conversations/{conversationId}/highlights": {
     "post": {
-      "tags": [
-        "conversations taxonomy"
-      ],
+      "tags": ["conversations taxonomy"],
       "summary": "Add a tag of type highlights to a words",
-      "parameters": [{
-        "name": "conversationId",
-        "in": "path",
-        "description": "The conversation id",
-        "required": true,
-        "type": "string"
-      }],
+      "parameters": [
+        {
+          "name": "conversationId",
+          "in": "path",
+          "description": "The conversation id",
+          "required": true,
+          "type": "string"
+        }
+      ],
       "requestBody": {
         "content": {
           "multipart/form-data": {

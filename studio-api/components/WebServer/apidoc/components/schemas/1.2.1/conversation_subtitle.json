@@ -40,14 +40,14 @@
       "screenCharSize": 80,
       "screenLines": 1
     },
-    "screens": [{
-      "text": [
-        "Quand il y a quelques mois, j'ai interrogé étant Zuckerman,"
-      ],
-      "stime": 3.66,
-      "etime": 6.21,
-      "turn_id": "a71b1f01-442e-44cf-926b-98a85e85628e"
-    }],
+    "screens": [
+      {
+        "text": ["Quand il y a quelques mois, j'ai interrogé étant Zuckerman,"],
+        "stime": 3.66,
+        "etime": 6.21,
+        "turn_id": "a71b1f01-442e-44cf-926b-98a85e85628e"
+      }
+    ],
     "_id": "65294f6245538e464dfbb3b3",
     "conv_id": "75294f6245538e464dfbb3b3",
     "conv_name": "conv_name",

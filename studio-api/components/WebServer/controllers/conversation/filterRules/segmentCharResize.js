@@ -1,15 +1,20 @@
-const debug = require('debug')('linto:components:WebServer:controller:filterRules:segmentCharResize')
+const debug = require("debug")(
+  "linto:components:WebServer:controller:filterRules:segmentCharResize",
+)
 
 module.exports = function (segments, segmentCharResize) {
   if (!segments || segments.length === 0) return segments
 
   let segment_resized = []
   for (let segment of segments) {
-    const segment_to_splice = Math.ceil(segment.segment.length / segmentCharResize)
+    const segment_to_splice = Math.ceil(
+      segment.segment.length / segmentCharResize,
+    )
     let last_word_added = -1
     let is_last_word_added = false
 
-    if (segment_to_splice <= 0) segment_resized.push(segment) // No need to resize
+    if (segment_to_splice <= 0)
+      segment_resized.push(segment) // No need to resize
     else {
       for (let j = 0; j < segment_to_splice; j++) {
         if (is_last_word_added) break
@@ -29,7 +34,8 @@ module.exports = function (segments, segmentCharResize) {
         }
 
         // check if few x words contains some punctuation
-        let extra_words_check = Math.ceil(segmentCharResize * 0.2) + last_word_added
+        let extra_words_check =
+          Math.ceil(segmentCharResize * 0.2) + last_word_added
         if (!is_last_word_added) {
           if (extra_words_check > segment.words.length)
             extra_words_check = segment.words.length
@@ -47,25 +53,28 @@ module.exports = function (segments, segmentCharResize) {
           if (add_extra) words.push(...tmp_extra_words)
         }
 
-
-
         const first_start_word = words[0].start
         const last_end_word = words[words.length - 1].end
 
-        let raw_words = segment.raw_words.filter(word => word.start >= first_start_word && word.end <= last_end_word)
-        if (is_last_word_added) { // if last segment words added, add all the remaining raw words
-          let missed_raw_words = segment.raw_words.filter(word => word.start >= last_end_word)
+        let raw_words = segment.raw_words.filter(
+          (word) => word.start >= first_start_word && word.end <= last_end_word,
+        )
+        if (is_last_word_added) {
+          // if last segment words added, add all the remaining raw words
+          let missed_raw_words = segment.raw_words.filter(
+            (word) => word.start >= last_end_word,
+          )
           raw_words.push(...missed_raw_words)
         }
 
         let new_segment = {
           ...segment,
           words: words,
-          segment: words.map(word => word.word).join(' '),
-          raw_segment: raw_words.map(word => word.word).join(' '),
+          segment: words.map((word) => word.word).join(" "),
+          raw_segment: raw_words.map((word) => word.word).join(" "),
           start: first_start_word,
           end: last_end_word,
-          duration: last_end_word - first_start_word
+          duration: last_end_word - first_start_word,
         }
         delete new_segment.raw_words
         segment_resized.push(new_segment)

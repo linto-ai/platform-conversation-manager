@@ -27,11 +27,13 @@
         @onSelect="onSelect"
         :selectedConversations="selectedConversations" />
     </ul>
+    <slot name="emptyPlaceholder" v-else-if="hasPlaceholderWhenEmpty"></slot>
     <div class="flex col align-center justify-center flex1" v-else>
       <h2 class="center-text">
         {{ $t("conversation.no_conversation_found") }}
       </h2>
       <router-link
+        v-if="isAtLeastUploader"
         :title="$t('navigation.conversation.create')"
         to="/interface/conversations/create"
         class="btn green-border">
@@ -40,13 +42,7 @@
       </router-link>
     </div>
   </div>
-  <div v-else-if="error" class="flex col flex1 align-center justify-center">
-    <h2 class="center-text">{{ $t("error.server_error.title") }}</h2>
-    <img src="/img/raining_illustration.svg" style="height: 8rem" />
-    <p>
-      {{ $t("error.server_error.subtitle") }}
-    </p>
-  </div>
+  <ErrorPage v-else-if="error" :error="error" />
   <div v-else class="flex col flex1 align-center justify-center relative">
     <loading :title="$t('conversation.loading_list_title')"></loading>
   </div>
@@ -57,8 +53,11 @@ import { Fragment } from "vue-fragment"
 
 import Loading from "@/components/Loading.vue"
 import ConversationLineNew from "@/components/ConversationLineNew.vue"
+import ErrorPage from "./ErrorPage.vue"
+import { orgaRoleMixin } from "@/mixins/orgaRole.js"
 
 export default {
+  mixins: [orgaRoleMixin],
   props: {
     conversations: { type: Array, required: false },
     loading: { type: Boolean, required: true },
@@ -75,7 +74,11 @@ export default {
     return {}
   },
   mounted() {},
-  computed: {},
+  computed: {
+    hasPlaceholderWhenEmpty() {
+      return !!this.$slots?.emptyPlaceholder
+    },
+  },
   methods: {
     dateToJMYHMS(date) {
       return this.$options.filters.dateToJMYHMS(date)
@@ -90,6 +93,7 @@ export default {
   components: {
     Loading,
     ConversationLine: ConversationLineNew,
+    ErrorPage,
   },
 }
 </script>

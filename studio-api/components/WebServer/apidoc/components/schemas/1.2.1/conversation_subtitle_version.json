@@ -23,10 +23,10 @@
         "properties": {
           "screenCharSize": {
             "type": "integer",
-            "example" : "80"
+            "example": "80"
           },
           "screenLines": {
-            "example" : "2"
+            "example": "2"
           }
         }
       }

@@ -9,7 +9,7 @@
     @drop="drop"
     :class="{ 'no-title': !showCategoryName }">
     <header class="category-box__header">
-      <h3
+      <h4
         class="flex row gap-small align-center"
         @click="toggleOpen"
         :class="{ 'no-padding': !open }">
@@ -27,25 +27,28 @@
         </span>
         <slot name="content-after-title"></slot>
         <span class="icon" :class="iconClass" v-if="!fixed"></span>
-      </h3>
+      </h4>
     </header>
     <ul class="category-box__tag-list flex col" v-if="open">
-      <li
-        class="flex align-bottom gap-small"
-        v-for="tag of tagsList"
-        :key="tag._id">
-        <label :for="`${id}-${tag._id}`" class="flex flex1 no-margin">
-          <Tag
-            :title="$t('tags.select_tag_title')"
-            :tagId="tag._id"
-            :value="tag.name"
-            :categoryId="tag.categoryId"
-            :categoryName="showCategoryName ? null : displayedCategory.name"
-            :editable="editable"
-            :color="category.color" />
-        </label>
+      <li class="flex col" v-for="tag of tagsList" :key="tag._id">
+        <div class="flex align-center gap-small">
+          <label
+            :for="`${id}-${tag._id}`"
+            class="flex flex1 no-margin"
+            @click="$emit('clickOnTag', tag)">
+            <Tag
+              :title="$t('tags.select_tag_title')"
+              :tagId="tag._id"
+              :value="tag.name"
+              :categoryId="tag.categoryId"
+              :categoryName="showCategoryName ? null : displayedCategory.name"
+              :editable="editable"
+              :color="category.color" />
+          </label>
 
-        <slot name="content-after-tag" v-bind:tag="tag"></slot>
+          <slot name="content-after-tag" v-bind:tag="tag"></slot>
+        </div>
+        <slot name="content-under-tag" v-bind:tag="tag"></slot>
       </li>
       <div v-if="tagsList.length === 0 && showCategoryName">
         <span class="category-box__no-tag">{{
@@ -88,9 +91,11 @@ export default {
     fixed: { type: Boolean, default: false },
     withMetadata: { type: Boolean, default: false },
     possess: { type: Boolean, default: false },
+    closeBox: { type: Boolean }, // change its value to close the box from the parent (if true pass it to false and vice versa)
   },
   data() {
     return {
+      closeBoxStartValue: this.closeBox,
       loading: false,
       displayedCategory: this.category,
       open: this.startOpen,
@@ -127,6 +132,12 @@ export default {
     },
   },
   watch: {
+    closeBox() {
+      if (this.closeBox !== this.closeBoxStartValue) {
+        this.open = false
+        this.closeBoxStartValue = this.closeBox
+      }
+    },
     startOpen() {
       this.open = this.startOpen
     },

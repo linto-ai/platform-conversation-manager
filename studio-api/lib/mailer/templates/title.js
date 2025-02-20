@@ -1,4 +1,4 @@
-const debug = require('debug')('linto:lib:Mailer:templates:builder:title')
+const debug = require("debug")("linto:lib:Mailer:templates:builder:title")
 
 module.exports = function (Type) {
   return `

@@ -5,7 +5,7 @@
     :dataLoaded="conversationLoaded"
     :error="error">
     <template v-slot:breadcrumb-actions>
-      <router-link :to="conversationListRoute" class="btn">
+      <router-link :to="conversationListRoute" class="btn secondary">
         <span class="icon close"></span>
         <span class="label">{{ $t("conversation.close_editor") }}</span>
       </router-link>
@@ -48,20 +48,28 @@
       :userInfo="userInfo"
       :blocks="screens"
       :canEdit="userRights.hasRightAccess(userRight, userRights.WRITE)"
-      @screenUpdate="screenUpdate"
+      :conversation-users="conversationUsers"
+      :users-connected="usersConnected"
+      :focusFields="focusFields"
+      @deleteScreen="deleteScreen"
+      @updateScreen="updateScreen"
       @mergeScreen="mergeScreen"
+      @textUpdate="textUpdate"
       @addScreen="addScreen">
     </SubtitleEditor>
   </MainContentConversation>
 </template>
 <script>
+import { bus } from "../main"
+
+import { workerSendMessage } from "@/tools/worker-message.js"
+import { apiGetFileFromConversationSubtitle } from "@/api/conversation.js"
+
 import { subtitleMixin } from "@/mixins/subtitle.js"
-import { workerSendMessage } from "../tools/worker-message.js"
-import { apiGetFileFromConversationSubtitle } from "../api/conversation.js"
-import MainContentConversation from "../components/MainContentConversation.vue"
+
+import MainContentConversation from "@/components/MainContentConversation.vue"
 import SubtitleEditor from "@/components/SubtitleEditor.vue"
 import CustomSelect from "@/components/CustomSelect.vue"
-import { bus } from "../main"
 export default {
   mixins: [subtitleMixin],
   data() {
@@ -104,17 +112,8 @@ export default {
       return this.subtitleVersions.find((elem) => elem._id === this.subtitleId)
         ?.version
     },
-    versionList() {
-      let action = []
-      for (const version of this.subtitleVersions) {
-        action.push({
-          value: version._id,
-          text: version.version,
-        })
-      }
-      return {
-        action: action,
-      }
+    versionSettings() {
+      return this.subtitleObj.generate_settings
     },
     versionList() {
       let action = []
@@ -149,7 +148,7 @@ export default {
         link.click()
       }
     },
-    screenUpdate(screen_id, stime, etime) {
+    updateScreen(screen_id, stime, etime) {
       let block = this.screens?.get(screen_id)
       if (block) {
         block.screen.stime = stime
@@ -160,9 +159,26 @@ export default {
         })
       }
     },
+    deleteScreen(screenId) {
+      this.screens.delete(screenId)
+      workerSendMessage("delete_screen", { screenId })
+    },
     mergeScreen(keptScreenId, deletedScreenId) {
       let keptScreen = this.screens.get(keptScreenId)
-      if (
+      let deletedScreen = this.screens.get(deletedScreenId)
+      let newLineNumber =
+        keptScreen.screen.text.length + deletedScreen.screen.text.length
+      if (newLineNumber > this.versionSettings.screenLines) {
+        bus.$emit("app_notif", {
+          status: "error",
+          message: this.$i18n.t(
+            "conversation.subtitles.error.too_much_lines_to_merge",
+            { maxLines: this.versionSettings.screenLines }
+          ),
+          timout: null,
+          redirect: false,
+        })
+      } else if (
         keptScreen.next === deletedScreenId ||
         keptScreen.prev === deletedScreenId
       ) {
@@ -170,7 +186,9 @@ export default {
       } else {
         bus.$emit("app_notif", {
           status: "error",
-          message: "Connot merge two non-consecutive screens",
+          message: this.$i18n.t(
+            "conversation.subtitles.error.cannot_merge_non_consecutive_screens"
+          ),
           timout: null,
           redirect: false,
         })
@@ -194,7 +212,9 @@ export default {
       if (etime - stime < 0.1) {
         bus.$emit("app_notif", {
           status: "error",
-          message: "Not enough place to create a new screen",
+          message: this.$i18n.t(
+            "conversation.subtitles.error.no_enough_place_new_screen"
+          ),
           timout: null,
           redirect: false,
         })
@@ -217,6 +237,16 @@ export default {
             conversationId: this.conversation._id,
             subtitleId: id,
           },
+        })
+      }
+    },
+    textUpdate(screenId, text) {
+      let block = this.screens.get(screenId)
+      if (block) {
+        block.screen.text = text.split("\n").map((line) => line.trim())
+        workerSendMessage("screen_edit_text", {
+          screenId: screenId,
+          newText: text,
         })
       }
     },

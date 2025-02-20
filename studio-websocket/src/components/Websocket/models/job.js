@@ -5,7 +5,7 @@ export class Job {
     key,
     conversationId,
     updateJobFunction,
-    conversationValue = null
+    conversationValue = null,
   ) {
     this.key = key
     this.state = "not_started"

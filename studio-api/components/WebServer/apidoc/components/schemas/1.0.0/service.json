@@ -54,12 +54,14 @@
       "service_language": "*",
       "queue_name": "diarization-default",
       "info": "1.1.2",
-      "instances": [{
-        "host_name": "0043de704fa6",
-        "last_alive": 1669906347,
-        "version": "1.1.2",
-        "concurrency": 1
-      }]
+      "instances": [
+        {
+          "host_name": "0043de704fa6",
+          "last_alive": 1669906347,
+          "version": "1.1.2",
+          "concurrency": 1
+        }
+      ]
     }
   }
 }
