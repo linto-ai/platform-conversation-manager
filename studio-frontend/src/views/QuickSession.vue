@@ -128,7 +128,6 @@ export default {
       this.onSaveSession(false)
     },
     async onSaveBotSession() {
-      console.log("todo !")
       this.loading = true
       await apiStopBot(this.sessionBot.id)
       this.onSaveSession()

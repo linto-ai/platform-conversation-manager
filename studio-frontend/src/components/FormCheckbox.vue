@@ -8,6 +8,7 @@
         :id="id"
         v-if="!switchDisplay" /> -->
       <Checkbox
+        :title="p_disabled ? p_disabledReason : ''"
         v-model="value"
         :id="id"
         v-if="!switchDisplay"
@@ -20,7 +21,10 @@
         style="margin-right: 0.5rem" />
     </div>
 
-    <div class="flex row" v-if="field.label">
+    <div
+      class="flex row"
+      v-if="field.label"
+      :title="p_disabled ? p_disabledReason : ''">
       <label class="form-label" :for="id">
         {{ field.label }}
       </label>
@@ -64,6 +68,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    disabledReason: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
@@ -82,6 +90,9 @@ export default {
   computed: {
     p_disabled() {
       return this.disabled || this.field.disabled
+    },
+    p_disabledReason() {
+      return this.disabledReason || this.field.disabledReason
     },
   },
   methods: {},

@@ -195,6 +195,9 @@ import LocalSwitcher from "@/components/LocalSwitcher.vue"
 import EMPTY_FIELD from "@/const/emptyField.js"
 import { apiCreateUser } from "@/api/user.js"
 import MainContentPublic from "@/components/MainContentPublic.vue"
+import { testEmail } from "@/tools/fields/testEmail.js"
+import { testName } from "@/tools/fields/testName.js"
+import { testPassword } from "@/tools/fields/testPassword.js"
 
 export default {
   data() {
@@ -336,17 +339,17 @@ export default {
       }
     },
     testName(obj) {
-      return this.$options.filters.testName(obj)
+      return testName(obj, (key) => this.$t(key))
     },
     testEmail(obj) {
       obj.value = obj.value.toLowerCase()
-      return this.$options.filters.testEmail(obj)
+      return testEmail(obj, (key) => this.$t(key))
     },
     testPassword(obj) {
-      return this.$options.filters.testPassword(obj)
+      return testPassword(obj, (key) => this.$t(key))
     },
     testPasswordConfirm(obj, password) {
-      return this.$options.filters.testPasswordConfirm(obj, password)
+      return testPasswordConfirm(obj, password)
     },
   },
   components: {

@@ -154,7 +154,6 @@ import MainContentConversation from "@/components/MainContentConversation.vue"
 import HighlightsList from "@/components/HighlightsList.vue"
 import MenuToolbox from "@/components/MenuToolbox.vue"
 import ModalDeleteTagHighlight from "@/components/ModalDeleteTagHighlight.vue"
-import ConversationShare from "@/components/ConversationShare.vue"
 import TranscriptionHelper from "@/components/TranscriptionHelper.vue"
 import AppEditorMetadataModal from "@/components/AppEditorMetadataModal.vue"
 import SearchResultPaginator from "@/components/SearchResultPaginator.vue"
@@ -422,7 +421,6 @@ export default {
     },
   },
   components: {
-    ConversationShare,
     TranscriptionHelper,
     Loading,
     Modal,

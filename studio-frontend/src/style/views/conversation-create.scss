@@ -96,13 +96,13 @@
   margin-top: 1rem;
   //position: sticky;
   bottom: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  border: var(--border-button-flat);
-  background-color: var(--background-primary);
-  box-shadow: var(--shadow-block);
+  padding: 0.25rem 0rem;
+  //border: var(--border-button-flat);
+  //background-color: var(--background-primary);
+  //box-shadow: var(--shadow-block);
   border-radius: 4px;
   z-index: 52;
   box-sizing: border-box;
-  width: calc(100% + 3rem);
-  margin-left: -1.5rem;
+  //width: calc(100% + 3rem);
+  //margin-left: -1.5rem;
 }

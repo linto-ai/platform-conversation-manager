@@ -331,7 +331,7 @@
     "transcription_service_error": "Please select a transcription service",
     "transcription_service_label": "Transcription service",
     "transcription_service_list_empty": "No transcription service available",
-    "transcription_service_title": "Selection of transcription service",
+    "transcription_service_title": "Transcription service",
     "transcription_settings_label": "Transcription settings",
     "turn_cant_merge": "There are too many caracteres in the turn to merge it",
     "turn_sync_error_title": "The turn is not well synchronized",
@@ -445,7 +445,9 @@
     },
     "title": "Something went wrong",
     "required": "This field is required",
-    "invalidVisioUrl": "Invalid visio URL"
+    "invalidVisioUrl": "Invalid visio URL",
+    "unauthorized_caracters": "Caractères non autorisé",
+    "invalid_email": "Invalid email"
   },
   "explore": {
     "delete_conversation_button": "Delete ",
@@ -920,15 +922,18 @@
   },
   "quick_session": {
     "creation": {
-      "source_title": "Source",
-      "microphone_source_label": "Use my local microphone",
-      "visio_source_label": "Join a visioconférence",
-      "profile_selector_title": "Transcription profile selection",
+      "transcription_settings_title": "Transcription mode",
+      "profile_selector_title": "Transcription profile",
       "no_profile_selected_error": "No transcription profile selected",
       "quick_meeting_already_start_title": "A recording has already been started.",
       "quick_meeting_already_start_button": "Join the quick meeting",
       "submit_button": "Start recording",
-      "description": "Data recorded by the microphone will be transcribed in real time"
+      "description_micro": "Setting up the microphone is done in the next step.",
+      "live_transcription_label": "Live transcription",
+      "live_options_title": "Transcription options",
+      "offline_transcription_label": "Offline transcription",
+      "keep_audio_disabled_because_offline": "Audio should be saved when offline transcription is enabled",
+      "live_or_offline_should_be_selected": "You must select either live or offline transcription"
     },
     "setup_microphone": {
       "waiting_permission_title": "Waiting permission to access your microphone",
@@ -958,8 +963,6 @@
       "type_label": "Service type",
       "link_label": "URL",
       "display_transcription_in_visio_label": "Display subtitles in the videoconference",
-      "live_transcription_label": "Live transcription",
-      "live_options": "Transcription options",
       "back": "Back",
       "join_meeting": "Join the meeting",
       "error_bot_setup": "An error occurred while joining the videoconference"

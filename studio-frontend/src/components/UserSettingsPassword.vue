@@ -53,6 +53,7 @@ import { bus } from "../main.js"
 
 import { apiUpdateUserInfo } from "@/api/user.js"
 import { apiAdminUpdateUser } from "@/api/admin.js"
+import { testPassword } from "@/tools/fields/testPassword.js"
 
 export default {
   props: {
@@ -83,7 +84,7 @@ export default {
   methods: {
     async update(event) {
       event?.preventDefault()
-      this.$options.filters.testPassword(this.newPassword)
+      testPassword(this.newPassword, (key) => this.$t(key))
       this.$options.filters.testPasswordConfirm(
         this.newPasswordConfirm,
         this.newPassword,

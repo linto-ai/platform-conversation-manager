@@ -43,16 +43,16 @@
         </section>
 
         <!-- services -->
-        <section>
+        <section class="flex col gap-small">
           <h2>{{ $t("conversation.transcription_service_title") }}</h2>
-          <div class="error-field" v-if="transcriptionService.error">
-            {{ transcriptionService.error }}
+          <div class="error-field" v-if="fieldTranscriptionService.error">
+            {{ fieldTranscriptionService.error }}
           </div>
           <ConversationCreateServices
-            :serviceList="transcriptionService.list"
+            :serviceList="fieldTranscriptionService.list"
             :disabled="formState === 'sending'"
-            :loading="transcriptionService.loading"
-            v-model="transcriptionService.value" />
+            :loading="fieldTranscriptionService.loading"
+            v-model="fieldTranscriptionService.value" />
         </section>
 
         <div
@@ -74,11 +74,13 @@
       <QuickSessionCreateContent
         v-if="currentTab === 'live' && !loadingSessionData"
         :transcriberProfiles="transcriberProfilesQuickMeeting"
-        :currentOrganizationScope="currentOrganizationScope" />
+        :currentOrganizationScope="currentOrganizationScope"
+        :transcriptionServices="fieldTranscriptionService.list" />
 
       <VisioCreateContent
         v-if="currentTab === 'visio' && !loadingSessionData"
         :transcriberProfiles="transcriberProfilesQuickMeeting"
+        :transcriptionServices="fieldTranscriptionService.list"
         :currentOrganizationScope="currentOrganizationScope" />
 
       <SessionCreateContent
@@ -101,6 +103,7 @@ import {
   apiGetSessionTemplates,
   apiGetQuickSessionByOrganization,
 } from "@/api/session.js"
+import { testService } from "@/tools/fields/testService.js"
 
 import ConversationCreateAudio from "@/components/ConversationCreateAudio.vue"
 import ConversationCreateServices from "@/components/ConversationCreateServices.vue"
@@ -168,7 +171,11 @@ export default {
       return enableSession && this.canSessionInCurrentOrganization
     },
     loadingSessionData() {
-      return this.loadingTranscriberProfiles || this.loadingSessionTemplates
+      return (
+        this.loadingTranscriberProfiles ||
+        this.loadingSessionTemplates ||
+        this.fieldTranscriptionService.loading
+      )
     },
     mainTabs() {
       let res = []
@@ -201,13 +208,15 @@ export default {
             name: "live",
             label: this.$t("conversation_creation.tabs.quick_meeting"),
             icon: loading ? "loading" : "record-live",
-            disabled: this.transcriberProfilesQuickMeeting.length === 0,
+            disabled:
+              this.transcriberProfilesQuickMeeting.length === 0 || loading,
           })
           res.push({
             name: "visio",
             label: this.$t("conversation_creation.tabs.visio"),
             icon: loading ? "loading" : "visio",
-            disabled: this.transcriberProfilesQuickMeeting.length === 0,
+            disabled:
+              this.transcriberProfilesQuickMeeting.length === 0 || loading,
           })
         }
         if (this.isAtLeastMeetingManager) {
@@ -215,7 +224,7 @@ export default {
             name: "session",
             label: this.$i18n.t("conversation_creation.tabs.session"),
             icon: loading ? "loading" : "session",
-            disabled: this.transcriberProfiles.length === 0,
+            disabled: this.transcriberProfiles.length === 0 || loading,
           })
         }
       }

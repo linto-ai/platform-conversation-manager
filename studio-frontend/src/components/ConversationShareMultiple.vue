@@ -10,7 +10,7 @@
       <span class="label">{{ $t("share_menu.button") }}</span>
     </button>
     <ContextMenu
-      :name="share - menu"
+      name="share-menu"
       class="conversation-share-list"
       first
       v-if="showShareList"

@@ -124,6 +124,8 @@ import { orgaRoleMixin } from "@/mixins/orgaRole.js"
 import ArrayHeader from "@/components/ArrayHeader.vue"
 import OrganizationCreateHelper from "@/components/OrganizationCreateHelper.vue"
 import MainContent from "@/components/MainContent.vue"
+import { testContent } from "@/tools/fields/testContent.js"
+import { testName } from "@/tools/fields/testName.js"
 
 export default {
   mixins: [orgaRoleMixin],
@@ -161,7 +163,7 @@ export default {
       return sortArray(
         this.orgaMembers,
         this.sortListKey,
-        this.sortListDirection
+        this.sortListDirection,
       )
     },
   },
@@ -190,10 +192,10 @@ export default {
       event?.preventDefault()
       if (this.formState === "available") {
         // test name field
-        this.$options.filters.testName(this.orgaName)
+        testName(this.orgaName, (key) => this.$t(key))
 
         // test description
-        this.$options.filters.testContent(this.orgaDescription)
+        testContent(this.orgaDescription, (key) => this.$t(key))
 
         // form valid
         if (this.orgaName.valid) {
@@ -271,7 +273,7 @@ export default {
       this.orgaMembersIds.splice(memberIdIndex, 1)
 
       let memberIndex = this.orgaMembers.findIndex(
-        (usr) => usr._id === user._id
+        (usr) => usr._id === user._id,
       )
       this.orgaMembers.splice(memberIndex, 1)
     },

@@ -12,7 +12,7 @@ import { debounceMixin } from "@/mixins/debounce"
 
 import RIGHTS_LIST from "@/const/rigthsList"
 import EMPTY_FIELD from "@/const/emptyField"
-import generateServiceConfig from "../tools/generateServiceConfig"
+import generateServiceConfig from "@/tools/generateServiceConfig"
 
 export default {
   mixins: [formsMixin, debounceMixin],
@@ -36,7 +36,7 @@ export default {
         "audioFiles",
         "conversationOrganization",
         "membersRight",
-        "transcriptionService",
+        "fieldTranscriptionService",
         "conversationLanguage",
       ],
       audioFiles: [], // array of fields { value (name), file, error }
@@ -50,7 +50,7 @@ export default {
         value: 1,
         list: RIGHTS_LIST((key) => this.$i18n.t(key)),
       },
-      transcriptionService: {
+      fieldTranscriptionService: {
         ...EMPTY_FIELD,
         loading: true,
         list: [],
@@ -102,8 +102,8 @@ export default {
       return apiGetTranscriptionService(lang, signal)
     },
     async initTranscriptionList() {
-      this.transcriptionService.loading = true
-      this.transcriptionService.value = null
+      this.fieldTranscriptionService.loading = true
+      this.fieldTranscriptionService.value = null
 
       const transcriptionService = await this.debouncedSearch(
         this.getTranscriptionList.bind(this),
@@ -111,9 +111,9 @@ export default {
       )
 
       if (transcriptionService) {
-        this.transcriptionService.list = [...transcriptionService]
-        this.transcriptionService.loading = false
-        this.transcriptionService.value =
+        this.fieldTranscriptionService.list = [...transcriptionService]
+        this.fieldTranscriptionService.loading = false
+        this.fieldTranscriptionService.value =
           transcriptionService.length > 0
             ? generateServiceConfig(transcriptionService[0])
             : null
@@ -161,13 +161,13 @@ export default {
                 membersRight: this.organizationMemberAccess
                   ? parseInt(this.membersRight.value)
                   : 0,
-                serviceName: this.transcriptionService.value.serviceName,
+                serviceName: this.fieldTranscriptionService.value.serviceName,
                 transcriptionConfig: JSON.stringify(
-                  this.transcriptionService.value.config,
+                  this.fieldTranscriptionService.value.config,
                 ),
                 segmentCharSize: process.env.VUE_APP_TURN_SIZE,
-                lang: this.transcriptionService.value.lang,
-                endpoint: this.transcriptionService.value.endpoint,
+                lang: this.fieldTranscriptionService.value.lang,
+                endpoint: this.fieldTranscriptionService.value.endpoint,
                 tracks: uploadType == "url" ? null : [file],
                 url: uploadType == "url" ? file : null,
               },
@@ -225,7 +225,7 @@ export default {
       if (this.formState === "available") {
         if (
           this.testFields({
-            fieldsToTest: ["linkFields", "transcriptionService"],
+            fieldsToTest: ["linkFields", "fieldTranscriptionService"],
           })
         ) {
           this.formError = null
@@ -244,13 +244,13 @@ export default {
               membersRights: this.organizationMemberAccess
                 ? parseInt(this.membersRight.value)
                 : 0,
-              serviceName: this.transcriptionService.value.serviceName,
+              serviceName: this.fieldTranscriptionService.value.serviceName,
               transcriptionConfig: JSON.stringify(
-                this.transcriptionService.value.config,
+                this.fieldTranscriptionService.value.config,
               ),
               segmentCharSize: process.env.VUE_APP_TURN_SIZE,
-              lang: this.transcriptionService.value.lang,
-              endpoint: this.transcriptionService.value.endpoint,
+              lang: this.fieldTranscriptionService.value.lang,
+              endpoint: this.fieldTranscriptionService.value.endpoint,
               url: this.linkFields[0].value,
             },
           )

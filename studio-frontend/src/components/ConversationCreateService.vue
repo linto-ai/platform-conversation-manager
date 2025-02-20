@@ -215,7 +215,6 @@ export default {
 
     select(event) {
       event?.preventDefault()
-      console.log("select !!!!", this.value.language)
       this.$emit(
         "select",
         generateServiceConfig(this.value, {

@@ -65,6 +65,7 @@ import LocalSwitcher from "@/components/LocalSwitcher.vue"
 import { apiLoginUser, getLoginMethods } from "@/api/user"
 import MainContentPublic from "@/components/MainContentPublic.vue"
 import { testEmail } from "@/tools/fields/testEmail"
+import { testFieldEmpty } from "@/tools/fields/testEmpty"
 import FormInput from "@/components/FormInput.vue"
 
 export default {
@@ -145,7 +146,7 @@ export default {
           }
         }
       } catch (error) {
-        if (process.env.VUE_APP_DEBUG === "true") {
+        if (process.env.VUE_APP_DEBUG === "*") {
           console.error(error)
         }
         this.formError =
@@ -155,10 +156,10 @@ export default {
       return false
     },
     testEmail() {
-      return this.$options.filters.testEmail(this.email)
+      return testEmail(this.email, (key) => this.$t(key))
     },
     testPasswordEmpty() {
-      return this.$options.filters.testFieldEmpty(this.password)
+      return testFieldEmpty(this.password, (key) => this.$t(key))
     },
     setCookie(name, value, exdays) {
       return this.$options.filters.setCookie(name, value, exdays)
@@ -170,7 +171,6 @@ export default {
         indexedByPath[login.path].push(login)
       }
       this.loginMethodsIndexedByPath = indexedByPath
-      console.log(indexedByPath)
     },
   },
   components: { LocalSwitcher, MainContentPublic, FormInput },

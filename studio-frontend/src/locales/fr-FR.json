@@ -331,7 +331,7 @@
     "transcription_service_error": "Veuillez sélectionner un service de transcription",
     "transcription_service_label": "Service de transcription",
     "transcription_service_list_empty": "Aucun service de transcription disponible",
-    "transcription_service_title": "Choisir le service de transcription",
+    "transcription_service_title": "Selection du service de transcription",
     "transcription_settings_label": "Paramètres de transcription",
     "turn_cant_merge": "Le nombre de caractères est trop élevé pour fusionner les tours de parole",
     "turn_sync_error_title": "Le tour de parole n'est pas synchronisé correctement",
@@ -445,7 +445,9 @@
     },
     "title": "Nous avons rencontré un problème",
     "required": "Ce champ est requis",
-    "invalidVisioUrl": "L'url de la visio n'est pas valide"
+    "invalidVisioUrl": "L'url de la visio n'est pas valide",
+    "unauthorized_caracters": "Caractères non autorisé",
+    "invalid_email": "Adresse email invalide"
   },
   "explore": {
     "delete_conversation_button": "Supprimer des médias",
@@ -923,15 +925,19 @@
   },
   "quick_session": {
     "creation": {
-      "source_title": "Source",
-      "microphone_source_label": "Utiliser le microphone local",
-      "visio_source_label": "Rejoindre une visio-conférence",
+      "transcription_settings_title": "Méthode de transcription",
       "profile_selector_title": "Sélection du profil de transcription",
       "no_profile_selected_error": "Aucun profil de transcription selectionné",
       "quick_meeting_already_start_title": "Un enregistrement est déjà démarré.",
       "quick_meeting_already_start_button": "Rejoindre le Quick meeting",
       "submit_button": "Démarrer l'enregistrement",
-      "description": "Les données captées par le microphone seront transcrits en temps réel"
+      "description_micro": "Le paramétrage du microphone se fera à l'étape suivante.",
+      "live_transcription_label": "Transcription en temps réél",
+      "live_options_title": "Options de la transcription",
+      "offline_options_title": "Options de la transcription après l'enregistrement",
+      "offline_transcription_label": "Transcription après l'enregistrement",
+      "keep_audio_disabled_because_offline": "L'audio doit être sauvegardé pour permettre la transcription après l'enregistrement",
+      "live_or_offline_should_be_selected": "Au moins une option de transcription doit être sélectionnée"
     },
     "setup_microphone": {
       "waiting_permission_title": "En attente des permissions pour accéder au microphone",
@@ -961,8 +967,6 @@
       "type_label": "Type de visio-conférence",
       "link_label": "URL de la visio-conférence",
       "display_transcription_in_visio_label": "Afficher les sous-titres dans la visioconférence",
-      "live_transcription_label": "Transcription en temps réél",
-      "live_options": "Options de la transcription",
       "back": "Retour",
       "join_meeting": "Rejoindre la visio-conférence",
       "error_bot_setup": "An error occurred while joining the videoconference"

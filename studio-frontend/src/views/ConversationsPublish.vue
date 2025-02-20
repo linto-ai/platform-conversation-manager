@@ -116,7 +116,6 @@ import MenuToolbox from "@/components/MenuToolbox.vue"
 import CustomSelect from "@/components/CustomSelect.vue"
 import SwitchInput from "@/components/SwitchInput.vue"
 import Tabs from "@/components/Tabs.vue"
-import ConversationShare from "@/components/ConversationShare.vue"
 import TranscriptionHelper from "@/components/TranscriptionHelper.vue"
 import ConversationPublishContent from "@/components/ConversationPublishContent.vue"
 import AppEditorChannelsSelector from "@/components/AppEditorChannelsSelector.vue"
@@ -474,7 +473,6 @@ export default {
     },
   },
   components: {
-    ConversationShare,
     TranscriptionHelper,
     Loading,
     Modal,

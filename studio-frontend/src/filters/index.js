@@ -12,6 +12,7 @@ import { testFieldEmpty } from "../tools/fields/testEmpty.js"
 import { testContent } from "../tools/fields/testContent.js"
 import { testName } from "../tools/fields/testName.js"
 import { testEmail } from "../tools/fields/testEmail.js"
+import { testPassword } from "../tools/fields/testPassword.js"
 // Send request
 
 Vue.filter("sendRequest", sendRequest)
@@ -84,18 +85,7 @@ Vue.filter("testName", testName)
 Vue.filter("testContent", testContent)
 
 // Test password field
-Vue.filter("testPassword", function (obj) {
-  obj.valid = false
-  obj.error = null
-  obj.value = obj.value.trim()
-  if (obj.value.length === 0) {
-    obj.error = "This field is required"
-  } else if (obj.value.length < 6) {
-    obj.error = "This field must contain at least 6 characters"
-  } else {
-    obj.valid = true
-  }
-})
+Vue.filter("testPassword", testPassword)
 
 // Test confirmation password field
 Vue.filter("testPasswordConfirm", function (obj, password) {

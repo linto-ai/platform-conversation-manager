@@ -5,9 +5,9 @@
       <FormRadio :field="fieldSource" v-model="fieldSource.value" />
     </section> -->
     <div>
-      {{ $t("quick_session.creation.description") }}
+      {{ $t("quick_session.creation.description_micro") }}
     </div>
-    <section class="flex col gap-small">
+    <!-- <section class="flex col gap-small">
       <h2>{{ $t("quick_session.creation.profile_selector_title") }}</h2>
       <FormCheckbox
         class=""
@@ -20,7 +20,15 @@
         :multiple="false"
         v-model="selectedProfile"
         :profilesList="transcriberProfiles" />
-    </section>
+    </section> -->
+
+    <QuickSessionSettings
+      :transcriberProfiles="transcriberProfiles"
+      :transcriptionServices="transcriptionServices"
+      :field="quickSessionSettingsField"
+      source="micro"
+      v-model="quickSessionSettingsField.value" />
+
     <div
       class="flex gap-small align-center conversation-create-footer"
       style="margin-top: 1rem">
@@ -40,12 +48,15 @@
 <script>
 import EMPTY_FIELD from "@/const/emptyField"
 import { testFieldEmpty } from "@/tools/fields/testEmpty"
+import { testQuickSessionSettings } from "@/tools/fields/testQuickSessionSettings"
+import generateServiceConfig from "@/tools/generateServiceConfig"
 
 import { formsMixin } from "@/mixins/forms.js"
 
 import FormRadio from "@/components/FormRadio.vue"
 import TranscriberProfileSelector from "@/components/TranscriberProfileSelector.vue"
 import FormCheckbox from "@/components/FormCheckbox.vue"
+import QuickSessionSettings from "@/components/QuickSessionSettings.vue"
 
 import { apiCreateQuickSession } from "@/api/session.js"
 
@@ -60,10 +71,14 @@ export default {
       type: String,
       required: true,
     },
+    transcriptionServices: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
-      fields: ["fieldSource"],
+      fields: ["fieldSource", "quickSessionSettingsField"],
       fieldSource: {
         value: "microphone",
         error: null,
@@ -75,11 +90,6 @@ export default {
               "quick_session.creation.microphone_source_label",
             ),
           },
-          // {
-          //   name: "visio",
-          //   label: this.$i18n.t("quick_session.creation.visio_source_label"),
-          //   disabled: false,
-          // },
         ],
         testField: testFieldEmpty,
       },
@@ -92,6 +102,22 @@ export default {
         ...EMPTY_FIELD,
         value: true,
         label: this.$t("session.create_page.keep_audio_label"),
+      },
+      quickSessionSettingsField: {
+        ...EMPTY_FIELD,
+        value: {
+          keepAudio: true,
+          diarization: false,
+          subInStudio: false,
+          subInVisio: true,
+          offlineTranscription: false,
+          selectedProfile: this.transcriberProfiles?.[0] ?? null,
+          transcriptionService:
+            this.transcriptionServices.length > 0
+              ? generateServiceConfig(this.transcriptionServices[0])
+              : null,
+        },
+        testField: testQuickSessionSettings,
       },
       selectedProfile: this.transcriberProfiles[0],
       formSubmitLabel: this.$i18n.t("quick_session.creation.submit_button"),
@@ -114,22 +140,19 @@ export default {
     async createQuickSession(event) {
       event?.preventDefault()
 
-      if (!this.selectedProfile) {
-        this.formError = this.$i18n.t(
-          "quick_session.creation.no_profile_selected_error",
-        )
-        this.formState = "error"
-        return false
-      }
-
       if (this.testFields()) {
+        const settings = this.quickSessionSettingsField.value
         const channels = [
           {
             name: "Main",
-            transcriberProfileId: this.selectedProfile.id,
-            translations: this.selectedProfile.translations ?? [],
-            diarization: this.fieldDiarizationEnabled.value ?? false,
-            keepAudio: this.fieldKeepAudio.value,
+            transcriberProfileId: settings.selectedProfile.id,
+            translations: settings.selectedProfile.translations ?? [],
+            diarization: settings.diarization ?? false,
+            keepAudio: settings.keepAudio,
+            async: settings.offlineTranscription,
+            meta: {
+              transcriptionService: settings.transcriptionService,
+            },
           },
         ]
         const res = await apiCreateQuickSession(this.currentOrganizationScope, {
@@ -153,6 +176,11 @@ export default {
       return false
     },
   },
-  components: { FormRadio, TranscriberProfileSelector, FormCheckbox },
+  components: {
+    FormRadio,
+    TranscriberProfileSelector,
+    FormCheckbox,
+    QuickSessionSettings,
+  },
 }
 </script>

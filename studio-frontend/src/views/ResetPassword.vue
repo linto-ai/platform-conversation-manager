@@ -50,6 +50,7 @@ import AppNotif from "@/components/AppNotif.vue"
 import LocalSwitcher from "@/components/LocalSwitcher.vue"
 import EMPTY_FIELD from "@/const/emptyField.js"
 import { apiRecoverPassword } from "../api/user"
+import { testEmail } from "@/tools/fields/testEmail"
 
 export default {
   data() {
@@ -71,7 +72,7 @@ export default {
   },
   methods: {
     testEmail() {
-      return this.$options.filters.testEmail(this.email)
+      return testEmail(this.email, (key) => this.$t(key))
     },
     async handleForm() {
       if (!this.sending) {

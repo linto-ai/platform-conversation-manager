@@ -178,6 +178,9 @@ export default {
     organizationId() {
       return this.currentOrganization._id
     },
+    currentOrganizationScope() {
+      return this.currentOrganization._id
+    },
   },
   mounted() {},
   methods: {

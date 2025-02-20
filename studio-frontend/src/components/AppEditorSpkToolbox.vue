@@ -153,6 +153,7 @@
 import { workerSendMessage } from "../tools/worker-message.js"
 import { bus } from "../main.js"
 import EMPTY_FIELD from "@/const/emptyField.js"
+import { testFieldEmpty } from "@/tools/fields/testEmpty.js"
 
 import ContextMenu from "./ContextMenu.vue"
 import FormInput from "./FormInput.vue"
@@ -213,7 +214,7 @@ export default {
       return !this.showAddSpeakerForm && !this.showEditSpeakerForm
     },
     "addSpeakerName.value"(val) {
-      this.$options.filters.testFieldEmpty(this.addSpeakerName)
+      testFieldEmpty(this.addSpeakerName, (key) => this.$t(key))
     },
     currentSpeakerName() {
       try {
@@ -271,7 +272,7 @@ export default {
     editSpeaker(e) {
       e?.preventDefault()
       e?.stopPropagation()
-      this.$options.filters.testFieldEmpty(this.editSpeakerName)
+      testFieldEmpty(this.editSpeakerName, (key) => this.$t(key))
       console.log("editSpeaker", this.editSpeakerName)
       if (this.editSpeakerName.valid) {
         let speakersNames = this.speakers.map((spk) => spk.speaker_name)
@@ -293,7 +294,7 @@ export default {
     addSpeaker(e) {
       e?.preventDefault()
       e?.stopPropagation()
-      this.$options.filters.testFieldEmpty(this.addSpeakerName)
+      testFieldEmpty(this.addSpeakerName, (key) => this.$t(key))
       if (this.addSpeakerName.valid) {
         workerSendMessage("update_conversation_add_speaker", {
           speakerName: this.addSpeakerName.value,
@@ -304,7 +305,7 @@ export default {
       return false
     },
     updateSpeaker(newSpeakerId) {
-      this.$options.filters.testFieldEmpty(this.addSpeakerName)
+      testFieldEmpty(this.addSpeakerName, (key) => this.$t(key))
 
       workerSendMessage("turn_edit_speaker", {
         turnId: this.turnId,

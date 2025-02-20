@@ -23,36 +23,12 @@
         required />
     </section>
 
-    <section>
-      <!-- <h2>Options de la transcription temps-réel</h2> -->
-      <FormCheckbox
-        :field="subInStudio"
-        v-model="subInStudio.value"
-        switchDisplay />
-      <div v-if="subInStudio.value" class="subSection">
-        <h3 class="small-margin-bottom">
-          {{ $t("quick_session.setup_visio.live_options") }}
-        </h3>
-        <FormCheckbox
-          :field="subInVisioField"
-          v-model="subInVisioField.value" />
-        <FormCheckbox
-          class=""
-          :field="fieldDiarizationEnabled"
-          v-model="fieldDiarizationEnabled.value"></FormCheckbox>
-        <FormCheckbox
-          :field="fieldKeepAudio"
-          v-model="fieldKeepAudio.value"></FormCheckbox>
-        <div class="medium-margin-top">
-          <h3>{{ $t("quick_session.creation.profile_selector_title") }}</h3>
-
-          <TranscriberProfileSelector
-            :multiple="false"
-            v-model="selectedProfile"
-            :profilesList="transcriberProfiles" />
-        </div>
-      </div>
-    </section>
+    <QuickSessionSettings
+      :transcriberProfiles="transcriberProfiles"
+      :transcriptionServices="transcriptionServices"
+      :field="quickSessionSettingsField"
+      source="visio"
+      v-model="quickSessionSettingsField.value" />
 
     <div
       class="flex gap-small align-center conversation-create-footer"
@@ -76,16 +52,18 @@ import { bus } from "@/main.js"
 import EMPTY_FIELD from "@/const/emptyField.js"
 import { testVisioUrl } from "@/tools/fields/testVisioUrl"
 import { formsMixin } from "@/mixins/forms.js"
-
-import FormInput from "@/components/FormInput.vue"
-import FormCheckbox from "@/components/FormCheckbox.vue"
-import TranscriberProfileSelector from "@/components/TranscriberProfileSelector.vue"
-
+import generateServiceConfig from "@/tools/generateServiceConfig"
 import {
   apiCreateQuickSession,
   apiStartBot,
   apiDeleteQuickSession,
 } from "@/api/session.js"
+import { testQuickSessionSettings } from "@/tools/fields/testQuickSessionSettings"
+
+import FormInput from "@/components/FormInput.vue"
+import FormCheckbox from "@/components/FormCheckbox.vue"
+import TranscriberProfileSelector from "@/components/TranscriberProfileSelector.vue"
+import QuickSessionSettings from "@/components/QuickSessionSettings.vue"
 
 export default {
   mixins: [formsMixin],
@@ -98,10 +76,14 @@ export default {
       type: String,
       required: true,
     },
+    transcriptionServices: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
-      fields: ["visioLinkField"],
+      fields: ["visioLinkField", "quickSessionSettingsField"],
       visioTypeField: {
         ...EMPTY_FIELD,
         value: "jitsi",
@@ -114,35 +96,24 @@ export default {
         label: this.$i18n.t("quick_session.setup_visio.link_label"),
         testField: testVisioUrl,
       },
-      subInVisioField: {
+      quickSessionSettingsField: {
         ...EMPTY_FIELD,
-        value: true,
-        label: this.$i18n.t(
-          "quick_session.setup_visio.display_transcription_in_visio_label",
-        ),
-      },
-      subInStudio: {
-        ...EMPTY_FIELD,
-        value: true,
-        label: this.$i18n.t(
-          "quick_session.setup_visio.live_transcription_label",
-        ),
-        disabled: true,
-      },
-      fieldDiarizationEnabled: {
-        ...EMPTY_FIELD,
-        value: false,
-        label: this.$t("session.create_page.diarization_label"),
-      },
-      fieldKeepAudio: {
-        ...EMPTY_FIELD,
-        value: true,
-        label: this.$t("session.create_page.keep_audio_label"),
+        value: {
+          keepAudio: true,
+          diarization: false,
+          subInStudio: false,
+          subInVisio: true,
+          offlineTranscription: false,
+          selectedProfile: this.transcriberProfiles?.[0] ?? null,
+          transcriptionService:
+            this.transcriptionServices.length > 0
+              ? generateServiceConfig(this.transcriptionServices[0])
+              : null,
+        },
+        testField: testQuickSessionSettings,
       },
       supportedVisioServices: ["jitsi", "bigbluebutton"],
-      selectedProfile: this.transcriberProfiles[0],
       formSubmitLabel: this.$t("quick_session.setup_visio.join_meeting"),
-
       formError: null,
       formState: "idle",
     }
@@ -152,22 +123,19 @@ export default {
     async createSession(event) {
       event?.preventDefault()
 
-      if (!this.selectedProfile) {
-        this.formError = this.$i18n.t(
-          "quick_session.creation.no_profile_selected_error",
-        )
-        this.formState = "error"
-        return false
-      }
-
       if (this.testFields()) {
+        const settings = this.quickSessionSettingsField.value
         const channels = [
           {
             name: "Main",
-            transcriberProfileId: this.selectedProfile.id,
-            translations: this.selectedProfile.translations ?? [],
-            diarization: this.fieldDiarizationEnabled.value ?? false,
-            keepAudio: this.fieldKeepAudio.value,
+            transcriberProfileId: settings.selectedProfile.id,
+            translations: settings.selectedProfile.translations ?? [],
+            diarization: settings.diarization ?? false,
+            keepAudio: settings.keepAudio,
+            async: settings.offlineTranscription,
+            meta: {
+              transcriptionService: settings.transcriptionService,
+            },
           },
         ]
         const requestSession = await apiCreateQuickSession(
@@ -183,8 +151,8 @@ export default {
           const requestBot = await apiStartBot({
             url: this.visioLinkField.value,
             channelId: session.channels[0].id,
-            enableLiveTranscripts: this.subInStudio.value,
-            enableDisplaySub: this.subInVisioField.value,
+            enableLiveTranscripts: settings.subInStudio,
+            enableDisplaySub: settings.subInVisio,
             subSource: null,
             provider: this.visioTypeField.value,
           })
@@ -217,6 +185,7 @@ export default {
     FormInput,
     FormCheckbox,
     TranscriberProfileSelector,
+    QuickSessionSettings,
   },
 }
 </script>
